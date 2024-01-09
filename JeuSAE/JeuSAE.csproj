@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="survivor-idle_shotgun_0.png" />
+    <None Remove="zombie gif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="survivor-idle_shotgun_0.png" />
+    <Resource Include="zombie gif.gif" />
+  </ItemGroup>
+
 </Project>
