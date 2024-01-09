@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="survivor-idle_shotgun_0.png" />
+    <None Remove="zombie gif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="survivor-idle_shotgun_0.png" />
+    <Resource Include="zombie gif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Image\bouton_1vs1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
