@@ -9,39 +9,8 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Canvas>
-        <Rectangle
-            x:Name="zombie_decor"
-            Canvas.Left="-13"
-            Canvas.Top="-10"
-            Width="837"
-            Height="464"
-            Fill="Black" />
-        <Button
-            x:Name="solo"
-            Canvas.Left="280"
-            Canvas.Top="185"
-            Width="250"
-            Height="85"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="" />
-        <Button
-            x:Name="_1vs1"
-            Canvas.Left="280"
-            Canvas.Top="295"
-            Width="250"
-            Height="85"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            Content="" />
-        <Button
-            x:Name="parametre"
-            Canvas.Left="719"
-            Canvas.Top="23"
-            Width="50"
-            Height="50"
-            Content="" />
+    <Grid Background="#FF6D6D6D">
+       
 
-    </Canvas>
+    </Grid>
 </Window>

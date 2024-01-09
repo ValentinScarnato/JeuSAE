@@ -8,20 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="survivor-idle_shotgun_0.png" />
-    <None Remove="zombie gif.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="survivor-idle_shotgun_0.png" />
-    <Resource Include="zombie gif.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Image\bouton_1vs1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Image\bouton_parametre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Image\bouton_solo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Image\survivor-idle_shotgun_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Image\zombie gif.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Image\zombie_decor.jpg">
