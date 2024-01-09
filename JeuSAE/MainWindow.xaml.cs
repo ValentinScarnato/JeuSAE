@@ -40,8 +40,8 @@ namespace JeuSAE
             btn_1vs1.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_1vs1.png"));
             _1vs1.Background = btn_1vs1;
 
-            //btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
-            //parametre.Background = btn_parametre;
+            btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
+            parametre.Background = btn_parametre;
 
         }
     }
