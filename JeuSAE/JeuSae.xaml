@@ -19,11 +19,11 @@
             Stroke="Black" />
         <Rectangle Margin="351,336,470,226">
             <Rectangle.Fill>
-                <ImageBrush ImageSource="/survivor-idle_shotgun_0.png" Stretch="Uniform" />
+                <ImageBrush ImageSource="/Image/survivor-idle_shotgun_0.png" Stretch="Uniform" />
             </Rectangle.Fill>
         </Rectangle>
         <ProgressBar
-            Margin="676,8,140,633"
+            Margin="758,20,42,621"
             Background="Black"
             BorderBrush="Black"
             RenderTransformOrigin="0.5,0.5"
