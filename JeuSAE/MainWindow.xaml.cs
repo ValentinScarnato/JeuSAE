@@ -32,32 +32,66 @@ namespace JeuSAE
 
             }
 
-        
-    }
-        public MainWindow()
-        {
-            InitializeComponent();
-            this.ChoixFenetre = "Menu";
-            while (true)
-            {
-                switch (ChoixFenetre)
-                {
-                    case "Menu":
-                    {
-                            WindowJeu menu = new WindowJeu();
-                            menu.fenetre = this;
-                            menu.ShowDialog();
-                            break;
-                        }
-                    case "niv1":
-                        {
-                            FenetreJeu niv1 = new FenetreJeu();
-                            niv1.fenetre = this;
-                            niv1.ShowDialog();
-                            break;
-                        }
-                }
-            }
+
         }
+        public MainWindow() { 
+            WindowJeu menu = new WindowJeu();
+            menu.ShowDialog();
+         
+        }
+        private bool gauche, droite, haut, bas = false;
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                gauche = true;
+            else if (e.Key == Key.Right)
+                droite = true;
+            else if (e.Key == Key.Up)
+                haut = true;
+            else if (e.Key == Key.Down)
+                bas = true;
+
+        }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                gauche = false;
+            else if (e.Key == Key.Right)
+                droite = false;
+            else if (e.Key == Key.Up)
+                haut = false;
+            else if (e.Key == Key.Down)
+                bas = false;
+
+
+        }
+        /*InitializeComponent();
+        this.ChoixFenetre = "Menu";
+        while (true)
+        {
+            switch (ChoixFenetre)
+            {
+                case "Menu":
+                {
+                        WindowJeu menu = new WindowJeu();
+                        menu.fenetre = this;
+                        menu.ShowDialog();
+                        break;
+                    }
+                case "niv1":
+                    {
+                        FenetreJeu niv1 = new FenetreJeu();
+                        niv1.fenetre = this;
+                        niv1.ShowDialog();
+                        break;
+                    }
+            }*/
+
+
     }
-}
+} 
+
+    
+        
+    
+

@@ -23,7 +23,7 @@
             Height="85"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Content="" />
+            Content="" Click="solo_Click_1" />
         <Button
             x:Name="_1vs1"
             Canvas.Left="280"
