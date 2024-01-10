@@ -19,9 +19,19 @@ namespace JeuSAE
     /// </summary>
     public partial class MainWindow : Window
     {
+        ImageBrush iconevie = new ImageBrush();
+        ImageBrush joueur_ = new ImageBrush();
+         ImageBrush iconecrane = new ImageBrush();
         public MainWindow()
-        {
-            InitializeComponent();
+        {         
+                InitializeComponent();
+                iconevie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
+                icone_vie.Fill = iconevie;
+                joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/survivor-idle_shotgun_0.png"));
+                joueur.Fill = joueur_;
+                iconecrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
+                icone_crane.Fill = iconecrane;
+            
         }
     }
 }

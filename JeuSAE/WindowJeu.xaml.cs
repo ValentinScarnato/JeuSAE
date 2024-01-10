@@ -45,10 +45,5 @@ namespace JeuSAE
 
         }
 
-        private void solo_Click(object sender, RoutedEventArgs e)
-        {
-            FenetreJeu map1 = new FenetreJeu();
-            map1.ShowDialog();
-        }
     }
 }
