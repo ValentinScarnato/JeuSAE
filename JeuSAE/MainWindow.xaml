@@ -12,14 +12,10 @@
     KeyUp="Window_KeyUp"
     mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="356*"/>
-            <ColumnDefinition Width="645*"/>
-        </Grid.ColumnDefinitions>
         <Canvas
             x:Name="fond"
             Background="#FF717171"
-            Focusable="True" Grid.ColumnSpan="2">
+            Focusable="True" Grid.ColumnSpan="3">
             <Rectangle
                 x:Name="bandeau"
                 Width="1000"
@@ -89,8 +85,8 @@
         </Canvas>
         <Rectangle
             x:Name="joueur"
-            Margin="58,285,414,285"
-            Fill="Red" Grid.Column="1" />
+            Margin="427,294,427,294"
+            Fill="Red" />
 
     </Grid>
 </Window>
