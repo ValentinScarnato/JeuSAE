@@ -8,6 +8,8 @@
     Title="FenetreJeu"
     Width="1000"
     Height="700"
+    KeyDown="Window_KeyDown"
+    KeyUp="Window_KeyUp"
     mc:Ignorable="d">
     <Grid>
         <Canvas
@@ -59,13 +61,25 @@
                 Content="4"
                 FontSize="38"
                 Foreground="Red" />
-            <Label x:Name="nombre_balles" Content="8 | 10" Canvas.Left="110" Foreground="White" Height="60" Width="118" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="38" />
+            <Label
+                x:Name="nombre_balles"
+                Canvas.Left="110"
+                Width="118"
+                Height="60"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Content="8 | 10"
+                FontSize="38"
+                Foreground="White" />
             <Rectangle
                 x:Name="icone_munition"
+                Canvas.Left="30"
                 Canvas.Top="8"
                 Width="45"
                 Height="45"
-                Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="30" />
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="Red" />
 
 
         </Canvas>
