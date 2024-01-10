@@ -23,7 +23,6 @@
             Height="85"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Click="solo_Click"
             Content="" />
         <Button
             x:Name="_1vs1"

@@ -19,9 +19,45 @@ namespace JeuSAE
     /// </summary>
     public partial class MainWindow : Window
     {
+        private String ChoixFenetre;
+
+        public String choixFenetre
+        {
+            get { return ChoixFenetre; }
+            set
+            {
+                if (value != "Menu") ;
+                throw new ArgumentException("Fenetre incorrecte");
+                ChoixFenetre = value;
+
+            }
+
+        
+    }
         public MainWindow()
         {
             InitializeComponent();
+            this.ChoixFenetre = "Menu";
+            while (true)
+            {
+                switch (ChoixFenetre)
+                {
+                    case "Menu":
+                    {
+                            WindowJeu menu = new WindowJeu();
+                            menu.fenetre = this;
+                            menu.ShowDialog();
+                            break;
+                        }
+                    case "niv1":
+                        {
+                            FenetreJeu niv1 = new FenetreJeu();
+                            niv1.fenetre = this;
+                            niv1.ShowDialog();
+                            break;
+                        }
+                }
+            }
         }
     }
 }

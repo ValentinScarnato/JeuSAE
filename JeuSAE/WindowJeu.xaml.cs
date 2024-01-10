@@ -30,7 +30,7 @@ namespace JeuSAE
 
 
             InitializeComponent();
-
+            /*
             background_01.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
             zombie_decor.Fill = background_01;
 
@@ -42,13 +42,17 @@ namespace JeuSAE
 
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
             parametre.Background = btn_parametre;
+            */
 
         }
 
         private void solo_Click(object sender, RoutedEventArgs e)
         {
-            FenetreJeu map1 = new FenetreJeu();
-            map1.ShowDialog();
+            this.DialogResult = true;
+        }
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }
