@@ -19,7 +19,7 @@ namespace JeuSAE
     /// </summary>
     public partial class MainWindow : Window
     {
-        private String ChoixFenetre;
+        /*private String ChoixFenetre;
 
         public String choixFenetre
         {
@@ -32,12 +32,29 @@ namespace JeuSAE
 
             }
 
-        
-    }
+
+        }*/
+        ImageBrush joueur_ = new ImageBrush();
+        ImageBrush iconeCrane = new ImageBrush();
+        ImageBrush iconeMunition = new ImageBrush();
+        ImageBrush iconeVie = new ImageBrush();
+
+
+
         public MainWindow()
         {
             InitializeComponent();
-            this.ChoixFenetre = "Menu";
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
+            joueur.Fill = joueur_;
+            iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
+            icone_crane.Fill = iconeCrane;
+            iconeMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/munition.png"));
+            icone_munition.Fill = iconeMunition;
+            iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
+            icone_vie.Fill = iconeVie;
+
+
+            /*this.ChoixFenetre = "Menu";
             while (true)
             {
                 switch (ChoixFenetre)
@@ -56,8 +73,7 @@ namespace JeuSAE
                             niv1.ShowDialog();
                             break;
                         }
-                }
-            }
+                }*/
         }
     }
 }

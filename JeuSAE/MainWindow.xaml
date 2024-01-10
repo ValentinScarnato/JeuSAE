@@ -51,16 +51,21 @@
                 Fill="Red" />
             <Label
                 x:Name="nombre_kill"
-                Canvas.Left="520"
-                Canvas.Top="8"
-                Width="92"
-                Height="45"
-                HorizontalAlignment="Left"
+                Canvas.Left="514"
+                Width="84"
+                Height="60"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="4"
-                FontFamily="Bodoni MT Black"
-                FontSize="34"
+                FontSize="38"
                 Foreground="Red" />
+            <Label x:Name="nombre_balles" Content="8 | 10" Canvas.Left="110" Foreground="White" Height="60" Width="118" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="38" />
+            <Rectangle
+                x:Name="icone_munition"
+                Canvas.Top="8"
+                Width="45"
+                Height="45"
+                Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="30" />
 
 
         </Canvas>
