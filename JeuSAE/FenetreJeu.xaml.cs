@@ -24,7 +24,7 @@ namespace JeuSAE
         public FenetreJeu()
         {
             InitializeComponent();
-            iconevie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
+            iconevie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconevie;
         }
 
