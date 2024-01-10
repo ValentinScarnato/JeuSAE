@@ -22,6 +22,18 @@ namespace JeuSAE
         public MainWindow()
         {
             InitializeComponent();
+            FenetreJeu niv1 = new FenetreJeu();
+
+            niv1.ShowDialog();
+            niv1.Owner = this;
+            
+            if (niv1.DialogResult == false)
+            {
+                Application.Current.Shutdown();
+            }
+            
+            
+
         }
     }
 }
