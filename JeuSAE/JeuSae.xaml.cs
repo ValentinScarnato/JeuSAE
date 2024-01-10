@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace JeuSAE
 {
     /// <summary>
-    /// Logique d'interaction pour jeu.xaml
+    /// Logique d'interaction pour JeuSae.xaml
     /// </summary>
-    public partial class jeu : Window
+    public partial class JeuSae : Window
     {
-        public jeu()
+        public JeuSae()
         {
             InitializeComponent();
         }

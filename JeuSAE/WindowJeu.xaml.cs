@@ -19,13 +19,13 @@ namespace JeuSAE
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class WindowJeu : Window
     {
         ImageBrush background_01 = new ImageBrush();
         ImageBrush btn_solo = new ImageBrush();
         ImageBrush btn_1vs1 = new ImageBrush();
         ImageBrush btn_parametre = new ImageBrush();
-        public MainWindow()
+        public WindowJeu()
         {
 
 

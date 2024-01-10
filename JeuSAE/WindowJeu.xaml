@@ -12,10 +12,8 @@
     <Canvas>
         <Rectangle
             x:Name="zombie_decor"
-            Canvas.Left="-13"
-            Canvas.Top="-10"
-            Width="837"
-            Height="464"
+            Width="800"
+            Height="434"
             Fill="Black" />
         <Button
             x:Name="solo"
