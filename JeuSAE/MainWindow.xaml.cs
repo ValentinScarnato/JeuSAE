@@ -31,9 +31,8 @@ namespace JeuSAE
                 ChoixFenetre = value;
 
             }
+        }
 
-        
-    }
         public MainWindow()
         {
             InitializeComponent();
@@ -51,7 +50,7 @@ namespace JeuSAE
                         }
                     case "niv1":
                         {
-                            FenetreJeu niv1 = new FenetreJeu();
+                            FenetreNiveau niv1 = new FenetreNiveau();
                             niv1.fenetre = this;
                             niv1.ShowDialog();
                             break;
