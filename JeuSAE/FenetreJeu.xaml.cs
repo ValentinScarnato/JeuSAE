@@ -15,12 +15,19 @@ using System.Windows.Shapes;
 namespace JeuSAE
 {
     /// <summary>
-    /// Logique d'interaction pour JeuSae.xaml
+    /// Logique d'interaction pour FenetreJeu.xaml
     /// </summary>
-    public partial class JeuSae : Window
+    public partial class FenetreJeu : Window
     {
-        public JeuSae()
+        ImageBrush iconevie = new ImageBrush();
+
+        public FenetreJeu()
         {
+            InitializeComponent();
+            iconevie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
+            icone_vie.Fill = iconevie;
         }
+
+        
     }
 }
