@@ -47,7 +47,7 @@ namespace JeuSAE
 
         private void solo_Click(object sender, RoutedEventArgs e)
         {
-            jeu map1 = new jeu();
+            JeuSae map1 = new JeuSae();
             map1.ShowDialog();
         }
     }
