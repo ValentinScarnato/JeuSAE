@@ -27,7 +27,11 @@ namespace JeuSAE
             iconevie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
             icone_vie.Fill = iconevie;
         }
-
-        
+        public MainWindow fenetre
+        {
+            get { return fenetre; }
+            set { fenetre = value; }
+        }
     }
 }
+
