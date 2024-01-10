@@ -7,8 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="FenetreJeu"
     Width="1000"
-    Height="700
-    "
+    Height="700"
     mc:Ignorable="d">
     <Grid>
         <Canvas Background="#FF717171" Focusable="True">
