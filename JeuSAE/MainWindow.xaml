@@ -84,6 +84,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Fill="Red" />
+            <Rectangle x:Name="ZombieCanvas" Height="89" Canvas.Left="169" Canvas.Top="312" Width="89" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
         </Canvas>
