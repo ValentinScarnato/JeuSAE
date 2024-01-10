@@ -38,7 +38,7 @@ namespace JeuSAE
 
 
             InitializeComponent();
-            /*
+            
             background_01.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
             zombie_decor.Fill = background_01;
 
@@ -50,7 +50,8 @@ namespace JeuSAE
 
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
             parametre.Background = btn_parametre;
-            */
+            
+
 
         }
 
@@ -61,6 +62,12 @@ namespace JeuSAE
         private void Annuler_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+
+        private void solo_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+
         }
     }
 }

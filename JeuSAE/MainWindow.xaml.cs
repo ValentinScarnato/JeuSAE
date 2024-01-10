@@ -19,44 +19,62 @@ namespace JeuSAE
     /// </summary>
     public partial class MainWindow : Window
     {
-        private String ChoixFenetre;
+        private bool gauche, droite, haut, bas = false;
 
-        public String choixFenetre
-        {
-            get { return ChoixFenetre; }
-            set
-            {
-                if (value != "Menu") ;
-                throw new ArgumentException("Fenetre incorrecte");
-                ChoixFenetre = value;
-
-            }
-        }
+        ImageBrush iconeMunition = new ImageBrush();
+        ImageBrush iconeVie = new ImageBrush();
+        ImageBrush joueur_ = new ImageBrush();
+        ImageBrush iconeCrane = new ImageBrush();
+        
 
         public MainWindow()
         {
+            WindowJeu menu = new WindowJeu();
+            menu.ShowDialog();
             InitializeComponent();
-            this.ChoixFenetre = "Menu";
-            while (true)
-            {
-                switch (ChoixFenetre)
-                {
-                    case "Menu":
-                    {
-                            WindowJeu menu = new WindowJeu();
-                            menu.fenetre = this;
-                            menu.ShowDialog();
-                            break;
-                        }
-                    case "niv1":
-                        {
-                            FenetreNiveau niv1 = new FenetreNiveau();
-                            niv1.fenetre = this;
-                            niv1.ShowDialog();
-                            break;
-                        }
-                }
-            }
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
+            joueur.Fill = joueur_;
+            iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
+            icone_crane.Fill = iconeCrane;
+            iconeMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/munition.png"));
+            icone_munition.Fill = iconeMunition;
+            iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
+            icone_vie.Fill = iconeVie;
+
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                gauche = true;
+            else if (e.Key == Key.Right)
+                droite = true;
+            else if (e.Key == Key.Up)
+                haut = true;
+            else if (e.Key == Key.Down)
+                bas = true;
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                gauche = false;
+            else if (e.Key == Key.Right)
+                droite = false;
+            else if (e.Key == Key.Up)
+                haut = false;
+            else if (e.Key == Key.Down)
+                bas = false;
+        }
+
     }
+
+
+
+
 }
+  
+
+    
+        
+    
+
