@@ -37,6 +37,7 @@
 
 
         </Canvas>
+        <Rectangle x:Name="joueur" Height="100" Stroke="Black" Width="100"/>
 
     </Grid>
 </Window>

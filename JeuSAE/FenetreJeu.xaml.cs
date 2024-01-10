@@ -20,6 +20,7 @@ namespace JeuSAE
     public partial class FenetreJeu : Window
     {
         ImageBrush iconevie = new ImageBrush();
+        ImageBrush joueur = new ImageBrush();
 
         public FenetreJeu()
         {
