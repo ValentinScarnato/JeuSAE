@@ -17,11 +17,7 @@
             VerticalAlignment="Top"
             Fill="Black"
             Stroke="Black" />
-        <Rectangle Margin="351,336,470,226">
-            <Rectangle.Fill>
-                <ImageBrush ImageSource="/Image/survivor-idle_shotgun_0.png" Stretch="Uniform" />
-            </Rectangle.Fill>
-        </Rectangle>
+        <Rectangle Margin="455,360,366,202" Fill="Red"/>
         <ProgressBar
             Margin="758,20,42,621"
             Background="Black"
