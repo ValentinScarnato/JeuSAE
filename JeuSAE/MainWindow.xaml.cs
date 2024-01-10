@@ -20,6 +20,9 @@ namespace JeuSAE
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int VIE_JOUEUR = 100;
+        public static int DEGATS_PAR_ZOMBIE = 10;
+        public static int 
         private bool gauche, droite, haut, bas = false;
         int vitesse = 1, vie = 100, munitions = 10, kills = 0;
         string position = "haut";
