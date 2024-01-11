@@ -22,6 +22,7 @@ namespace JeuSAE
         public Parametres()
         {
             InitializeComponent();
+            
         }
     }
 }
