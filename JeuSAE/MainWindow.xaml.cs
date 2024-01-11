@@ -117,13 +117,13 @@ namespace JeuSAE
                 ORIENTATION_JOUEUR = "droite";
 
             }
-            if (e.Key == Key.Up)
+            if (e.Key == Key.Z)
             {
                 haut = true;
                 ORIENTATION_JOUEUR = "haut";
 
             }
-            if (e.Key == Key.Down)
+            if (e.Key == Key.S)
             {
                 bas = true;
                 ORIENTATION_JOUEUR = "bas";
@@ -135,18 +135,18 @@ namespace JeuSAE
             double xJoueur = Canvas.GetLeft(joueur);
             double yJoueur = Canvas.GetTop(joueur);
 
-            if (e.Key == Key.Left)
+            if (e.Key == Key.Q)
                 gauche = false;
 
-            if (e.Key == Key.Right)
+            if (e.Key == Key.D)
                 droite = false;
 
 
-            if (e.Key == Key.Up)
+            if (e.Key == Key.Z)
                 haut = false;
 
 
-            if (e.Key == Key.Down)
+            if (e.Key == Key.S)
                 bas = false;
 
 
