@@ -149,7 +149,27 @@ namespace JeuSAE
                 ORIENTATION_JOUEUR = "bas";
             }
             if (e.Key == Key.Space)
-                TirJoueur(ORIENTATION_JOUEUR);
+            {
+                /*private*/ void TirJoueur(string orientation)
+                {
+                    //vide la liste des items
+                    //itemsToRemove.Clear();
+                    Rectangle newBullet = new Rectangle
+                    {
+                        Tag = "balleJoueur",
+                        Height = 20,
+                        Width = 5,
+                        Fill = Brushes.White,
+                        Stroke = Brushes.Red
+                    };
+                    // on place le tir à l’endroit du joueur
+                    Canvas.SetTop(newBullet, Canvas.GetTop(joueur) - newBullet.Height);
+                    Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                    // on place le tir dans le canvas
+                    fond.Children.Add(newBullet);
+                }
+                
+            }
         }
 
 
@@ -213,22 +233,39 @@ namespace JeuSAE
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
             */
-            
-            
-
-
-
         }
 
         /*----------------------------------------------------*/
-        /*---------------GESTION DU TIR JOUEUR----------------*/
+        /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        private static void TirJoueur(string orientation)
+        private void TirJoueur(string orientation)
+        {
+            if (e.Key == Key.Space)
+            { 
+
+                //vide la liste des items
+                //itemsToRemove.Clear();
+                Rectangle newBullet = new Rectangle
+                {
+                    Tag = "balleJoueur",
+                    Height = 20,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Red
+                };
+                // on place le tir à l’endroit du joueur
+                Canvas.SetTop(newBullet, Canvas.GetTop(joueur) - newBullet.Height);
+                Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                // on place le tir dans le canvas
+                fond.Children.Add(newBullet);
+            }
+           
+        }
+
+        private void TirEnnemis(double x, double y)
         {
 
         }
-         
-
 
 
 
