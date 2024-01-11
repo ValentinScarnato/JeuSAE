@@ -96,8 +96,7 @@ namespace JeuSAE
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            double xJoueur = Canvas.GetLeft(joueur);
-            double yJoueur = Canvas.GetTop(joueur);
+           
 
             if (e.Key == Key.Q)
             {
@@ -127,8 +126,7 @@ namespace JeuSAE
         }
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            double xJoueur = Canvas.GetLeft(joueur);
-            double yJoueur = Canvas.GetTop(joueur);
+            
 
             if (e.Key == Key.Q)
                 gauche = false;
