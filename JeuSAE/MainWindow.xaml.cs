@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
@@ -29,7 +30,7 @@ namespace JeuSAE
 
         public static int DEGATS_PAR_ZOMBIE = 10;
         bool gauche, droite, haut, bas = false;
-        public static int VITESSE_JOUEUR = 1, VIE_JOUEUR = 100;
+        public static int VITESSE_JOUEUR = 20, VIE_JOUEUR = 100;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
 
@@ -72,7 +73,7 @@ namespace JeuSAE
             iconeMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/munition.png"));
             icone_munition.Fill = iconeMunition;
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
-            icone_vie.Fill = iconeVie; 
+            icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
             Genere_Zombies(zombar);
 
@@ -80,20 +81,77 @@ namespace JeuSAE
             /*-------------------TEMPS----------------------------*/
             /*----------------------------------------------------*/
 
-                DispatcherTimer minuterie = new DispatcherTimer();
+            DispatcherTimer minuterie = new DispatcherTimer();
 
-                minuterie.Interval = TimeSpan.FromMilliseconds(16);
+            minuterie.Interval = TimeSpan.FromMilliseconds(16);
 
-                minuterie.Tick += Jeu;
+            minuterie.Tick += Jeu;
 
-                minuterie.Start();
-               /* if (haut == true)
-            {
+            minuterie.Start();
+            /* if (haut == true)
+         {
 
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 1);
-                    
-            }*/
+             Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 1);
+
+         }*/
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            double xJoueur = Canvas.GetLeft(joueur);
+            double yJoueur = Canvas.GetTop(joueur);
+
+            if (e.Key == Key.Left)
+            {
+                gauche = true;
+                ORIENTATION_JOUEUR = "gauche";
+
+            }
+            if (e.Key == Key.Right)
+            {
+                droite = true;
+                ORIENTATION_JOUEUR = "droite";
+
+            }
+            if (e.Key == Key.Up)
+            {
+                haut = true;
+                ORIENTATION_JOUEUR = "haut";
+
+            }
+            if (e.Key == Key.Down)
+            {
+                bas = true;
+                ORIENTATION_JOUEUR = "bas";
+
+            }
+        }
+
+
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            double xJoueur = Canvas.GetLeft(joueur);
+            double yJoueur = Canvas.GetTop(joueur);
+
+            if (e.Key == Key.Left)
+                gauche = false;
+
+            if (e.Key == Key.Right)
+                droite = false;
+
+
+            if (e.Key == Key.Up)
+                haut = false;
+
+
+            if (e.Key == Key.Down)
+                bas = false;
+
+
+        }
+
+
 
 
 
@@ -102,55 +160,36 @@ namespace JeuSAE
         /*-------------------DEPLACEMENTS 2-------------------*/
         /*----------------------------------------------------*/
 
-        private void joueur_KeyDown(object sender, KeyEventArgs e)
+        private void fond_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
-            {
-                gauche = true;
-                ORIENTATION_JOUEUR = "gauche";
-            }
-            if (e.Key == Key.Right)
-            {
-                droite = true;
-                ORIENTATION_JOUEUR = "droite";
-            }
-            if (e.Key == Key.Up)
-            {
-                haut = true;
-                ORIENTATION_JOUEUR = "haut";
-            }
-            if (e.Key == Key.Down)
-            {
-                bas = true;
-                ORIENTATION_JOUEUR = "bas";
-            }
+
         }
 
-        private void joueur_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Left)
-            {
-                gauche = false;
-                ORIENTATION_JOUEUR = "gauche";
-            }
-            if (e.Key == Key.Right)
-            {
-                droite = false;
-                ORIENTATION_JOUEUR = "droite";
-            }
-            if (e.Key == Key.Up)
-            {
-                haut = false;
-                ORIENTATION_JOUEUR = "haut";
-            }
-            if (e.Key == Key.Down)
-            {
-                bas = false;
-                ORIENTATION_JOUEUR = "bas";
-            }
-            if (e.Key == Key.Space)
-                TirJoueur(ORIENTATION_JOUEUR);
-        }
+        /* private void joueur_KeyUp(object sender, KeyEventArgs e)
+         {
+             if (e.Key == Key.Left)
+             {
+                 gauche = false;
+                 ORIENTATION_JOUEUR = "gauche";
+             }
+             if (e.Key == Key.Right)
+             {
+                 droite = false;
+                 ORIENTATION_JOUEUR = "droite";
+             }
+             if (e.Key == Key.Up)
+             {
+                 haut = false;
+                 ORIENTATION_JOUEUR = "haut";
+             }
+             if (e.Key == Key.Down)
+             {
+                 bas = false;
+                 ORIENTATION_JOUEUR = "bas";
+             }
+             if (e.Key == Key.Space)
+                 TirJoueur(ORIENTATION_JOUEUR);
+         }*/
 
 
 
@@ -159,11 +198,11 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         public void Genere_Zombies(ImageBrush zombiiee)
         {
-            int nbr, i=0;
+            int nbr, i = 0;
             Random n = new Random();
             nbr = n.Next(10, 20);
             if (i < nbr)
-            InitializeComponent();
+                InitializeComponent();
             Random rnd = new Random();
             ZombieCanvas.Fill = zombiiee;
             Rectangle zombie = new Rectangle();
@@ -175,7 +214,9 @@ namespace JeuSAE
         }
         private void Jeu(object? sender, EventArgs e)
         {
-            /*
+            Rect _joueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
+
+
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
@@ -184,17 +225,17 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
             }
-            else if (droite == true && Canvas.GetTop(joueur) > 0)
+            else if (bas == true && Canvas.GetTop(joueur) > 0)
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
-            else if (droite == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Width)
+            else if (haut == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Width)
             {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
             }
-            */
 
-            
+
+
             /*
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
@@ -213,8 +254,8 @@ namespace JeuSAE
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
             */
-            
-            
+
+
 
 
 
@@ -227,7 +268,7 @@ namespace JeuSAE
         {
 
         }
-         
+
 
 
 
