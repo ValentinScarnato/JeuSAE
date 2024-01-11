@@ -126,8 +126,28 @@ namespace JeuSAE
 
             }
         }
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            double xJoueur = Canvas.GetLeft(joueur);
+            double yJoueur = Canvas.GetTop(joueur);
 
-        
+            if (e.Key == Key.Left)
+                gauche = false;
+
+            if (e.Key == Key.Right)
+                droite = false;
+
+
+            if (e.Key == Key.Up)
+                haut = false;
+
+
+            if (e.Key == Key.Down)
+                bas = false;
+
+
+        }
+
 
 
 
@@ -173,27 +193,6 @@ namespace JeuSAE
             }
 
 
-
-            /*
-            if (gauche == true && Canvas.GetLeft(joueur) > 0)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
-            }
-            if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < this.joueur.Height)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
-            }
-            if (haut == true && Canvas.GetLeft(joueur) > 60)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
-            }
-            if (bas == true && Canvas.GetLeft(joueur) + joueur.Height < this.joueur.Height)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
-            }
-            */
-
-
         }
 
         /*----------------------------------------------------*/
@@ -202,7 +201,7 @@ namespace JeuSAE
         private void TirJoueur(string orientation)
         {
             if (e.Key == Key.Space)
-            { 
+            {
 
                 //vide la liste des items
                 //itemsToRemove.Clear();
@@ -220,13 +219,12 @@ namespace JeuSAE
                 // on place le tir dans le canvas
                 fond.Children.Add(newBullet);
             }
-           
-        }
-        
 
         }
-
 
 
     }
+
+
+
 }
