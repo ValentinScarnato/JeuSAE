@@ -28,15 +28,21 @@ namespace JeuSAE
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
 
+        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3;
         public static int DEGATS_PAR_ZOMBIE = 10;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 15, VIE_JOUEUR = 100;
-
+        int nombreZombiesManche = 4, ennemisTotaux = 0;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
         int BANDEAU = 60;
-        
+        int vieJoueur = 100;
+        Key avancer = Key.Z;
+        Key reculer = Key.S;
+        Key allerADroite = Key.D;
+        Key allerAGauche = Key.Q;
+
         /*----------------------------------------------------*/
         /*---------------GENERATION D'IMAGES------------------*/
         /*----------------------------------------------------*/
@@ -49,6 +55,7 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
+        String rour;
 
 
 
@@ -78,7 +85,8 @@ namespace JeuSAE
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
-            Genere_Zombies(zombar);
+            //Genere_Zombies(zombar);
+            Generation_Zombies(nombreZombiesManche);
 
             /*----------------------------------------------------*/
             /*-------------------TEMPS----------------------------*/
@@ -88,36 +96,36 @@ namespace JeuSAE
 
             minuterie.Interval = TimeSpan.FromMilliseconds(16);
 
-            minuterie.Tick += Jeu;
+            minuterie.Tick += Moteur_Jeu;
 
             minuterie.Start();
-            
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-           
 
-            if (e.Key == Key.Q)
+
+            if (e.Key == allerAGauche)
             {
                 gauche = true;
                 ORIENTATION_JOUEUR = "gauche";
 
             }
-            
-            if (e.Key == Key.D)
+
+            if (e.Key == allerADroite)
             {
                 droite = true;
                 ORIENTATION_JOUEUR = "droite";
 
             }
-            if (e.Key == Key.Z)
+            if (e.Key == avancer)
             {
                 haut = true;
                 ORIENTATION_JOUEUR = "haut";
 
             }
-            if (e.Key == Key.S)
+            if (e.Key == reculer)
             {
                 bas = true;
                 ORIENTATION_JOUEUR = "bas";
@@ -126,21 +134,18 @@ namespace JeuSAE
         }
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            
 
-            if (e.Key == Key.Q)
+            if (e.Key == allerAGauche)
                 gauche = false;
 
-            if (e.Key == Key.D)
+            if (e.Key == allerADroite)
                 droite = false;
 
-
-            if (e.Key == Key.Z)
+            if (e.Key == avancer)
                 haut = false;
-
-
-            if (e.Key == Key.S)
+            if (e.Key == reculer)
                 bas = false;
+
 
 
         }
@@ -148,10 +153,8 @@ namespace JeuSAE
 
 
 
-        /*----------------------------------------------------*/
-        /*---------------GENERATION DE ZOMBIES----------------*/
-        /*----------------------------------------------------*/
-        public void Genere_Zombies(ImageBrush zombiiee)
+
+        /*public void Genere_Zombies(ImageBrush zombiiee)
         {
             int nbr, i = 0;
             Random n = new Random();
@@ -166,18 +169,19 @@ namespace JeuSAE
             //zombiiee.Top = rnd.Next(0, 800);
 
 
-        }
-        private void Jeu(object sender, EventArgs e)
+        }*/
+        /*----------------------------------------------------*/
+        /*-------------------- DEPLACEMENTS ------------------*/
+        /*----------------------------------------------------*/
+        public void Deplacements()
         {
             Rect _joueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
-            
-            
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
             }
-           
+
             else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
@@ -190,9 +194,65 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
-            
-            
-            
+        }
+        /*----------------------------------------------------*/
+        /*-------------- GENERATION DE ZOMBIES ---------------*/
+        /*----------------------------------------------------*/
+        private void Generation_Zombies(int nombreZombiesMax)
+        {
+            Random aleatoire = new Random();
+            for (int i = 0; i < nombreZombiesMax; i++)
+            {
+                Rectangle ennemi = new Rectangle
+                {
+                    Tag = "Ennemi",
+                    Height = 86,
+                    Width = 86,
+                    Fill = zombar
+                };
+                int pointApparition = aleatoire.Next(1, 5);
+                switch (pointApparition)
+                {
+                    case 1:
+                        Canvas.SetTop(ennemi, 30);
+                        Canvas.SetLeft(ennemi, 60);
+                        break;
+                    case 2:
+                        Canvas.SetTop(ennemi, 60);
+                        Canvas.SetLeft(ennemi, 300);
+                        break;
+                    case 3:
+                        Canvas.SetTop(ennemi, 500);
+                        Canvas.SetLeft(ennemi, 400);
+                        break;
+                    case 4:
+                        Canvas.SetTop(ennemi, 800);
+                        Canvas.SetLeft(ennemi, 90);
+                        break;
+                    case 5:
+                        Canvas.SetTop(ennemi, 1600);
+                        Canvas.SetLeft(ennemi, 1000);
+                        break;
+                }
+
+                fond.Children.Add(ennemi);
+                ennemisTotaux++;
+                if (ennemisTotaux >= 1)
+                    nombre_ennemis.Content = ennemisTotaux + " ennemi restants";
+                else
+                    nombre_ennemis.Content = ennemisTotaux + " ennemis restant";
+                /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
+                 System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
+
+            }
+
+        }
+
+        private void Moteur_Jeu(object sender, EventArgs e)
+        {
+            Deplacements();
+
+
 
 
 
@@ -222,11 +282,11 @@ namespace JeuSAE
                 // on place le tir dans le canvas
                 fond.Children.Add(newBullet);
             }*/
-        
-        }
-
 
     }
+
+
+}
 
 
 
