@@ -69,5 +69,10 @@ namespace JeuSAE
             this.DialogResult = true;
 
         }
+
+        private void parametre_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

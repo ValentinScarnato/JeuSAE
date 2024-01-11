@@ -36,10 +36,9 @@
                 Height="31"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                BorderBrush="#FFF7F7F7"
                 LargeChange="0"
                 SmallChange="0"
-                Value="50" />
+                Value="50" BorderBrush="White" Background="White" />
             <Rectangle
                 x:Name="icone_crane"
                 Canvas.Left="456"
