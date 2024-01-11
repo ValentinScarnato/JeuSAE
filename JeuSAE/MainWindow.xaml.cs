@@ -200,7 +200,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         private void TirJoueur(string orientation)
         {
-            if (e.Key == Key.Space)
+            //if (e.Key == Key.Space)
             {
 
                 //vide la liste des items
