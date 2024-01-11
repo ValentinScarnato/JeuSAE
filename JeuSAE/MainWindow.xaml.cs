@@ -101,13 +101,13 @@ namespace JeuSAE
             double xJoueur = Canvas.GetLeft(joueur);
             double yJoueur = Canvas.GetTop(joueur);
 
-            if (e.Key == Key.Left)
+            if (e.Key == Key.Q)
             {
                 gauche = true;
                 ORIENTATION_JOUEUR = "gauche";
 
             }
-            if (e.Key == Key.Right)
+            if (e.Key == Key.D)
             {
                 droite = true;
                 ORIENTATION_JOUEUR = "droite";
@@ -198,7 +198,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        /*private void TirJoueur(string orientation)
+        private void TirJoueur(string orientation)
         {
             if (e.Key == Key.Space)
             {
@@ -220,7 +220,7 @@ namespace JeuSAE
                 fond.Children.Add(newBullet);
             }
         
-        }*/
+        }
 
 
     }
