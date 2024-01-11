@@ -30,9 +30,10 @@ namespace JeuSAE
 
         public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3;
         public static int DEGATS_PAR_ZOMBIE = 10;
+        private static int VITESSE_BALLE_JOUEUR = 20;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        public static int VITESSE_JOUEUR = 15, VIE_JOUEUR = 100;
+        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6, VIE_JOUEUR = 100;
         int nombreZombiesManche = 4, ennemisTotaux = 0;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
@@ -42,6 +43,8 @@ namespace JeuSAE
         Key reculer = Key.S;
         Key allerADroite = Key.D;
         Key allerAGauche = Key.Q;
+        private List<Rectangle> objetASupprimer = new List<Rectangle>();
+
 
         /*----------------------------------------------------*/
         /*---------------GENERATION D'IMAGES------------------*/
@@ -104,8 +107,21 @@ namespace JeuSAE
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Space)
+            {
 
-
+                Rectangle balleJoueur = new Rectangle
+                {
+                    Tag = "Balle joueur",
+                    Height = 5,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Yellow
+                };
+                Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
+                Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                fond.Children.Add(balleJoueur);
+            }
             if (e.Key == allerAGauche)
             {
                 gauche = true;
@@ -132,6 +148,9 @@ namespace JeuSAE
 
             }
         }
+
+
+
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
 
@@ -194,6 +213,7 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
+
         }
         /*----------------------------------------------------*/
         /*-------------- GENERATION DE ZOMBIES ---------------*/
@@ -247,16 +267,47 @@ namespace JeuSAE
             }
 
         }
+        private void Balle()
+        {
+            foreach (Rectangle x in fond.Children.OfType<Rectangle>())
+            {
+                if (x is Rectangle && (string)x.Tag == "Balle joueur")
+                {
+                    Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
+                    Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
+                    if (Canvas.GetTop(x) < 10)
+                    {
+                        objetASupprimer.Add(x);
+                    }
+
+
+                    foreach (var y in fond.Children.OfType<Rectangle>())
+                    {
+                        if (y is Rectangle && (string)y.Tag == "enemy")
+                        {
+                            Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                            if (balle.IntersectsWith(enemy))
+                            {
+                                objetASupprimer.Add(x);
+                                objetASupprimer.Add(y);
+                                ennemisTotaux -= 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
-
+            Balle();
 
 
 
 
         }
+
 
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
@@ -287,6 +338,7 @@ namespace JeuSAE
 
 
 }
+
 
 
 
