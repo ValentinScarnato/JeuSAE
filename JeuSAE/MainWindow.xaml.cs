@@ -127,69 +127,7 @@ namespace JeuSAE
             }
         }
 
-
-
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            double xJoueur = Canvas.GetLeft(joueur);
-            double yJoueur = Canvas.GetTop(joueur);
-
-            if (e.Key == Key.Left)
-                gauche = false;
-
-            if (e.Key == Key.Right)
-                droite = false;
-
-
-            if (e.Key == Key.Up)
-                haut = false;
-
-
-            if (e.Key == Key.Down)
-                bas = false;
-
-
-        }
-
-
-
-
-
-
-        /*----------------------------------------------------*/
-        /*-------------------DEPLACEMENTS 2-------------------*/
-        /*----------------------------------------------------*/
-
-        private void fond_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        /* private void joueur_KeyUp(object sender, KeyEventArgs e)
-         {
-             if (e.Key == Key.Left)
-             {
-                 gauche = false;
-                 ORIENTATION_JOUEUR = "gauche";
-             }
-             if (e.Key == Key.Right)
-             {
-                 droite = false;
-                 ORIENTATION_JOUEUR = "droite";
-             }
-             if (e.Key == Key.Up)
-             {
-                 haut = false;
-                 ORIENTATION_JOUEUR = "haut";
-             }
-             if (e.Key == Key.Down)
-             {
-                 bas = false;
-                 ORIENTATION_JOUEUR = "bas";
-             }
-             if (e.Key == Key.Space)
-                 TirJoueur(ORIENTATION_JOUEUR);
-         }*/
+        
 
 
 
@@ -256,20 +194,37 @@ namespace JeuSAE
             */
 
 
-
-
-
         }
 
         /*----------------------------------------------------*/
-        /*---------------GESTION DU TIR JOUEUR----------------*/
+        /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        private static void TirJoueur(string orientation)
+        private void TirJoueur(string orientation)
         {
+            if (e.Key == Key.Space)
+            { 
+
+                //vide la liste des items
+                //itemsToRemove.Clear();
+                Rectangle newBullet = new Rectangle
+                {
+                    Tag = "balleJoueur",
+                    Height = 20,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Red
+                };
+                // on place le tir à l’endroit du joueur
+                Canvas.SetTop(newBullet, Canvas.GetTop(joueur) - newBullet.Height);
+                Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                // on place le tir dans le canvas
+                fond.Children.Add(newBullet);
+            }
+           
+        }
+        
 
         }
-
-
 
 
 
