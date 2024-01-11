@@ -28,7 +28,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
 
         public static int DEGATS_PAR_ZOMBIE = 10;
-        private bool gauche, droite, haut, bas = false;
+        bool gauche, droite, haut, bas = false;
         public static int VITESSE_JOUEUR = 1, VIE_JOUEUR = 100;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
@@ -160,7 +160,7 @@ namespace JeuSAE
         }
         private void Jeu(object? sender, EventArgs e)
         {
-            /* déplacement à gauche et droite de vitessePlayer avec vérification des limites de fenêtre gauche et droite
+            /*
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
@@ -177,23 +177,31 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
-            if (gauche == true && joueur.Left > 0)
+            */
+
+            
+            /*
+            if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
-                joueur.Left -= VITESSE_JOUEUR;
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
             }
-            if (droite && joueur.Left + joueur.Width < 930)
+            if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < this.joueur.Height)
             {
-                joueur.Left += VITESSE_JOUEUR;
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
             }
-            if (gauche && joueur.Top > 60)
+            if (haut == true && Canvas.GetLeft(joueur) > 60)
             {
-                joueur.Top -= VITESSE_JOUEUR;
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
-            if (bas && joueur.Top + joueur.Height < 700)
+            if (bas == true && Canvas.GetLeft(joueur) + joueur.Height < this.joueur.Height)
             {
-                joueur.Top += VITESSE_JOUEUR;
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
             */
+            
+            
+
+
 
         }
 

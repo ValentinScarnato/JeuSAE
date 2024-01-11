@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="joueur_shotgun.png" />
     <None Remove="zombie gif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="joueur_shotgun.png" />
   </ItemGroup>
 
   <ItemGroup>
