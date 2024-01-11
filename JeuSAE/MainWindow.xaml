@@ -50,20 +50,20 @@
             <Label
                 x:Name="nombre_kill"
                 Canvas.Left="888"
-                Width="38"
+                Width="109"
                 Height="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Content="4"
                 FontSize="38"
                 Foreground="Red" Canvas.Top="-2" />
             <Label
                 x:Name="nombre_balles"
                 Canvas.Left="110"
-                Width="118"
+                Width="161"
                 Height="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Content="8 | 10"
                 FontSize="38"
                 Foreground="White" />
@@ -87,11 +87,11 @@
             <Label
                 x:Name="nombre_ennemis"
                 Canvas.Left="296"
-                Width="385"
+                Width="453"
                 Height="60"
                 Content="5 ennemis restants"
                 FontSize="38"
-                Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         </Canvas>
         <Rectangle x:Name="boite_arme" Margin="816,236,840,661" Fill="#FF00FF3E"/>

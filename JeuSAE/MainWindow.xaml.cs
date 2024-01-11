@@ -28,7 +28,7 @@ namespace JeuSAE
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
 
-        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3;
+        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 10;
         public static int DEGATS_PAR_ZOMBIE = 10;
         private static int VITESSE_BALLE_JOUEUR = 20;
         bool gauche, droite, haut, bas = false;
@@ -36,9 +36,10 @@ namespace JeuSAE
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6, VIE_JOUEUR = 100;
         int nombreZombiesManche = 4, ennemisTotaux = 0;
         string ORIENTATION_JOUEUR = "haut";
-        int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
+        int killsJoueur = 0;
         int BANDEAU = 60;
         int vieJoueur = 100;
+        private int nombreDeBalles = 10;
         Key avancer = Key.Z;
         Key reculer = Key.S;
         Key allerADroite = Key.D;
@@ -107,21 +108,28 @@ namespace JeuSAE
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+
             if (e.Key == Key.Space)
             {
 
-                Rectangle balleJoueur = new Rectangle
+                if (nombreDeBalles > 0)
                 {
-                    Tag = "Balle joueur",
-                    Height = 5,
-                    Width = 5,
-                    Fill = Brushes.White,
-                    Stroke = Brushes.Yellow
-                };
-                Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
-                Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                fond.Children.Add(balleJoueur);
+                    Rectangle balleJoueur = new Rectangle
+                    {
+                        Tag = "Balle joueur",
+                        Height = 5,
+                        Width = 5,
+                        Fill = Brushes.White,
+                        Stroke = Brushes.Yellow
+                    };
+                    Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
+                    Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                    fond.Children.Add(balleJoueur);
+                    nombreDeBalles--;
+                }
+
             }
+
             if (e.Key == allerAGauche)
             {
                 gauche = true;
@@ -257,22 +265,41 @@ namespace JeuSAE
 
                 fond.Children.Add(ennemi);
                 ennemisTotaux++;
-                if (ennemisTotaux >= 1)
-                    nombre_ennemis.Content = ennemisTotaux + " ennemi restants";
-                else
-                    nombre_ennemis.Content = ennemisTotaux + " ennemis restant";
+
                 /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
                  System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
 
             }
 
         }
+        private void NombreEnnemis()
+        {
+            if (ennemisTotaux >= 1)
+                nombre_ennemis.Content = ennemisTotaux + " ennemi restants";
+            else
+                nombre_ennemis.Content = ennemisTotaux + " ennemis restant";
+        }
+        private void NombreBalles()
+        {
+
+            nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
+
+        }
+        private void NombreKills()
+        {
+
+            nombre_kill.Content = killsJoueur;
+
+        }
         private void Balle()
         {
+            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
+
             foreach (Rectangle x in fond.Children.OfType<Rectangle>())
             {
                 if (x is Rectangle && (string)x.Tag == "Balle joueur")
                 {
+
                     Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
                     Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
@@ -280,30 +307,86 @@ namespace JeuSAE
                     {
                         objetASupprimer.Add(x);
                     }
-
-
+                
+            
                     foreach (var y in fond.Children.OfType<Rectangle>())
                     {
-                        if (y is Rectangle && (string)y.Tag == "enemy")
+
+                        if (y is Rectangle && (string)y.Tag == "Ennemi")
                         {
-                            Rect enemy = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-                            if (balle.IntersectsWith(enemy))
+                            Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+
+                            if (balle.IntersectsWith(ennemiZone))
                             {
                                 objetASupprimer.Add(x);
                                 objetASupprimer.Add(y);
                                 ennemisTotaux -= 1;
+                                killsJoueur += 1;
                             }
                         }
+                        if (x is Rectangle && (string)x.Tag == "Ennemi")
+                        {
+                            Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+
+                            Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_ZOMBIE);
+
+
+                        }
+                        if (x is Rectangle && (string)x.Tag == "Ennemi")
+                        {
+                            Rect ennemiZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+                            Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_ZOMBIE);
+
+
+
+                        }
+
                     }
+                    if (Canvas.GetTop(x) > ActualHeight + x.ActualHeight)
+                        objetASupprimer.Add(x);
+
+
+
+
+
+
+
+
                 }
+                
+
+
             }
+            foreach (Rectangle y in objetASupprimer)
+                {
+                    fond.Children.Remove(y);
+                }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
+            NombreEnnemis();
             Balle();
-
-
+            NombreBalles();
+            NombreKills();
 
 
         }
