@@ -29,7 +29,8 @@ namespace JeuSAE
 
         public static int DEGATS_PAR_ZOMBIE = 10;
         bool gauche, droite, haut, bas = false;
-        public static int VITESSE_JOUEUR = 1, VIE_JOUEUR = 100;
+        bool FinDePartie = false;
+        public static int VITESSE_JOUEUR = 10, VIE_JOUEUR = 100;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
 
@@ -173,7 +174,7 @@ namespace JeuSAE
 
 
         }
-        private void Jeu(object? sender, EventArgs e)
+        private void Jeu(object sender, EventArgs e)
         {
             /*
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
@@ -196,7 +197,7 @@ namespace JeuSAE
 
             
             /*
-            if (gauche == true && Canvas.GetLeft(joueur) > 0)
+            if (gauche == true && Canvas.GetLeft(joueur) > 200)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
             }
@@ -204,7 +205,7 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
             }
-            if (haut == true && Canvas.GetLeft(joueur) > 60)
+            if (haut == true && Canvas.GetLeft(joueur) > 200)
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
@@ -214,9 +215,32 @@ namespace JeuSAE
             }
             */
             
-            
+            if (VIE_JOUEUR > 1)
+            {
+                BarreDeVie.Value = VIE_JOUEUR;
 
+            }
+            else
+            {
+                FinDePartie = true;
+            }
 
+            if (gauche == true && Canvas.GetLeft(joueur) > 0)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
+            }
+            if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < this.joueur.Height)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
+            }
+            if (haut == true && Canvas.GetLeft(joueur) > 0)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
+            }
+            if (bas == true && Canvas.GetLeft(joueur) + joueur.Height < this.joueur.Height)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
+            }
 
         }
 

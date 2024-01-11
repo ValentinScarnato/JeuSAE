@@ -24,5 +24,11 @@ namespace JeuSAE
             InitializeComponent();
             
         }
+
+        private void btn_annuler(object sender, RoutedEventArgs e)
+        {
+            Parametres menu = new Parametres();
+            menu.Close();
+        }
     }
 }
