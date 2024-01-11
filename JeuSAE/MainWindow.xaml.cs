@@ -42,6 +42,12 @@ namespace JeuSAE
         ImageBrush joueur_ = new ImageBrush();
         ImageBrush iconeCrane = new ImageBrush();
         ImageBrush zombar = new ImageBrush();
+        ImageBrush boiteMunition = new ImageBrush();
+        ImageBrush caisseDecor = new ImageBrush();
+        ImageBrush boiteArme = new ImageBrush();
+
+
+
 
 
         public MainWindow()
@@ -49,6 +55,15 @@ namespace JeuSAE
             WindowJeu menu = new WindowJeu();
             menu.ShowDialog();
             InitializeComponent();
+            caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
+            caisse_decor_1.Fill = caisseDecor;
+            caisse_decor_2.Fill = caisseDecor;
+            caisse_decor_3.Fill = caisseDecor;
+            caisse_decor_4.Fill = caisseDecor;
+            boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
+            boite_munitions.Fill = boiteMunition;
+            boiteArme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_arme.png"));
+            boite_arme.Fill = boiteArme;
 
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
             joueur.Fill = joueur_;

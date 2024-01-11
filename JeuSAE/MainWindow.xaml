@@ -6,31 +6,31 @@
     xmlns:local="clr-namespace:JeuSAE"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="FenetreJeu"
-    Width="1000"
-    Height="700"
+    Width="1750"
+    Height="984"
     mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Canvas
             x:Name="fond"
             Background="#FF717171"
-            Focusable="True" Grid.ColumnSpan="3">
+            Focusable="True" Grid.ColumnSpan="3" >
             <Rectangle
                 x:Name="bandeau"
-                Width="1000"
+                Width="1750"
                 Height="60"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Fill="Black"
                 Stroke="Black" />
             <Rectangle
                 x:Name="icone_vie"
-                Canvas.Left="741"
+                Canvas.Left="1485"
                 Canvas.Top="8"
                 Width="45"
                 Height="45"
-                Fill="Red" />
+                Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <ProgressBar
-                Canvas.Left="802"
+                Canvas.Left="1546"
                 Canvas.Top="14"
                 Width="170"
                 Height="31"
@@ -41,23 +41,23 @@
                 Value="50" BorderBrush="White" Background="White" />
             <Rectangle
                 x:Name="icone_crane"
-                Canvas.Left="456"
-                Canvas.Top="8"
+                Canvas.Left="830"
+                Canvas.Top="6"
                 Width="45"
-                Height="45"
+                Height="46"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Fill="Red" />
             <Label
                 x:Name="nombre_kill"
-                Canvas.Left="514"
-                Width="84"
+                Canvas.Left="888"
+                Width="38"
                 Height="60"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Top"
                 Content="4"
                 FontSize="38"
-                Foreground="Red" />
+                Foreground="Red" Canvas.Top="-2" />
             <Label
                 x:Name="nombre_balles"
                 Canvas.Left="110"
@@ -77,14 +77,18 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Fill="Red" />
-            <Rectangle x:Name="ZombieCanvas" Height="89" Canvas.Left="169" Canvas.Top="312" Width="89" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Rectangle x:Name="ZombieCanvas" Height="86" Canvas.Left="169" Canvas.Top="807" Width="86" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Rectangle
                 x:Name="joueur"
-                Margin="427,294,427,294"
-                Fill="Red" KeyUp="joueur_KeyUp" KeyDown="joueur_KeyDown" Width="146" Height="96" />
-
+                Fill="Red" KeyUp="joueur_KeyUp" KeyDown="joueur_KeyDown" Width="146" Height="96" Canvas.Left="802" Canvas.Top="444" />
+            <Rectangle x:Name="caisse_decor_1" Height="135" Width="135" Fill="#FFFBE44B" Canvas.Left="228" Canvas.Top="243" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Rectangle x:Name="caisse_decor_3" Height="135" Width="135" Fill="#FFFBE44B" Canvas.Left="1192" Canvas.Top="698" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Rectangle x:Name="caisse_decor_2" Height="135" Width="135" Fill="#FFFBE44B" Canvas.Left="1330" Canvas.Top="184" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Rectangle x:Name="caisse_decor_4" Height="135" Width="135" Fill="#FFFBE44B" Canvas.Left="488" Canvas.Top="679" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Rectangle x:Name="boite_munitions" Height="45" Canvas.Left="303" Canvas.Top="439" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" Fill="#FF0A7F0A"/>
 
         </Canvas>
+        <Rectangle x:Name="boite_arme" Margin="816,236,840,661" Fill="#FF00FF3E"/>
 
 
     </Grid>
