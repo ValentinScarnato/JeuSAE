@@ -150,7 +150,7 @@ namespace JeuSAE
             }
             if (e.Key == Key.Space)
             {
-                /*private*/ void TirJoueur(string orientation)
+                /*privatee*/ void TirJoueur(string orientation)
                 {
                     //vide la liste des items
                     //itemsToRemove.Clear();
