@@ -35,7 +35,7 @@ namespace JeuSAE
 
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
-        
+
         /*----------------------------------------------------*/
         /*---------------GENERATION D'IMAGES------------------*/
         /*----------------------------------------------------*/
@@ -115,13 +115,13 @@ namespace JeuSAE
                 ORIENTATION_JOUEUR = "droite";
 
             }
-            if (e.Key == Key.Z)
+            if (e.Key == Key.Up)
             {
                 haut = true;
                 ORIENTATION_JOUEUR = "haut";
 
             }
-            if (e.Key == Key.S)
+            if (e.Key == Key.Down)
             {
                 bas = true;
                 ORIENTATION_JOUEUR = "bas";
@@ -133,22 +133,24 @@ namespace JeuSAE
             double xJoueur = Canvas.GetLeft(joueur);
             double yJoueur = Canvas.GetTop(joueur);
 
-            if (e.Key == Key.Q)
+            if (e.Key == Key.Left)
                 gauche = false;
 
-            if (e.Key == Key.D)
+            if (e.Key == Key.Right)
                 droite = false;
 
 
-            if (e.Key == Key.Z)
+            if (e.Key == Key.Up)
                 haut = false;
 
 
-            if (e.Key == Key.S)
+            if (e.Key == Key.Down)
                 bas = false;
 
 
         }
+
+
 
 
         /*----------------------------------------------------*/
@@ -203,7 +205,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        /*private void TirJoueur(string orientation)
+        private void TirJoueur(string orientation)
         {
             //if (e.Key == Key.Space)
             {
@@ -225,7 +227,7 @@ namespace JeuSAE
                 fond.Children.Add(newBullet);
             }
         
-        }*/
+        }
 
 
     }
