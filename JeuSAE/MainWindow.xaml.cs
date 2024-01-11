@@ -177,7 +177,7 @@ namespace JeuSAE
             Rect _joueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
             
-            /*
+            
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
@@ -195,7 +195,7 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
-            */
+            
             
             
 
