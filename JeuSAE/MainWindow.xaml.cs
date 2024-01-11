@@ -111,24 +111,8 @@ namespace JeuSAE
 
             if (e.Key == Key.Space)
             {
-
-                if (nombreDeBalles > 0)
-                {
-                    Rectangle balleJoueur = new Rectangle
-                    {
-                        Tag = "Balle joueur",
-                        Height = 5,
-                        Width = 5,
-                        Fill = Brushes.White,
-                        Stroke = Brushes.Yellow
-                    };
-                    Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
-                    Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                    fond.Children.Add(balleJoueur);
-                    nombreDeBalles--;
-                }
-
-            }
+                GenerationBalle();
+                          }
 
             if (e.Key == allerAGauche)
             {
@@ -176,27 +160,30 @@ namespace JeuSAE
 
 
         }
-
-
-
-
-
-        /*public void Genere_Zombies(ImageBrush zombiiee)
+        /*----------------------------------------------------*/
+        /*--------------- GENERATION DE BALLES ---------------*/
+        /*----------------------------------------------------*/
+        private void GenerationBalle()
         {
-            int nbr, i = 0;
-            Random n = new Random();
-            nbr = n.Next(10, 20);
-            if (i < nbr)
-                InitializeComponent();
-            Random rnd = new Random();
-            ZombieCanvas.Fill = zombiiee;
-            Rectangle zombie = new Rectangle();
-            //zombiiee.ImageSource = 
-            //zombiiee.Left = rnd.Next(0, 900);
-            //zombiiee.Top = rnd.Next(0, 800);
+            if (nombreDeBalles > 0)
+            {
+                Rectangle balleJoueur = new Rectangle
+                {
+                    Tag = "Balle joueur",
+                    Height = 5,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Yellow
+                };
+                Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
+                Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                fond.Children.Add(balleJoueur);
+                nombreDeBalles--;
+            }
+        }
 
 
-        }*/
+        
         /*----------------------------------------------------*/
         /*-------------------- DEPLACEMENTS ------------------*/
         /*----------------------------------------------------*/
@@ -291,24 +278,24 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
-        private void Balle()
+        private void Interactions()
         {
             Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
-            foreach (Rectangle x in fond.Children.OfType<Rectangle>())
+            foreach (var x in fond.Children.OfType<Rectangle>())
             {
                 if (x is Rectangle && (string)x.Tag == "Balle joueur")
                 {
 
                     Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
-                    Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
                     if (Canvas.GetTop(x) < 10)
                     {
                         objetASupprimer.Add(x);
                     }
-                
-            
+                    Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+
+
                     foreach (var y in fond.Children.OfType<Rectangle>())
                     {
 
@@ -323,60 +310,47 @@ namespace JeuSAE
                                 ennemisTotaux -= 1;
                                 killsJoueur += 1;
                             }
-                        }
-                        if (x is Rectangle && (string)x.Tag == "Ennemi")
-                        {
-                            Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-
-                            Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_ZOMBIE);
-
-
-                        }
-                        if (x is Rectangle && (string)x.Tag == "Ennemi")
-                        {
-                            Rect ennemiZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-
-                            Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_ZOMBIE);
-
-
 
                         }
 
                     }
-                    if (Canvas.GetTop(x) > ActualHeight + x.ActualHeight)
-                        objetASupprimer.Add(x);
+                    if (x is Rectangle && (string)x.Tag == "Ennemi")
+                    {
 
+                        Rect ennemiZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        if (zoneJoueur.IntersectsWith(ennemiZone))
+                        {
+                            MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
+                        }
+                    }
+                    if (x is Rectangle && (string)x.Tag == "Ennemi")
+                    {
 
+                        Rect ennemiZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                        // détection de collision entre le joueur et le tir ennemi
+                        if (ennemiZone.IntersectsWith(zoneJoueur))
+                        {
+                            // arrêt du timer et fin du jeu
 
-
-
-
-
-
+                            MessageBox.Show("Perdu", "Fin de partie", MessageBoxButton.OK, MessageBoxImage.Stop);
+                        }
+                    }
                 }
-                
+
+
+
 
 
             }
+
+
+
+
             foreach (Rectangle y in objetASupprimer)
-                {
-                    fond.Children.Remove(y);
-                }
+            {
+                fond.Children.Remove(y);
+            }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -384,7 +358,7 @@ namespace JeuSAE
         {
             Deplacements();
             NombreEnnemis();
-            Balle();
+            Interactions();
             NombreBalles();
             NombreKills();
 
