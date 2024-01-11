@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,9 +29,9 @@ namespace JeuSAE
 
         public static int DEGATS_PAR_ZOMBIE = 10;
         private bool gauche, droite, haut, bas = false;
-        public static int VITESSE_JOUEUR = 1, VIE = 100;
-        public static string position = "droite";
-        int munitions = 10, kills = 0;
+        public static int VITESSE_JOUEUR = 1, VIE_JOUEUR = 100;
+        string ORIENTATION_JOUEUR = "haut";
+        int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
 
         /*----------------------------------------------------*/
         /*---------------GENERATION D'IMAGES------------------*/
@@ -77,34 +79,65 @@ namespace JeuSAE
                     
             }*/
         }
+
+
+
+
         /*----------------------------------------------------*/
         /*-------------------DEPLACEMENTS 2-------------------*/
         /*----------------------------------------------------*/
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+
+        private void joueur_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
+            {
                 gauche = true;
-            else if (e.Key == Key.Right)
+                ORIENTATION_JOUEUR = "gauche";
+            }
+            if (e.Key == Key.Right)
+            {
                 droite = true;
-            else if (e.Key == Key.Up)
+                ORIENTATION_JOUEUR = "droite";
+            }
+            if (e.Key == Key.Up)
+            {
                 haut = true;
-            else if (e.Key == Key.Down)
+                ORIENTATION_JOUEUR = "haut";
+            }
+            if (e.Key == Key.Down)
+            {
                 bas = true;
+                ORIENTATION_JOUEUR = "bas";
+            }
         }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
+        private void joueur_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
+            {
                 gauche = false;
-            else if (e.Key == Key.Right)
+                ORIENTATION_JOUEUR = "gauche";
+            }
+            if (e.Key == Key.Right)
+            {
                 droite = false;
-            else if (e.Key == Key.Up)
+                ORIENTATION_JOUEUR = "droite";
+            }
+            if (e.Key == Key.Up)
+            {
                 haut = false;
-            else if (e.Key == Key.Down)
+                ORIENTATION_JOUEUR = "haut";
+            }
+            if (e.Key == Key.Down)
+            {
                 bas = false;
+                ORIENTATION_JOUEUR = "bas";
+            }
+            if (e.Key == Key.Space)
+                TirJoueur(ORIENTATION_JOUEUR);
         }
 
-        
+
 
         /*----------------------------------------------------*/
         /*---------------GENERATION DE ZOMBIES----------------*/
@@ -127,7 +160,7 @@ namespace JeuSAE
         }
         private void Jeu(object? sender, EventArgs e)
         {
-            // déplacement à gauche et droite de vitessePlayer avec vérification des limites de fenêtre gauche et droite
+            /* déplacement à gauche et droite de vitessePlayer avec vérification des limites de fenêtre gauche et droite
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
@@ -144,7 +177,31 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
+            if (gauche == true && joueur.Left > 0)
+            {
+                joueur.Left -= VITESSE_JOUEUR;
+            }
+            if (droite && joueur.Left + joueur.Width < 930)
+            {
+                joueur.Left += VITESSE_JOUEUR;
+            }
+            if (gauche && joueur.Top > 60)
+            {
+                joueur.Top -= VITESSE_JOUEUR;
+            }
+            if (bas && joueur.Top + joueur.Height < 700)
+            {
+                joueur.Top += VITESSE_JOUEUR;
+            }
+            */
 
+        }
+
+        /*----------------------------------------------------*/
+        /*---------------GESTION DU TIR JOUEUR----------------*/
+        /*----------------------------------------------------*/
+        private static void TirJoueur(string orientation)
+        {
 
         }
 
