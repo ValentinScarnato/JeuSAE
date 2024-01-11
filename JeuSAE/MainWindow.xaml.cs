@@ -198,7 +198,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        private void TirJoueur(string orientation)
+        /*private void TirJoueur(string orientation)
         {
             if (e.Key == Key.Space)
             {
@@ -219,8 +219,8 @@ namespace JeuSAE
                 // on place le tir dans le canvas
                 fond.Children.Add(newBullet);
             }
-
-        }
+        
+        }*/
 
 
     }

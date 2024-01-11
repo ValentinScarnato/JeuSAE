@@ -13,7 +13,7 @@
         <Canvas
             x:Name="fond"
             Background="#FF717171"
-            Focusable="True" Grid.ColumnSpan="3" KeyDown="fond_KeyDown" >
+            Focusable="True" Grid.ColumnSpan="3" >
             <Rectangle
                 x:Name="bandeau"
                 Width="1750"
