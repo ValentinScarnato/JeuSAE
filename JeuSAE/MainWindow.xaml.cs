@@ -32,7 +32,7 @@ namespace JeuSAE
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VIE_JOUEUR = 100;
-        public static int VITESSE_JOUEUR = 20, VIE_JOUEUR = 100;
+
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
         
