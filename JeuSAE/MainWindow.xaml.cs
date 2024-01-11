@@ -91,12 +91,7 @@ namespace JeuSAE
             minuterie.Tick += Jeu;
 
             minuterie.Start();
-            /* if (haut == true)
-         {
-
-             Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 1);
-
-         }*/
+            
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -208,9 +203,9 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        private void TirJoueur(string orientation)
+        /*private void TirJoueur(string orientation)
         {
-            //if (e.Key == Key.Space)
+            if (e.Key == Key.Space)
             {
 
                 //vide la liste des items
@@ -228,7 +223,7 @@ namespace JeuSAE
                 Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
                 // on place le tir dans le canvas
                 fond.Children.Add(newBullet);
-            }
+            }*/
         
         }
 
