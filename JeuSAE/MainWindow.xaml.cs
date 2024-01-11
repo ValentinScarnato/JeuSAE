@@ -30,7 +30,9 @@ namespace JeuSAE
 
         public static int DEGATS_PAR_ZOMBIE = 10;
         bool gauche, droite, haut, bas = false;
-        public static int VITESSE_JOUEUR = 20, VIE_JOUEUR = 100;
+        bool FinDePartie = false;
+        public static int VITESSE_JOUEUR = 10, VIE_JOUEUR = 100;
+
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
         int BANDEAU = 60;
@@ -170,11 +172,12 @@ namespace JeuSAE
 
 
         }
-        private void Jeu(object? sender, EventArgs e)
+        private void Jeu(object sender, EventArgs e)
         {
             Rect _joueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
-
+            
+            /*
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
@@ -192,6 +195,10 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
+            */
+            
+            
+
 
 
         }
@@ -201,7 +208,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*private void TirJoueur(string orientation)
         {
-            if (e.Key == Key.Space)
+            //if (e.Key == Key.Space)
             {
 
                 //vide la liste des items

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:JeuSAE"
         mc:Ignorable="d"
         Title="Parametres" Height="450" Width="800">
-    <Grid>
-        <Label Content="Niveau Du Jeu" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top" Width="146" FontSize="20" Height="35"/>
+    <Grid Background="Black">
+        <Label Content="Niveau Du Jeu" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Button x:Name="Accepter" Content="ACCEPTER" HorizontalAlignment="Left" Margin="284,327,0,0" VerticalAlignment="Top" Height="25" Width="115"/>
+        <Button x:Name="Anuuler" Content="ANNULER" HorizontalAlignment="Left" Margin="443,327,0,0" VerticalAlignment="Top" Height="25" Width="115" Click="btn_annuler"/>
 
     </Grid>
 </Window>

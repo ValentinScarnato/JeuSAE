@@ -29,7 +29,7 @@
                 Width="45"
                 Height="45"
                 Fill="Red" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <ProgressBar
+            <ProgressBar x:Name="BarreDeVie"
                 Canvas.Left="1546"
                 Canvas.Top="14"
                 Width="170"
@@ -37,8 +37,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 LargeChange="0"
-                SmallChange="0"
-                Value="50" BorderBrush="White" Background="White" />
+                SmallChange="0" BorderBrush="White" Background="White" />
             <Rectangle
                 x:Name="icone_crane"
                 Canvas.Left="830"
