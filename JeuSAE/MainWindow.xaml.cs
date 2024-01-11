@@ -33,6 +33,7 @@ namespace JeuSAE
         public static int VITESSE_JOUEUR = 20, VIE_JOUEUR = 100;
         string ORIENTATION_JOUEUR = "haut";
         int MUNITIONS_JOUEUR = 10, KILLS_JOUEUR = 0;
+        int BANDEAU = 60;
         
         /*----------------------------------------------------*/
         /*---------------GENERATION D'IMAGES------------------*/
@@ -107,6 +108,7 @@ namespace JeuSAE
                 ORIENTATION_JOUEUR = "gauche";
 
             }
+            
             if (e.Key == Key.D)
             {
                 droite = true;
@@ -177,17 +179,18 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
             }
+           
             else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
             }
-            else if (bas == true && Canvas.GetTop(joueur) > 0)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
-            }
-            else if (haut == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Width)
+            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU)
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
+            }
+            else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
             }
 
 
