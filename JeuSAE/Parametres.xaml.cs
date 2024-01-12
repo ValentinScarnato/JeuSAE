@@ -22,7 +22,7 @@ namespace JeuSAE
         public Parametres()
         {
             InitializeComponent();
-            
+
         }
 
         private void btn_annuler(object sender, RoutedEventArgs e)
@@ -31,9 +31,20 @@ namespace JeuSAE
             menu.Close();
         }
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
 
+
+        
+
+
+
+      
+
+        private void bouton_avancer_KeyDown(object sender, KeyEventArgs e)
+        {
+            bouton_avancer.Text = "";
+            Key avancer;
+            avancer = e.Key;
+            bouton_avancer.Text = e.ToString();
         }
     }
 }
