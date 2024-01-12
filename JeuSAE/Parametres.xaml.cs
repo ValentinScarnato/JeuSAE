@@ -22,7 +22,34 @@ namespace JeuSAE
         public Parametres()
         {
             InitializeComponent();
-            
+
         }
+
+
+        private void click_Annuler(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+          
+        }
+
+
+
+        
+
+
+
+      
+
+        private void bouton_avancer_KeyDown(object sender, KeyEventArgs e)
+        {
+            bouton_avancer.Text = "";
+            Key avancer;
+            avancer = e.Key;
+
+            bouton_avancer.Text = e.ToString().Substring(0,0);
+            AFFICHAGE.Content= e.ToString();
+        }
+
+        
     }
 }

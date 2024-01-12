@@ -55,14 +55,6 @@ namespace JeuSAE
 
         }
 
-        private void solo_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-        private void Annuler_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
-        }
 
         private void solo_Click_1(object sender, RoutedEventArgs e)
         {
@@ -72,7 +64,17 @@ namespace JeuSAE
 
         private void parametre_Click(object sender, RoutedEventArgs e)
         {
-
+            Parametres parametre = new Parametres();
+            parametre.ShowDialog();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBox.Show("Je vais fermer la fenêtre");
+            if ( this.DialogResult != true )
+            App.Current.Shutdown();
+        }
+
+
     }
 }
