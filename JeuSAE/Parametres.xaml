@@ -91,16 +91,7 @@
             <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
             <ComboBoxItem>Difficile</ComboBoxItem>
         </ComboBox>
-        <Label
-            Width="145"
-            Height="35"
-            Margin="100,75,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Niveau Du Jeu"
-            FontSize="20"
-            Foreground="White" />
-
+      
         <TextBox
             Width="120"
             Margin="172,217,0,0"
