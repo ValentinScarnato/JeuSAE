@@ -197,6 +197,7 @@ namespace JeuSAE
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
         /*private void TirJoueur(string orientation)
+        /*private void TirJoueur(string orientation)
         {
             //if (e.Key == Key.Space)
             {
