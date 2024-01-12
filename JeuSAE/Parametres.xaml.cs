@@ -25,10 +25,11 @@ namespace JeuSAE
 
         }
 
-        private void btn_annuler(object sender, RoutedEventArgs e)
+
+        private void click_Annuler(object sender, RoutedEventArgs e)
         {
-            Parametres menu = new Parametres();
-            menu.Close();
+            this.Close();
+          
         }
 
 

@@ -1,17 +1,113 @@
-﻿<Window x:Class="JeuSAE.Parametres"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:JeuSAE"
-        mc:Ignorable="d"
-        Title="Parametres" Height="450" Width="800">
-    <Grid Background="Black" Focusable="True">
-        <Label Content="Niveau Du Jeu" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
-        <Button x:Name="Accepter" Content="ACCEPTER" HorizontalAlignment="Left" Margin="284,327,0,0" VerticalAlignment="Top" Height="25" Width="115"/>
-        <Button x:Name="Anuuler" Content="ANNULER" HorizontalAlignment="Left" Margin="443,327,0,0" VerticalAlignment="Top" Height="25" Width="115" Click="btn_annuler"/>
-        <TextBox x:Name="bouton_avancer" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="90,230,590,154" KeyDown="bouton_avancer_KeyDown"/>
+﻿<Window
+    x:Class="JeuSAE.Parametres"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:JeuSAE"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Parametres"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid Background="Black">
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,50,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Niveau Du Jeu : "
+            FontSize="20"
+            Foreground="White" />
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,100,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="DROITE : "
+            FontSize="20"
+            Foreground="White" />
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,150,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="HAUT : "
+            FontSize="20"
+            Foreground="White" />
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,200,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="BAS :"
+            FontSize="20"
+            Foreground="White" />
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,250,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="GAUCHE : "
+            FontSize="20"
+            Foreground="White" />
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,300,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="TIRER : "
+            FontSize="20"
+            Foreground="White" />
+        <Button
+            x:Name="Accepter"
+            Width="115"
+            Height="25"
+            Margin="255,365,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="#FF57A52D"
+            Content="ACCEPTER" />
+        <Button
+            x:Name="Anuuler"
+            Width="115"
+            Height="25"
+            Margin="0,365,255,0"
+            HorizontalAlignment="right"
+            VerticalAlignment="Top"
+            Background="#FFBF1616"
+            Click="click_Annuler"
+            Content="ANNULER" />
+        <ComboBox
+            Width="136"
+            Margin="352,61,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+            <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
+            <ComboBoxItem>Difficile</ComboBoxItem>
+        </ComboBox>
+        <Label
+            Width="145"
+            Height="35"
+            Margin="100,75,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Niveau Du Jeu"
+            FontSize="20"
+            Foreground="White" />
 
+        <TextBox
+            Width="120"
+            Margin="172,217,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="TextBox"
+            TextWrapping="Wrap" />
 
     </Grid>
 </Window>
