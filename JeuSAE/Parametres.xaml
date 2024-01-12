@@ -74,7 +74,7 @@
             Background="#FF57A52D"
             Content="ACCEPTER" />
         <Button
-            x:Name="Anuuler"
+            x:Name="Retour"
             Width="115"
             Height="25"
             Margin="0,365,255,0"
@@ -82,10 +82,10 @@
             VerticalAlignment="Top"
             Background="#FFBF1616"
             Click="click_Annuler"
-            Content="ANNULER" />
+            Content="RETOUR" />
         <ComboBox
             Width="136"
-            Margin="352,61,0,0"
+            Margin="260,61,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
             <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
@@ -93,13 +93,13 @@
         </ComboBox>
 
         <TextBox
-            x:Name="bouton_avancer"
+            x:Name="bouton_reculer"
             Width="120"
-            Margin="172,217,0,0"
+            Margin="200,212,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             KeyDown="bouton_avancer_KeyDown"
-            Text="Z"
+            Text="S"
             TextWrapping="Wrap" />
         <Label
             x:Name="AFFICHAGE"
@@ -107,6 +107,10 @@
             Content=""
             FontSize="40"
             Foreground="White" />
+        <TextBox x:Name="bouton_droite" HorizontalAlignment="Left" Margin="200,112,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="bouton_avancer" HorizontalAlignment="Left" Margin="200,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="bouton_gauche" HorizontalAlignment="Left" Margin="200,260,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="bouton_tirer" HorizontalAlignment="Left" Margin="200,310,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

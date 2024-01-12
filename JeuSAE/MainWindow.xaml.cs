@@ -168,9 +168,6 @@ namespace JeuSAE
                 haut = false;
             if (e.Key == reculer)
                 bas = false;
-
-
-
         }
         /*----------------------------------------------------*/
         /*--------------- GENERATION DE BALLES ---------------*/
@@ -375,13 +372,12 @@ namespace JeuSAE
 
         }
 
-
         /*----------------------------------------------------*/
         /*---------------GESTION DU TIR ----------------------*/
         /*----------------------------------------------------*/
-        /*private void TirJoueur(string orientation)
-        /*private void TirJoueur(string orientation)
+        private void TirJoueur(string orientation)
         {
+            /*
             if (e.Key == Key.Space)
             {
 
@@ -400,11 +396,11 @@ namespace JeuSAE
                 Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
                 // on place le tir dans le canvas
                 fond.Children.Add(newBullet);
-            }*/
-
+            
+            }
+            */
+        }
     }
-
-
 }
 
 

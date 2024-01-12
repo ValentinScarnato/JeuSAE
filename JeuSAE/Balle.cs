@@ -11,5 +11,7 @@ namespace JeuSAE
         public string direction;
         public int balleGauche, balleHaut, balleDroite, balleBas;
         private int vitesseBalle = 20;
+
+
     }
 }
