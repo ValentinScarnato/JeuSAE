@@ -30,5 +30,10 @@ namespace JeuSAE
             Parametres menu = new Parametres();
             menu.Close();
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
