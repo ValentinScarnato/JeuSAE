@@ -45,12 +45,11 @@ namespace JeuSAE
             bouton_avancer.Text = "";
             Key avancer;
             avancer = e.Key;
-            bouton_avancer.Text = e.ToString();
+
+            bouton_avancer.Text = e.ToString().Substring(0,0);
+            AFFICHAGE.Content= e.ToString().Substring(0, 1);
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

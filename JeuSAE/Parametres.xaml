@@ -91,14 +91,22 @@
             <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
             <ComboBoxItem>Difficile</ComboBoxItem>
         </ComboBox>
-      
-        <TextBox x:Name="bouton_avancer"
+
+        <TextBox
+            x:Name="bouton_avancer"
             Width="120"
             Margin="172,217,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Text="TextBox"
-            TextWrapping="Wrap" TextChanged="TextBox_TextChanged" KeyDown="bouton_avancer_KeyDown" />
+            KeyDown="bouton_avancer_KeyDown"
+            Text="Z"
+            TextWrapping="Wrap" />
+        <Label
+            x:Name="AFFICHAGE"
+            Margin="365,99,232,217"
+            Content=""
+            FontSize="80"
+            Foreground="White" />
 
     </Grid>
 </Window>
