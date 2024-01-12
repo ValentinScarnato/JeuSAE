@@ -92,13 +92,13 @@
             <ComboBoxItem>Difficile</ComboBoxItem>
         </ComboBox>
       
-        <TextBox
+        <TextBox x:Name="bouton_avancer"
             Width="120"
             Margin="172,217,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="TextBox"
-            TextWrapping="Wrap" />
+            TextWrapping="Wrap" TextChanged="TextBox_TextChanged" KeyDown="bouton_avancer_KeyDown" />
 
     </Grid>
 </Window>

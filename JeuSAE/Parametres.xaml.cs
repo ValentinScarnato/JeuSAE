@@ -47,5 +47,10 @@ namespace JeuSAE
             avancer = e.Key;
             bouton_avancer.Text = e.ToString();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
