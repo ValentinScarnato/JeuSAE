@@ -60,17 +60,13 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-        String rour;
 
 
 
 
 
-        public MainWindow()
+        public void GenerationImage()
         {
-            WindowJeu menu = new WindowJeu();
-            menu.ShowDialog();
-            InitializeComponent();
             caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
             caisse_decor_1.Fill = caisseDecor;
             caisse_decor_2.Fill = caisseDecor;
@@ -90,12 +86,26 @@ namespace JeuSAE
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
+        }
+        public MainWindow()
+        {
+            WindowJeu menu = new WindowJeu();
+            menu.ShowDialog();
+            InitializeComponent();
+            Temps();
+            GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
 
-            /*----------------------------------------------------*/
-            /*-------------------TEMPS----------------------------*/
-            /*----------------------------------------------------*/
 
+
+
+        }
+        /*----------------------------------------------------*/
+        /*-------------------TEMPS----------------------------*/
+        /*----------------------------------------------------*/
+
+        public void Temps()
+        {
             DispatcherTimer minuterie = new DispatcherTimer();
 
             minuterie.Interval = TimeSpan.FromMilliseconds(16);
@@ -103,8 +113,10 @@ namespace JeuSAE
             minuterie.Tick += Moteur_Jeu;
 
             minuterie.Start();
-
         }
+        /*----------------------------------------------------*/
+        /*-----------------Appui touche-----------------------*/
+        /*----------------------------------------------------*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -343,7 +355,6 @@ namespace JeuSAE
         private void Vie()
         {
             BarreDeVie.Value = vieJoueur;
-            label_vie.Content = vieJoueur;
             if (vieJoueur < 0)
             {
                 vieJoueur = 0;

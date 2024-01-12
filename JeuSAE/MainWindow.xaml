@@ -92,7 +92,6 @@
                 Content="5 ennemis restants"
                 FontSize="38"
                 Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <Label x:Name="label_vie" Content="vie" Canvas.Left="1289" Canvas.Top="-6" Height="70" Width="209" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="50" Foreground="White"/>
 
         </Canvas>
         <Rectangle x:Name="boite_arme" Margin="816,236,840,661" Fill="#FF00FF3E"/>

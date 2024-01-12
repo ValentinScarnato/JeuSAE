@@ -31,5 +31,10 @@ namespace JeuSAE
             this.Close();
           
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }
