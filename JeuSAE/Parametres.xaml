@@ -7,9 +7,18 @@
         mc:Ignorable="d"
         Title="Parametres" Height="450" Width="800">
     <Grid Background="Black">
-        <Label Content="Niveau Du Jeu" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
-        <Button x:Name="Accepter" Content="ACCEPTER" HorizontalAlignment="Left" Margin="284,327,0,0" VerticalAlignment="Top" Height="25" Width="115"/>
-        <Button x:Name="Anuuler" Content="ANNULER" HorizontalAlignment="Left" Margin="443,327,0,0" VerticalAlignment="Top" Height="25" Width="115" Click="btn_annuler"/>
+        <Label Content="Niveau Du Jeu : " HorizontalAlignment="Left" Margin="100,50,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Label Content="DROITE : " HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Label Content="HAUT : " HorizontalAlignment="Left" Margin="100,150,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Label Content="BAS :" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Label Content="GAUCHE : " HorizontalAlignment="Left" Margin="100,250,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Label Content="TIRER : " HorizontalAlignment="Left" Margin="100,300,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Height="35" Foreground="White"/>
+        <Button x:Name="Accepter" Content="ACCEPTER" HorizontalAlignment="Left" Margin="255,365,0,0" VerticalAlignment="Top" Height="25" Width="115" Background="#FF57A52D"/>
+        <Button x:Name="Anuuler" Content="ANNULER" HorizontalAlignment="right" Margin="0,365,255,0" VerticalAlignment="Top" Height="25" Width="115" Click="click_Annuler" Background="#FFBF1616"/>
+        <ComboBox HorizontalAlignment="Left" Margin="352,61,0,0" VerticalAlignment="Top" Width="136">
+            <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
+        <ComboBoxItem>Difficile</ComboBoxItem>
+        </ComboBox>
 
     </Grid>
 </Window>
