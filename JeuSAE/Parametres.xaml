@@ -105,7 +105,7 @@
             x:Name="AFFICHAGE"
             Margin="365,99,232,217"
             Content=""
-            FontSize="80"
+            FontSize="40"
             Foreground="White" />
 
     </Grid>

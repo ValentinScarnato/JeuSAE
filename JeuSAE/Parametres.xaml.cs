@@ -47,7 +47,7 @@ namespace JeuSAE
             avancer = e.Key;
 
             bouton_avancer.Text = e.ToString().Substring(0,0);
-            AFFICHAGE.Content= e.ToString().Substring(0, 1);
+            AFFICHAGE.Content= e.ToString();
         }
 
         
