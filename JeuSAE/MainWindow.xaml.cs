@@ -45,6 +45,7 @@ namespace JeuSAE
         Key reculer = Key.S;
         Key allerADroite = Key.D;
         Key allerAGauche = Key.Q;
+        Key tirer = Key.Space;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
 
 
@@ -169,6 +170,12 @@ namespace JeuSAE
             if (e.Key == reculer)
                 bas = false;
         }
+
+        private void bouton_pause_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         /*----------------------------------------------------*/
         /*--------------- GENERATION DE BALLES ---------------*/
         /*----------------------------------------------------*/
@@ -399,6 +406,7 @@ namespace JeuSAE
             
             }
             */
+            
         }
     }
 }
