@@ -69,7 +69,7 @@ namespace JeuSAE
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBox.Show("Je vais fermer la fenêtre");
+            
             if ( this.DialogResult != true )
             App.Current.Shutdown();
         }
