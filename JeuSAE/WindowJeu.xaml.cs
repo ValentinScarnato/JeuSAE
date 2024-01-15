@@ -27,15 +27,10 @@ namespace JeuSAE
         ImageBrush btn_parametre = new ImageBrush();
 
 
-        public MainWindow fenetre
-        {
-            get { return fenetre; }
-            set { fenetre = value; }
-        }
+       
 
         public WindowJeu()
         {
-
 
             InitializeComponent();
             

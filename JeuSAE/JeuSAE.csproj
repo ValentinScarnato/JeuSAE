@@ -8,12 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="joueur_shotgun.png" />
     <None Remove="zombie gif.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="joueur_shotgun.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +35,9 @@
     </None>
     <None Update="Image\idle0000.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Image\joueur_shotgun_gauche.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Image\joueur_shotgun.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
