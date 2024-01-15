@@ -174,7 +174,7 @@
                 FontSize="24"
                 FontWeight="Bold"
                 TextWrapping="Wrap"><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
-            <Button x:Name="bouton_pause" Content="Button" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="44" Width="133"/>
+            <Button x:Name="bouton_pause" Content="Button" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="44" Width="133"  Focusable="False"/>
 
         </Canvas>
 
