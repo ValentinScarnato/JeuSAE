@@ -27,14 +27,12 @@ namespace JeuSAE
         ImageBrush btn_parametre = new ImageBrush();
 
 
-        public MainWindow fenetre
-        {
-            get { return fenetre; }
-            set { fenetre = value; }
-        }
+       
 
         public WindowJeu()
         {
+
+
 
 
             InitializeComponent();
@@ -51,8 +49,6 @@ namespace JeuSAE
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
             parametre.Background = btn_parametre;
             
-
-
         }
 
 
@@ -65,7 +61,20 @@ namespace JeuSAE
         private void parametre_Click(object sender, RoutedEventArgs e)
         {
             Parametres parametre = new Parametres();
-            parametre.Show();
+            parametre.ShowDialog();
         }
+
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            if ( this.DialogResult != true )
+            App.Current.Shutdown();
+        }
+
+
+
+
+
     }
 }

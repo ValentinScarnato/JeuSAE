@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -30,13 +31,15 @@ namespace JeuSAE
 
         public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
         public static int DEGATS_PAR_ZOMBIE = 10;
+        public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
+        private bool Pause { get; set; } = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
-        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreZombieMaxMemeTemps = 5;
-
-        string ORIENTATION_JOUEUR = "haut";
+        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
+        private TimeSpan minuterie;
+        string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
         int vieJoueur = VIE_JOUEUR;
@@ -45,7 +48,13 @@ namespace JeuSAE
         Key reculer = Key.S;
         Key allerADroite = Key.D;
         Key allerAGauche = Key.Q;
+        Key tirer = Key.Space;
+        Key tournerDroite = Key.E;
+        Key tournerGauche = Key.A;
+        bool perdu = false;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
+        private List<Rectangle> zombies = new List<Rectangle>();
+        private List<Rectangle> balles = new List<Rectangle>();
 
 
         /*----------------------------------------------------*/
@@ -60,17 +69,11 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-        String rour;
+        ImageBrush joueurGauche = new ImageBrush();
+        private bool vv;
 
-
-
-
-
-        public MainWindow()
+        public void GenerationImage()
         {
-            WindowJeu menu = new WindowJeu();
-            menu.ShowDialog();
-            InitializeComponent();
             caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
             caisse_decor_1.Fill = caisseDecor;
             caisse_decor_2.Fill = caisseDecor;
@@ -78,10 +81,9 @@ namespace JeuSAE
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             boite_munitions.Fill = boiteMunition;
-            boiteArme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_arme.png"));
-            boite_arme.Fill = boiteArme;
+            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
 
-            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
@@ -90,12 +92,28 @@ namespace JeuSAE
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
+        }
+        public MainWindow()
+        {
+
+            WindowJeu menu = new WindowJeu();
+            menu.ShowDialog();
+            InitializeComponent();
+            Temps();
+            GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
+            Generation_Munitions(nombreMunitionMaxMemeTemps);
 
-            /*----------------------------------------------------*/
-            /*-------------------TEMPS----------------------------*/
-            /*----------------------------------------------------*/
 
+
+
+        }
+        /*----------------------------------------------------*/
+        /*-------------------TEMPS----------------------------*/
+        /*----------------------------------------------------*/
+
+        public void Temps()
+        {
             DispatcherTimer minuterie = new DispatcherTimer();
 
             minuterie.Interval = TimeSpan.FromMilliseconds(16);
@@ -103,8 +121,36 @@ namespace JeuSAE
             minuterie.Tick += Moteur_Jeu;
 
             minuterie.Start();
+        }
+
+        private void bouton_pause_Click(object sender, EventArgs e)
+        {
+            Pause pause = new Pause();
+            pause.ShowDialog();
+            Pause = true;
+            Chronometre_Tick();
 
         }
+
+        private void Chronometre_Tick()
+        {
+
+            if (Pause == false)
+            {
+                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
+                texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
+            }
+            if (Pause == true)
+            {
+                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
+            }
+
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-----------------Appui touche-----------------------*/
+        /*----------------------------------------------------*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -117,27 +163,49 @@ namespace JeuSAE
             if (e.Key == allerAGauche)
             {
                 gauche = true;
-                ORIENTATION_JOUEUR = "gauche";
+
 
             }
 
             if (e.Key == allerADroite)
             {
                 droite = true;
-                ORIENTATION_JOUEUR = "droite";
+
 
             }
             if (e.Key == avancer)
             {
                 haut = true;
-                ORIENTATION_JOUEUR = "haut";
+
 
             }
             if (e.Key == reculer)
             {
                 bas = true;
-                ORIENTATION_JOUEUR = "bas";
 
+
+            }
+            if (e.Key == tournerDroite)
+            {
+                if (orientationJoueur == ORIENTATION_GAUCHE)
+                    orientationJoueur = ORIENTATION_HAUT;
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                    orientationJoueur = ORIENTATION_DROITE;
+                else if (orientationJoueur == ORIENTATION_DROITE)
+                    orientationJoueur = ORIENTATION_BAS;
+                else
+                    orientationJoueur = ORIENTATION_GAUCHE;
+            }
+            if (e.Key == tournerGauche)
+            {
+                if (orientationJoueur == ORIENTATION_DROITE)
+                    orientationJoueur = ORIENTATION_HAUT;
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                    orientationJoueur = ORIENTATION_GAUCHE;
+                else if (orientationJoueur == ORIENTATION_GAUCHE)
+                    orientationJoueur = ORIENTATION_BAS;
+                else
+                    orientationJoueur = ORIENTATION_DROITE;
             }
         }
 
@@ -156,10 +224,11 @@ namespace JeuSAE
                 haut = false;
             if (e.Key == reculer)
                 bas = false;
-
-
-
         }
+
+        
+      
+
         /*----------------------------------------------------*/
         /*--------------- GENERATION DE BALLES ---------------*/
         /*----------------------------------------------------*/
@@ -167,17 +236,17 @@ namespace JeuSAE
         {
             if (nombreDeBalles > 0)
             {
-                Rectangle balleJoueur = new Rectangle
+                Rectangle balle = new Rectangle
                 {
-                    Tag = "Balle joueur",
+                    Tag = "Balle",
                     Height = 5,
                     Width = 5,
                     Fill = Brushes.White,
                     Stroke = Brushes.Yellow
                 };
-                Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
-                Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                fond.Children.Add(balleJoueur);
+                Canvas.SetTop(balle, Canvas.GetTop(joueur) - balle.Height);
+                Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                fond.Children.Add(balle);
                 nombreDeBalles--;
             }
         }
@@ -226,30 +295,33 @@ namespace JeuSAE
                     Fill = zombar
                 };
                 int pointApparition = aleatoire.Next(1, 5);
-                switch (pointApparition)
-                {
-                    case 1:
-                        Canvas.SetTop(ennemi, 30);
-                        Canvas.SetLeft(ennemi, 60);
-                        break;
-                    case 2:
-                        Canvas.SetTop(ennemi, 60);
-                        Canvas.SetLeft(ennemi, 300);
-                        break;
-                    case 3:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 400);
-                        break;
-                    case 4:
-                        Canvas.SetTop(ennemi, 800);
-                        Canvas.SetLeft(ennemi, 90);
-                        break;
-                    case 5:
-                        Canvas.SetTop(ennemi, 1600);
-                        Canvas.SetLeft(ennemi, 1000);
-                        break;
-                }
 
+                    switch (pointApparition)
+                    {
+                        case 1:
+                            Canvas.SetTop(ennemi, aleatoire.Next(100, 860));
+                            Canvas.SetLeft(ennemi, aleatoire.Next(40, 1700));
+                            break;
+                            /*   case 2:
+                                   Canvas.SetTop(ennemi, 60);
+                                   Canvas.SetLeft(ennemi, 300);
+                                   break;
+                               case 3:
+                                   Canvas.SetTop(ennemi, 500);
+                                   Canvas.SetLeft(ennemi, 400);
+                                   break;
+                               case 4:
+                                   Canvas.SetTop(ennemi, 800);
+                                   Canvas.SetLeft(ennemi, 90);
+                                   break;
+                               case 5:
+                                   Canvas.SetTop(ennemi, 1600);
+                                   Canvas.SetLeft(ennemi, 1000);
+                                   break;*/
+
+
+                    }
+                
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
 
@@ -259,12 +331,43 @@ namespace JeuSAE
             }
 
         }
+
+        /*----------------------------------------------------*/
+        /*-------------- GENERATION DE MUNITIONS ---------------*/
+        /*----------------------------------------------------*/
+        private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
+        {
+            Random aleatoire = new Random();
+            for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
+            {
+                Rectangle boite_mun = new Rectangle
+                {
+                    Tag = "boite_munitions",
+                    Height = 45,
+                    Width = 52,
+                    Fill = boiteMunition
+                };
+                int pointApparition = aleatoire.Next(1, 1);
+                switch (pointApparition)
+                {
+                    case 1:
+                        Canvas.SetTop(boite_mun, aleatoire.Next(80, 900));
+                        Canvas.SetLeft(boite_mun, aleatoire.Next(20, 1730 ));
+                        break;
+                }
+
+                fond.Children.Add(boite_mun);
+                nombreMunitionsMap++;
+
+            }
+
+        }
         private void NombreEnnemis()
         {
             if (ennemisRestants >= 1)
-                nombre_ennemis.Content = ennemisRestants + " ennemi restants";
+                nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
-                nombre_ennemis.Content = ennemisRestants + " ennemis restant";
+                nombre_ennemis.Content = ennemisRestants + " ennemi restant";
         }
         private void NombreBalles()
         {
@@ -284,7 +387,7 @@ namespace JeuSAE
 
             foreach (var x in fond.Children.OfType<Rectangle>())
             {
-                if (x is Rectangle && (string)x.Tag == "Balle joueur")
+                if (x is Rectangle && (string)x.Tag == "Balle")
                 {
 
                     Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
@@ -328,6 +431,18 @@ namespace JeuSAE
 
                     }
                 }
+                if (x is Rectangle && (string)x.Tag == "boite_munitions")
+                {
+
+                    Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                    if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < MUNITIONS_MAX_JOUEUR)
+                    {
+                        nombreDeBalles = 15 ;
+                        objetASupprimer.Add(x);
+                        System.Threading.Thread.Sleep(80);
+
+                    }
+                }
 
             }
 
@@ -343,12 +458,27 @@ namespace JeuSAE
         private void Vie()
         {
             BarreDeVie.Value = vieJoueur;
-            if (vieJoueur < 0)
+            if (vieJoueur <= 0)
             {
                 vieJoueur = 0;
+                perdu = true;
+            }
+            if (perdu == true)
+            {
+
+                FenetreMort fenetremort = new FenetreMort();
+                fenetremort.ShowDialog();
+                
+            }
+            
+        }
+        private void OrientationJoueur()
+        {
+            if (orientationJoueur == ORIENTATION_GAUCHE)
+            {
+
             }
         }
-
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -357,41 +487,19 @@ namespace JeuSAE
             NombreBalles();
             NombreKills();
             Vie();
+            OrientationJoueur();
+            Chronometre_Tick();
+            bouton_pause_Click(sender, e);
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
-
+            orientation.Content = orientationJoueur;
 
         }
 
 
-        /*----------------------------------------------------*/
-        /*---------------GESTION DU TIR ----------------------*/
-        /*----------------------------------------------------*/
-        /*private void TirJoueur(string orientation)
-        {
-            if (e.Key == Key.Space)
-            {
 
-                //vide la liste des items
-                //itemsToRemove.Clear();
-                Rectangle newBullet = new Rectangle
-                {
-                    Tag = "balleJoueur",
-                    Height = 20,
-                    Width = 5,
-                    Fill = Brushes.White,
-                    Stroke = Brushes.Red
-                };
-                // on place le tir à l’endroit du joueur
-                Canvas.SetTop(newBullet, Canvas.GetTop(joueur) - newBullet.Height);
-                Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                // on place le tir dans le canvas
-                fond.Children.Add(newBullet);
-            }*/
 
     }
-
-
 }
 
 
