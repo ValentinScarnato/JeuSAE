@@ -70,9 +70,7 @@ namespace JeuSAE
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
         ImageBrush joueurGauche = new ImageBrush();
-
-
-
+        private bool vv;
 
         public void GenerationImage()
         {
@@ -296,28 +294,34 @@ namespace JeuSAE
                     Fill = zombar
                 };
                 int pointApparition = aleatoire.Next(1, 5);
-                switch (pointApparition)
+                while (true)
                 {
-                    case 1:
-                        Canvas.SetTop(ennemi, 30);
-                        Canvas.SetLeft(ennemi, 60);
-                        break;
-                    case 2:
-                        Canvas.SetTop(ennemi, 60);
-                        Canvas.SetLeft(ennemi, 300);
-                        break;
-                    case 3:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 400);
-                        break;
-                    case 4:
-                        Canvas.SetTop(ennemi, 800);
-                        Canvas.SetLeft(ennemi, 90);
-                        break;
-                    case 5:
-                        Canvas.SetTop(ennemi, 1600);
-                        Canvas.SetLeft(ennemi, 1000);
-                        break;
+
+                    switch (pointApparition)
+                    {
+                        case 1:
+                            Canvas.SetTop(ennemi, aleatoire.Next(100, 860));
+                            Canvas.SetLeft(ennemi, aleatoire.Next(40, 1700));
+                            break;
+                            /*   case 2:
+                                   Canvas.SetTop(ennemi, 60);
+                                   Canvas.SetLeft(ennemi, 300);
+                                   break;
+                               case 3:
+                                   Canvas.SetTop(ennemi, 500);
+                                   Canvas.SetLeft(ennemi, 400);
+                                   break;
+                               case 4:
+                                   Canvas.SetTop(ennemi, 800);
+                                   Canvas.SetLeft(ennemi, 90);
+                                   break;
+                               case 5:
+                                   Canvas.SetTop(ennemi, 1600);
+                                   Canvas.SetLeft(ennemi, 1000);
+                                   break;*/
+
+
+                    }
                 }
 
                 fond.Children.Add(ennemi);
@@ -343,23 +347,19 @@ namespace JeuSAE
                     Tag = "boite_munitions",
                     Height = 45,
                     Width = 52,
-                    Fill = iconeMunition
+                    Fill = boiteMunition
                 };
-                int pointApparition = aleatoire.Next(1, 5);
+                int pointApparition = aleatoire.Next(1, 1);
                 switch (pointApparition)
                 {
                     case 1:
-                        Canvas.SetTop(boite_mun, 460);
-                        Canvas.SetLeft(boite_mun, 1456);
+                        Canvas.SetTop(boite_mun, aleatoire.Next(80, 900));
+                        Canvas.SetLeft(boite_mun, aleatoire.Next(20, 1730 ));
                         break;
-
                 }
 
                 fond.Children.Add(boite_mun);
                 nombreMunitionsMap++;
-
-                /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
-                 System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
 
             }
 
@@ -429,6 +429,18 @@ namespace JeuSAE
                     if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                     {
                         vieJoueur -= 5;
+                        System.Threading.Thread.Sleep(80);
+
+                    }
+                }
+                if (x is Rectangle && (string)x.Tag == "boite_munitions")
+                {
+
+                    Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+                    if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < MUNITIONS_MAX_JOUEUR)
+                    {
+                        nombreDeBalles = 15 ;
+                        objetASupprimer.Add(x);
                         System.Threading.Thread.Sleep(80);
 
                     }
