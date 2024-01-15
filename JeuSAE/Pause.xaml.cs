@@ -35,7 +35,6 @@ namespace JeuSAE
 
         private void bouton_reprendre_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
             Close();
         }
     }
