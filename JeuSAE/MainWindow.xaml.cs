@@ -123,6 +123,15 @@ namespace JeuSAE
             minuterie.Start();
         }
 
+        private void bouton_pause_Click(object sender, EventArgs e)
+        {
+            Pause pause = new Pause();
+            pause.ShowDialog();
+            Pause = true;
+            Chronometre_Tick();
+
+        }
+
         private void Chronometre_Tick()
         {
 
@@ -137,14 +146,6 @@ namespace JeuSAE
             }
 
 
-        }
-        private void bouton_pause_Click(object sender, RoutedEventArgs e)
-        {
-            Pause pause = new Pause();  
-            pause.ShowDialog();
-            Pause = true;
-            Chronometre_Tick();
-            
         }
 
         /*----------------------------------------------------*/
@@ -491,6 +492,7 @@ namespace JeuSAE
             Vie();
             OrientationJoueur();
             Chronometre_Tick();
+            bouton_pause_Click(sender, e);
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
             orientation.Content = orientationJoueur;
