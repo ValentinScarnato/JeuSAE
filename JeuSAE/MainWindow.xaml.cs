@@ -46,6 +46,8 @@ namespace JeuSAE
         Key allerADroite = Key.D;
         Key allerAGauche = Key.Q;
         Key tirer = Key.Space;
+        Key tournerDroite = Key.E;
+        Key tournerGauche = Key.A;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombies = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
@@ -77,8 +79,7 @@ namespace JeuSAE
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             boite_munitions.Fill = boiteMunition;
-            boiteArme.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_arme.png"));
-            boite_arme.Fill = boiteArme;
+            
 
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
             joueur.Fill = joueur_;
@@ -154,7 +155,14 @@ namespace JeuSAE
                 ORIENTATION_JOUEUR = "bas";
 
             }
-            
+            if (e.Key == tournerDroite)
+            {
+
+            }
+            if (e.Key == tournerGauche)
+            {
+
+            }
         }
 
 
