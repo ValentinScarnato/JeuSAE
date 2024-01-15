@@ -395,7 +395,10 @@ namespace JeuSAE
             }
             
         }
+        private void OrientationJoueur()
+        {
 
+        }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -404,6 +407,7 @@ namespace JeuSAE
             NombreBalles();
             NombreKills();
             Vie();
+            OrientationJoueur();
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
             orientation.Content = orientationJoueur;
