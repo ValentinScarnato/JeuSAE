@@ -213,7 +213,7 @@ namespace JeuSAE
         {
             if (nombreDeBalles > 0)
             {
-                Rectangle balleJoueur = new Rectangle
+                Rectangle balle = new Rectangle
                 {
                     Tag = "Balle",
                     Height = 5,
@@ -221,9 +221,9 @@ namespace JeuSAE
                     Fill = Brushes.White,
                     Stroke = Brushes.Yellow
                 };
-                Canvas.SetTop(balleJoueur, Canvas.GetTop(joueur) - balleJoueur.Height);
-                Canvas.SetLeft(balleJoueur, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                fond.Children.Add(balleJoueur);
+                Canvas.SetTop(balle, Canvas.GetTop(joueur) - balle.Height);
+                Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                fond.Children.Add(balle);
                 nombreDeBalles--;
             }
         }

@@ -37,12 +37,6 @@
     <None Update="Image\idle0000.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Image\joueur_droite.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Image\joueur_gauche.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Image\joueur_shotgun.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
