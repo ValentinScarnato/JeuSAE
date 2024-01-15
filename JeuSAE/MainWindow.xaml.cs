@@ -343,7 +343,6 @@ namespace JeuSAE
         private void Vie()
         {
             BarreDeVie.Value = vieJoueur;
-            label_vie.Content = vieJoueur;
             if (vieJoueur < 0)
             {
                 vieJoueur = 0;
