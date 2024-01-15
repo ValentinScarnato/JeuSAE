@@ -70,7 +70,7 @@ namespace JeuSAE
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
         ImageBrush joueurGauche = new ImageBrush();
-        private bool vv;
+        ImageBrush pause = new ImageBrush();
 
         public void GenerationImage()
         {
@@ -80,7 +80,6 @@ namespace JeuSAE
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
-            boite_munitions.Fill = boiteMunition;
             joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
 
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
@@ -92,6 +91,8 @@ namespace JeuSAE
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
+            pause.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/pause.png"));
+            bouton_pause.Background = pause;
         }
         public MainWindow()
         {
@@ -333,7 +334,7 @@ namespace JeuSAE
         }
 
         /*----------------------------------------------------*/
-        /*-------------- GENERATION DE MUNITIONS ---------------*/
+        /*--------------GENERATION DE MUNITIONS---------------*/
         /*----------------------------------------------------*/
         private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
         {
