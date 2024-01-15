@@ -96,6 +96,7 @@ namespace JeuSAE
         }
         public MainWindow()
         {
+
             WindowJeu menu = new WindowJeu();
             menu.ShowDialog();
             InitializeComponent();
