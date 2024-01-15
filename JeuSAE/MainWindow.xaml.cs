@@ -66,7 +66,7 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-
+        ImageBrush joueurGauche = new ImageBrush();
 
 
 
@@ -80,9 +80,9 @@ namespace JeuSAE
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             boite_munitions.Fill = boiteMunition;
+            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
 
-
-            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
@@ -397,7 +397,10 @@ namespace JeuSAE
         }
         private void OrientationJoueur()
         {
+            if (orientationJoueur == ORIENTATION_GAUCHE)
+            {
 
+            }
         }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
