@@ -50,6 +50,8 @@ namespace JeuSAE
         Key tournerDroite = Key.E;
         Key tournerGauche = Key.A;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
+        private List<Rectangle> zombies = new List<Rectangle>();
+        private List<Rectangle> balles = new List<Rectangle>();
 
 
         /*----------------------------------------------------*/
@@ -383,10 +385,15 @@ namespace JeuSAE
         private void Vie()
         {
             BarreDeVie.Value = vieJoueur;
-            if (vieJoueur < 0)
+            if (vieJoueur <= 0)
             {
                 vieJoueur = 0;
+                FenetreMort fenetremort = new FenetreMort();
+                fenetremort.ShowDialog();     
+                
+
             }
+            
         }
 
         private void Moteur_Jeu(object sender, EventArgs e)
