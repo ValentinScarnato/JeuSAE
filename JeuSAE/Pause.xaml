@@ -10,7 +10,6 @@
     Height="980"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
         <Button
