@@ -47,6 +47,8 @@ namespace JeuSAE
         Key allerAGauche = Key.Q;
         Key tirer = Key.Space;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
+        private List<Rectangle> zombies = new List<Rectangle>();
+        private List<Rectangle> balles = new List<Rectangle>();
 
 
         /*----------------------------------------------------*/
@@ -364,6 +366,7 @@ namespace JeuSAE
             {
                 vieJoueur = 0;
             }
+            
         }
 
         private void Moteur_Jeu(object sender, EventArgs e)
