@@ -33,12 +33,12 @@ namespace JeuSAE
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
-        private bool Pause = false;
+        private bool Pause { get; set; } = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
-        private TimeSpan tempsEcoule;
+        private TimeSpan minuterie;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
@@ -127,24 +127,26 @@ namespace JeuSAE
 
         private void Chronometre_Tick()
         {
+
             if (Pause == false)
             {
-                tempsEcoule = tempsEcoule.Add(TimeSpan.FromMilliseconds(984));
-                texteMinuterie.Text = tempsEcoule.ToString(@"hh\:mm");
+                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
+                texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
             }
-            
+            if (Pause == true)
+            {
+                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
+            }
+
 
         }
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
             Pause pause = new Pause();  
             pause.ShowDialog();
-            Chronometre_Tick();
             Pause = true;
-            if (Pause == true)
-            {
-                tempsEcoule = tempsEcoule.Add(TimeSpan.FromMilliseconds(0));
-            }
+            Chronometre_Tick();
+            
         }
 
         /*----------------------------------------------------*/
