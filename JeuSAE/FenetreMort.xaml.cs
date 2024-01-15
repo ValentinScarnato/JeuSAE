@@ -26,8 +26,8 @@ namespace JeuSAE
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainwindow = new MainWindow();
-            mainwindow.ShowDialog();
+            WindowJeu windowJeu = new WindowJeu();
+            windowJeu.ShowDialog();
         }
     }
 }

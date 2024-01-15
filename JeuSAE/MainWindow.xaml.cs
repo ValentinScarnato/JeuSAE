@@ -370,9 +370,13 @@ namespace JeuSAE
         private void Vie()
         {
             BarreDeVie.Value = vieJoueur;
-            if (vieJoueur < 0)
+            if (vieJoueur <= 0)
             {
                 vieJoueur = 0;
+                FenetreMort fenetremort = new FenetreMort();
+                fenetremort.ShowDialog();     
+                
+
             }
             
         }

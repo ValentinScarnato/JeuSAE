@@ -35,8 +35,6 @@ namespace JeuSAE
 
         public WindowJeu()
         {
-
-
             InitializeComponent();
             
             background_01.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
@@ -73,6 +71,7 @@ namespace JeuSAE
             if ( this.DialogResult != true )
             App.Current.Shutdown();
         }
+
 
 
 
