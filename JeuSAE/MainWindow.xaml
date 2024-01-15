@@ -135,10 +135,10 @@
                 Fill="#FFFBE44B" />
             <Rectangle
                 x:Name="boite_munitions"
-                Canvas.Left="303"
-                Canvas.Top="439"
+                Canvas.Left="1546"
+                Canvas.Top="766"
                 Width="52"
-                Height="45"
+                Height="44"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="#FF0A7F0A" />

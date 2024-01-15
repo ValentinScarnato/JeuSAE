@@ -50,7 +50,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Image\zombie_decor.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Image\zombie_gif.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

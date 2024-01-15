@@ -37,7 +37,7 @@ namespace JeuSAE
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
-        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreZombieMaxMemeTemps = 5;
+        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan tempsEcoule;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
@@ -104,6 +104,7 @@ namespace JeuSAE
             Temps();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
+            Generation_Munitions(nombreMunitionMaxMemeTemps);
 
 
 
@@ -319,6 +320,41 @@ namespace JeuSAE
 
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
+
+                /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
+                 System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
+
+            }
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-------------- GENERATION DE MUNITIONS ---------------*/
+        /*----------------------------------------------------*/
+        private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
+        {
+            Random aleatoire = new Random();
+            for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
+            {
+                Rectangle boite_mun = new Rectangle
+                {
+                    Tag = "boite_munitions",
+                    Height = 45,
+                    Width = 52,
+                    Fill = iconeMunition
+                };
+                int pointApparition = aleatoire.Next(1, 5);
+                switch (pointApparition)
+                {
+                    case 1:
+                        Canvas.SetTop(boite_mun, 460);
+                        Canvas.SetLeft(boite_mun, 1456);
+                        break;
+
+                }
+
+                fond.Children.Add(boite_mun);
+                nombreMunitionsMap++;
 
                 /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
                  System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
