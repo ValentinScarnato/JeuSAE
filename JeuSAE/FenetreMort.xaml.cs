@@ -28,7 +28,7 @@ namespace JeuSAE
         {
             WindowJeu windowJeu = new WindowJeu();
             windowJeu.ShowDialog();
-            Close();
+            Close();    
         }
     }
 }
