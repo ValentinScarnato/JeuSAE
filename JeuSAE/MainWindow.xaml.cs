@@ -295,8 +295,6 @@ namespace JeuSAE
                     Fill = zombar
                 };
                 int pointApparition = aleatoire.Next(1, 5);
-                while (true)
-                {
 
                     switch (pointApparition)
                     {
@@ -323,8 +321,7 @@ namespace JeuSAE
 
 
                     }
-                }
-
+                
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
 
