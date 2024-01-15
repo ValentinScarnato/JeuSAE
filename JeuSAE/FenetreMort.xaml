@@ -11,14 +11,14 @@
     mc:Ignorable="d">
     <Canvas>
         <Button
-            x:Name="bouton_rejouer"
-            Canvas.Left="570"
-            Canvas.Top="553"
+            x:Name="bouton_menu"
+            Canvas.Left="725"
+            Canvas.Top="559"
             Width="300"
             Height="100"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="#FFFDFF0B"
+            Background="#FFFDFF0A"
             BorderBrush="#FF060606"
             Click="Button_Click"
             Content="Menu Principal"

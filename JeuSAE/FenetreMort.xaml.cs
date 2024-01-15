@@ -26,19 +26,17 @@ namespace JeuSAE
         }
         public void RedemarrerApplication()
         {
-            // Récupérez le chemin d'exécution de l'application
             string cheminApplication = Process.GetCurrentProcess().MainModule.FileName;
-
-            // Fermez l'instance actuelle de l'application
             Process.Start(cheminApplication);
             Application.Current.Shutdown();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RedemarrerApplication();
-            this.DialogResult = true;
+            this.DialogResult = false;
 
         }
+       
 
         /*WindowJeu windowJeu = new WindowJeu();
             windowJeu.ShowDialog();
