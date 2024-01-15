@@ -30,13 +30,14 @@ namespace JeuSAE
 
         public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
         public static int DEGATS_PAR_ZOMBIE = 10;
+        public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreZombieMaxMemeTemps = 5;
 
-        string ORIENTATION_JOUEUR = "haut";
+        string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
         int vieJoueur = VIE_JOUEUR;
@@ -65,7 +66,7 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-
+        ImageBrush joueurGauche = new ImageBrush();
 
 
 
@@ -79,9 +80,9 @@ namespace JeuSAE
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             boite_munitions.Fill = boiteMunition;
-            
+            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
 
-            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_shotgun.png"));
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
@@ -133,35 +134,49 @@ namespace JeuSAE
             if (e.Key == allerAGauche)
             {
                 gauche = true;
-                ORIENTATION_JOUEUR = "gauche";
+
 
             }
 
             if (e.Key == allerADroite)
             {
                 droite = true;
-                ORIENTATION_JOUEUR = "droite";
+
 
             }
             if (e.Key == avancer)
             {
                 haut = true;
-                ORIENTATION_JOUEUR = "haut";
+
 
             }
             if (e.Key == reculer)
             {
                 bas = true;
-                ORIENTATION_JOUEUR = "bas";
+
 
             }
             if (e.Key == tournerDroite)
             {
-
+                if (orientationJoueur == ORIENTATION_GAUCHE)
+                    orientationJoueur = ORIENTATION_HAUT;
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                    orientationJoueur = ORIENTATION_DROITE;
+                else if (orientationJoueur == ORIENTATION_DROITE)
+                    orientationJoueur = ORIENTATION_BAS;
+                else
+                    orientationJoueur = ORIENTATION_GAUCHE;
             }
             if (e.Key == tournerGauche)
             {
-
+                if (orientationJoueur == ORIENTATION_DROITE)
+                    orientationJoueur = ORIENTATION_HAUT;
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                    orientationJoueur = ORIENTATION_GAUCHE;
+                else if (orientationJoueur == ORIENTATION_GAUCHE)
+                    orientationJoueur = ORIENTATION_BAS;
+                else
+                    orientationJoueur = ORIENTATION_DROITE;
             }
         }
 
@@ -184,7 +199,7 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         /*----------------------------------------------------*/
@@ -196,7 +211,7 @@ namespace JeuSAE
             {
                 Rectangle balleJoueur = new Rectangle
                 {
-                    Tag = "Balle joueur",
+                    Tag = "Balle",
                     Height = 5,
                     Width = 5,
                     Fill = Brushes.White,
@@ -311,7 +326,7 @@ namespace JeuSAE
 
             foreach (var x in fond.Children.OfType<Rectangle>())
             {
-                if (x is Rectangle && (string)x.Tag == "Balle joueur")
+                if (x is Rectangle && (string)x.Tag == "Balle")
                 {
 
                     Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
@@ -380,7 +395,13 @@ namespace JeuSAE
             }
             
         }
+        private void OrientationJoueur()
+        {
+            if (orientationJoueur == ORIENTATION_GAUCHE)
+            {
 
+            }
+        }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -389,41 +410,16 @@ namespace JeuSAE
             NombreBalles();
             NombreKills();
             Vie();
+            OrientationJoueur();
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
-
+            orientation.Content = orientationJoueur;
 
         }
 
-        /*----------------------------------------------------*/
-        /*---------------GESTION DU TIR ----------------------*/
-        /*----------------------------------------------------*/
-        private void TirJoueur(string orientation)
-        {
-            /*
-            if (e.Key == Key.Space)
-            {
 
-                //vide la liste des items
-                //itemsToRemove.Clear();
-                Rectangle newBullet = new Rectangle
-                {
-                    Tag = "balleJoueur",
-                    Height = 20,
-                    Width = 5,
-                    Fill = Brushes.White,
-                    Stroke = Brushes.Red
-                };
-                // on place le tir à l’endroit du joueur
-                Canvas.SetTop(newBullet, Canvas.GetTop(joueur) - newBullet.Height);
-                Canvas.SetLeft(newBullet, Canvas.GetLeft(joueur) + joueur.Width / 2);
-                // on place le tir dans le canvas
-                fond.Children.Add(newBullet);
-            
-            }
-            */
-            
-        }
+
+
     }
 }
 

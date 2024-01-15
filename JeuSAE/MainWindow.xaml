@@ -92,10 +92,11 @@
                 Content="5 ennemis restants"
                 FontSize="38"
                 Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <Button x:Name="bouton_pause" Content="Button" Canvas.Left="1192" Canvas.Top="3" Width="45" Height="46" RenderTransformOrigin="0.533,1.849" HorizontalAlignment="Center" VerticalAlignment="Center" Click="bouton_pause_Click"/>
+            <Button x:Name="bouton_pause" Content="Button" Canvas.Left="997" Canvas.Top="4" Width="45" Height="46" RenderTransformOrigin="0.533,1.849" HorizontalAlignment="Left" VerticalAlignment="Top" Click="bouton_pause_Click"/>
+            <Label x:Name="orientation" Content="ORIENTATION" Canvas.Left="1110" Canvas.Top="4" HorizontalAlignment="Center" VerticalAlignment="Top" Width="355" Height="56" Foreground="White" FontSize="30"/>
 
         </Canvas>
-        
+
 
 
     </Grid>
