@@ -318,7 +318,7 @@ namespace JeuSAE
             if (ennemisRestants >= 1)
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
-                nombre_ennemis.Content = ennemisRestants + " ennemis restant";
+                nombre_ennemis.Content = ennemisRestants + " ennemi restant";
         }
         private void NombreBalles()
         {
