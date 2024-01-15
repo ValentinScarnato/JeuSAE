@@ -226,8 +226,8 @@ namespace JeuSAE
                 bas = false;
         }
 
-        
-      
+
+
 
         /*----------------------------------------------------*/
         /*--------------- GENERATION DE BALLES ---------------*/
@@ -296,32 +296,32 @@ namespace JeuSAE
                 };
                 int pointApparition = aleatoire.Next(1, 5);
 
-                    switch (pointApparition)
-                    {
-                        case 1:
-                            Canvas.SetTop(ennemi, aleatoire.Next(100, 860));
-                            Canvas.SetLeft(ennemi, aleatoire.Next(40, 1700));
-                            break;
-                            /*   case 2:
-                                   Canvas.SetTop(ennemi, 60);
-                                   Canvas.SetLeft(ennemi, 300);
-                                   break;
-                               case 3:
-                                   Canvas.SetTop(ennemi, 500);
-                                   Canvas.SetLeft(ennemi, 400);
-                                   break;
-                               case 4:
-                                   Canvas.SetTop(ennemi, 800);
-                                   Canvas.SetLeft(ennemi, 90);
-                                   break;
-                               case 5:
-                                   Canvas.SetTop(ennemi, 1600);
-                                   Canvas.SetLeft(ennemi, 1000);
-                                   break;*/
+                switch (pointApparition)
+                {
+                    case 1:
+                        Canvas.SetTop(ennemi, 460);
+                        Canvas.SetLeft(ennemi, 1100);
+                        break;
+                    case 2:
+                        Canvas.SetTop(ennemi, 60);
+                        Canvas.SetLeft(ennemi, 300);
+                        break;
+                    case 3:
+                        Canvas.SetTop(ennemi, 500);
+                        Canvas.SetLeft(ennemi, 400);
+                        break;
+                    case 4:
+                        Canvas.SetTop(ennemi, 500);
+                        Canvas.SetLeft(ennemi, 590);
+                        break;
+                    case 5:
+                        Canvas.SetTop(ennemi, 400);
+                        Canvas.SetLeft(ennemi, 1000);
+                        break;
 
 
-                    }
-                
+                }
+
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
 
@@ -352,7 +352,7 @@ namespace JeuSAE
                 {
                     case 1:
                         Canvas.SetTop(boite_mun, aleatoire.Next(80, 900));
-                        Canvas.SetLeft(boite_mun, aleatoire.Next(20, 1730 ));
+                        Canvas.SetLeft(boite_mun, aleatoire.Next(20, 1730));
                         break;
                 }
 
@@ -437,7 +437,7 @@ namespace JeuSAE
                     Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
                     if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < MUNITIONS_MAX_JOUEUR)
                     {
-                        nombreDeBalles = 15 ;
+                        nombreDeBalles = 15;
                         objetASupprimer.Add(x);
                         System.Threading.Thread.Sleep(80);
 
@@ -468,9 +468,9 @@ namespace JeuSAE
 
                 FenetreMort fenetremort = new FenetreMort();
                 fenetremort.ShowDialog();
-                
+
             }
-            
+
         }
         private void OrientationJoueur()
         {
@@ -489,7 +489,6 @@ namespace JeuSAE
             Vie();
             OrientationJoueur();
             Chronometre_Tick();
-            bouton_pause_Click(sender, e);
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
             orientation.Content = orientationJoueur;
