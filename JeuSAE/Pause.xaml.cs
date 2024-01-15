@@ -23,10 +23,6 @@ namespace JeuSAE
         {
             InitializeComponent();
         }
-        private void bouton_pause_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
 
         private void texte_pause_TextChanged(object sender, TextChangedEventArgs e)
         {
