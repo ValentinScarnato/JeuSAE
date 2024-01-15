@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -49,6 +50,7 @@ namespace JeuSAE
         Key tirer = Key.Space;
         Key tournerDroite = Key.E;
         Key tournerGauche = Key.A;
+        bool perdu = false;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombies = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
@@ -94,8 +96,8 @@ namespace JeuSAE
         }
         public MainWindow()
         {
-            //WindowJeu menu = new WindowJeu();
-            //menu.ShowDialog();
+            WindowJeu menu = new WindowJeu();
+            menu.ShowDialog();
             InitializeComponent();
             Temps();
             GenerationImage();
@@ -201,6 +203,7 @@ namespace JeuSAE
         {
             
         }
+      
 
         /*----------------------------------------------------*/
         /*--------------- GENERATION DE BALLES ---------------*/
@@ -388,10 +391,14 @@ namespace JeuSAE
             if (vieJoueur <= 0)
             {
                 vieJoueur = 0;
-                FenetreMort fenetremort = new FenetreMort();
-                fenetremort.ShowDialog();     
-                
+                perdu = true;
+            }
+            if (perdu == true)
+            {
 
+                FenetreMort fenetremort = new FenetreMort();
+                fenetremort.ShowDialog();
+                
             }
             
         }

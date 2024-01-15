@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +24,25 @@ namespace JeuSAE
         {
             InitializeComponent();
         }
+        public void RedemarrerApplication()
+        {
+            // Récupérez le chemin d'exécution de l'application
+            string cheminApplication = Process.GetCurrentProcess().MainModule.FileName;
 
+            // Fermez l'instance actuelle de l'application
+            Process.Start(cheminApplication);
+            Application.Current.Shutdown();
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WindowJeu windowJeu = new WindowJeu();
-            windowJeu.ShowDialog();
-            Close();    
+            RedemarrerApplication();
+            this.DialogResult = true;
+
         }
+
+        /*WindowJeu windowJeu = new WindowJeu();
+            windowJeu.ShowDialog();
+            Close();
+        */
     }
 }
