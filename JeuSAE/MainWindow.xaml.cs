@@ -82,7 +82,7 @@ namespace JeuSAE
             boite_munitions.Fill = boiteMunition;
             joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
 
-            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
@@ -94,8 +94,8 @@ namespace JeuSAE
         }
         public MainWindow()
         {
-            WindowJeu menu = new WindowJeu();
-            menu.ShowDialog();
+            //WindowJeu menu = new WindowJeu();
+            //menu.ShowDialog();
             InitializeComponent();
             Temps();
             GenerationImage();
