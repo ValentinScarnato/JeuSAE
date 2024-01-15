@@ -122,6 +122,8 @@ namespace JeuSAE
             minuterie.Tick += Moteur_Jeu;
 
             minuterie.Start();
+
+            
         }
 
         private void bouton_pause_Click(object sender, EventArgs e)
