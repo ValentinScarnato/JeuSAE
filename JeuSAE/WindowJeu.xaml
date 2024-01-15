@@ -20,25 +20,25 @@
             Fill="Black" />
         <Button
             x:Name="solo"
-            Canvas.Left="635"
-            Canvas.Top="445"
-            Width="445"
-            Height="190"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            BorderThickness="0,0,0,0"
-            Click="solo_Click_1"
-            Content="" />
-        <Button
-            x:Name="_1vs1"
-            Canvas.Left="635"
-            Canvas.Top="710"
-            Width="445"
-            Height="190"
+            Canvas.Left="300"
+            Canvas.Top="650"
+            Width="350"
+            Height="150"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             BorderThickness="0,0,0,0"
-            Content="" />
+            Click="solo_Click_1"
+            Content="Solo" Background="#FFFFFF0A" FontSize="40" FontFamily="Segoe UI" FontWeight="Bold" />
+        <Button
+            x:Name="quitter"
+            Canvas.Right="300"
+            Canvas.Top="640"
+            Width="350"
+            Height="150"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            BorderThickness="0,0,0,0"
+            Content="Quitter" Background="#FFFFFF07" FontSize="40" FontWeight="Bold" />
         <Button
             x:Name="parametre"
             Canvas.Left="1600"

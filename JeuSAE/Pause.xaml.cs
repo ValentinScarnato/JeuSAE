@@ -33,5 +33,10 @@ namespace JeuSAE
         {
             Close();
         }
+
+        private void bouton_quitter_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }

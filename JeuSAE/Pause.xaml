@@ -11,7 +11,7 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="Black">
         <Button
             x:Name="bouton_reprendre"
             Width="300"
@@ -19,7 +19,7 @@
             Margin="162,345,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="#FFFDFF0A"
+            Background="#FFFFFF0A"
             BorderBrush="Black"
             Click="bouton_reprendre_Click"
             Content="Reprendre"
@@ -32,22 +32,20 @@
             Margin="648,345,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="#FFFDFF0A"
+            Background="#FFFFFF0A"
             BorderBrush="#FF020202"
             Content="Quitter"
             FontSize="24"
-            FontWeight="Bold" />
-        <TextBox
+            FontWeight="Bold" Click="bouton_quitter_Click" />
+        <Label
             x:Name="texte_pause"
             Width="314"
             Margin="0,100,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            BorderBrush="White"
             FontSize="72"
-            Text="PAUSE  II"
-            TextChanged="texte_pause_TextChanged"
-            TextWrapping="Wrap" />
+            Content="PAUSE l l" Foreground="White"
+            />
 
     </Grid>
 </Window>
