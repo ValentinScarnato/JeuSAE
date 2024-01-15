@@ -107,10 +107,39 @@
             Content=""
             FontSize="40"
             Foreground="White" />
-        <TextBox x:Name="bouton_droite" HorizontalAlignment="Left" Margin="200,112,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="bouton_avancer" HorizontalAlignment="Left" Margin="200,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="bouton_gauche" HorizontalAlignment="Left" Margin="200,260,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="bouton_tirer" HorizontalAlignment="Left" Margin="200,310,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox
+            x:Name="bouton_droite"
+            Width="120"
+            Margin="200,112,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="D"
+            TextChanged="bouton_droite_TextChanged"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="bouton_avancer"
+            Width="120"
+            Margin="200,160,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="Z"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="bouton_gauche"
+            Width="120"
+            Margin="200,260,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="Q"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="bouton_tirer"
+            Width="120"
+            Margin="200,310,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="Espace"
+            TextWrapping="Wrap" />
 
     </Grid>
 </Window>

@@ -50,6 +50,9 @@ namespace JeuSAE
             AFFICHAGE.Content= e.ToString();
         }
 
-        
+        private void bouton_droite_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

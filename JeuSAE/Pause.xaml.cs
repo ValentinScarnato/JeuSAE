@@ -27,5 +27,16 @@ namespace JeuSAE
         {
             this.DialogResult = true;
         }
+
+        private void texte_pause_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void bouton_reprendre_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            Close();
+        }
     }
 }

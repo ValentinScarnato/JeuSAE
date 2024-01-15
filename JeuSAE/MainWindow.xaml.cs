@@ -37,7 +37,7 @@ namespace JeuSAE
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreZombieMaxMemeTemps = 5;
-
+        private TimeSpan tempsEcoule;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
@@ -122,6 +122,13 @@ namespace JeuSAE
 
             minuterie.Start();
         }
+
+        private void Chronometre_Tick()
+        {
+            tempsEcoule = tempsEcoule.Add(TimeSpan.FromMilliseconds(984));
+            texteMinuterie.Text = tempsEcoule.ToString(@"hh\:mm");
+        }
+
         /*----------------------------------------------------*/
         /*-----------------Appui touche-----------------------*/
         /*----------------------------------------------------*/
@@ -202,7 +209,8 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-            
+            Pause pause = new Pause();  
+            pause.ShowDialog();
         }
       
 
@@ -308,7 +316,7 @@ namespace JeuSAE
         private void NombreEnnemis()
         {
             if (ennemisRestants >= 1)
-                nombre_ennemis.Content = ennemisRestants + " ennemi restants";
+                nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemis restant";
         }
@@ -419,6 +427,7 @@ namespace JeuSAE
             NombreKills();
             Vie();
             OrientationJoueur();
+            Chronometre_Tick();
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
             orientation.Content = orientationJoueur;
