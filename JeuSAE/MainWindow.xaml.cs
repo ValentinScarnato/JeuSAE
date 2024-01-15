@@ -98,7 +98,6 @@ namespace JeuSAE
             Temps();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
-            orientation.Content = orientationJoueur;
 
 
 
@@ -198,7 +197,7 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         /*----------------------------------------------------*/
