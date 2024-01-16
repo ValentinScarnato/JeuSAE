@@ -62,11 +62,8 @@
             BorderThickness="1">
             <Rectangle
                 x:Name="rectangle_LastNight"
-                Width="1000"
-                Height="1000"
-                Margin="0,0,0,500"
-                Opacity="0.99"
-                Stroke="Black" />
+                Margin="421,180,421,599"
+                Opacity="0.99" Fill="Red" />
         </Border>
 
 
