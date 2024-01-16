@@ -60,6 +60,9 @@
     <None Update="Image\LastNightFinal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Image\LastNightLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Image\LastNightWEWE.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
