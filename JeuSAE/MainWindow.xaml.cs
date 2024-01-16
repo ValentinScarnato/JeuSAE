@@ -288,7 +288,7 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
             }
-            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU)
+            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
             }
