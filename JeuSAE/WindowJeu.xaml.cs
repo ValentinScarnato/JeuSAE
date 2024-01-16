@@ -45,7 +45,7 @@ namespace JeuSAE
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
             parametre.Background = btn_parametre;
             
-            LastNight.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/LastNightWEWE.png"));
+            LastNight.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/LastNightLogo.png"));
             rectangle_LastNight.Fill = LastNight;
         }
 
