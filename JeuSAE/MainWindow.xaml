@@ -165,7 +165,7 @@
                 FontSize="24"
                 FontWeight="Bold"
                 TextWrapping="Wrap"><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
-            <Button x:Name="bouton_pause" Content="" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="45" Width="45"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button x:Name="bouton_pause" Content="" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="45" Width="45"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="Black"/>
 
         </Canvas>
 
