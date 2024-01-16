@@ -134,7 +134,7 @@ namespace JeuSAE
         }
 
         
-        private void bouton_pause_Click_1(object sender, RoutedEventArgs e)
+        private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
             Pause pause = new Pause();
             pause.ShowDialog();
