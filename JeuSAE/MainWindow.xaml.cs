@@ -70,6 +70,8 @@ namespace JeuSAE
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
         ImageBrush joueurGauche = new ImageBrush();
+        ImageBrush joueurDroite = new ImageBrush();
+
         ImageBrush pause = new ImageBrush();
 
         public void GenerationImage()
@@ -80,10 +82,9 @@ namespace JeuSAE
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
-            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
-
-            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
-            joueur.Fill = joueur_;
+            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_gauche.png"));
+            joueurDroite.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
+            joueur.Fill = joueurDroite;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
             iconeMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/munition.png"));
@@ -123,7 +124,7 @@ namespace JeuSAE
 
             minuterie.Start();
 
-            
+
         }
 
         private void bouton_pause_Click(object sender, EventArgs e)
@@ -479,7 +480,11 @@ namespace JeuSAE
         {
             if (orientationJoueur == ORIENTATION_GAUCHE)
             {
-
+                joueur.Fill = joueurGauche;
+            }
+            if (orientationJoueur == ORIENTATION_DROITE)
+            {
+                joueur.Fill = joueurDroite;
             }
         }
         private void Moteur_Jeu(object sender, EventArgs e)
