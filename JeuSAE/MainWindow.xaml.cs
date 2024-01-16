@@ -129,7 +129,8 @@ namespace JeuSAE
     private void GenerMunitionsConditions(object sender, EventArgs e)
     {
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
-                Generation_Munitions(nombreMunitionMaxMemeTemps);
+            Generation_Munitions(nombreMunitionMaxMemeTemps);
+            interval.Stop();
             
     }
 
@@ -511,7 +512,6 @@ namespace JeuSAE
                         nombreDeBalles = 15;
                         objetASupprimer.Add(x);
                         System.Threading.Thread.Sleep(80);
-                        interval.Stop();
                         interval.Start();
                     }
                 }
