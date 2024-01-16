@@ -154,18 +154,28 @@
                 Content="ORIENTATION"
                 FontSize="30"
                 Foreground="White" />
+
             <TextBlock
                 x:Name="texteMinuterie"
-                Canvas.Left="806"
-                Canvas.Top="101"
+                Canvas.Left="956"
                 Width="200"
                 Height="50"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="24"
                 FontWeight="Bold"
                 TextWrapping="Wrap"><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
-            <Button x:Name="bouton_pause" Content="" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="45" Width="45"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button
+                x:Name="bouton_pause"
+                Canvas.Left="906"
+                Canvas.Top="8"
+                Width="45"
+                Height="45"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Click="bouton_pause_Click_1"
+                Content=""
+                Focusable="False" />
 
         </Canvas>
 
