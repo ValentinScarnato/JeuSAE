@@ -259,24 +259,24 @@ namespace JeuSAE
                 {
                     balleG.Add(balle);
                     Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur)-balle.Width );
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
                 }
                 else if (orientationJoueur == ORIENTATION_DROITE)
                 {
                     balleD.Add(balle);
                     Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width );
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
                 }
                 else if (orientationJoueur == ORIENTATION_HAUT)
                 {
-                    balleH.Add(balle); 
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) -30);
+                    balleH.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
                     Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
                 }
                 else
                 {
                     balleB.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) +joueur.Height+30);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
                     Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
                 }
                 fond.Children.Add(balle);
@@ -414,29 +414,49 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
+        private void Test(Rectangle x)
+        {
+            if (Canvas.GetTop(x) < 60)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) < 0)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) < 0)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) > fond.Width)
+            {
+                objetASupprimer.Add(x);
+            }
+        }
         private void Interactions()
         {
+            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
             foreach (Rectangle x in balleB)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) + VITESSE_BALLE_JOUEUR);
+                Test(x);
 
             }
             foreach (Rectangle x in balleD)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
             foreach (Rectangle x in balleG)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
             foreach (Rectangle x in balleH)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
-            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
             foreach (var x in fond.Children.OfType<Rectangle>())
             {
@@ -444,10 +464,7 @@ namespace JeuSAE
                 {
 
 
-                    if (Canvas.GetTop(x) < 10)
-                    {
-                        objetASupprimer.Add(x);
-                    }
+
                     Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
 
