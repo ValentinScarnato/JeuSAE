@@ -69,8 +69,7 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-        ImageBrush joueurGauche = new ImageBrush();
-        ImageBrush joueurDroite = new ImageBrush();
+      
 
         ImageBrush pause = new ImageBrush();
 
@@ -82,9 +81,9 @@ namespace JeuSAE
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
-            joueurGauche.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_gauche.png"));
-            joueurDroite.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur_droite.png"));
-            joueur.Fill = joueurDroite;
+ 
+            joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
+            joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
             icone_crane.Fill = iconeCrane;
             iconeMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/munition.png"));
@@ -478,13 +477,29 @@ namespace JeuSAE
         }
         private void OrientationJoueur()
         {
+            joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
+
             if (orientationJoueur == ORIENTATION_GAUCHE)
             {
-                joueur.Fill = joueurGauche;
+               // joueur.Fill = joueurGauche;
+
+                joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2);
+
             }
             if (orientationJoueur == ORIENTATION_DROITE)
             {
                 joueur.Fill = joueurDroite;
+
+            }
+            if (orientationJoueur == ORIENTATION_HAUT)
+            {
+
+                joueur.RenderTransform = new RotateTransform(-90,joueur.Width/2,joueur.Height/2);
+            }
+            if (orientationJoueur == ORIENTATION_BAS)
+            {
+
+                joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);
             }
         }
         private void Moteur_Jeu(object sender, EventArgs e)
