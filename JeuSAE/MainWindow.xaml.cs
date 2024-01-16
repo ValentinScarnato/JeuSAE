@@ -37,11 +37,9 @@ namespace JeuSAE
         private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool munitions = true, lancerTempsMunitions = true;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
-        private TimeSpan minuterieMunitions;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
@@ -82,6 +80,8 @@ namespace JeuSAE
 
 
         ImageBrush pause = new ImageBrush();
+        DispatcherTimer interval = new DispatcherTimer();
+        DispatcherTimer mineuteur = new DispatcherTimer();
 
         public void GenerationImage()
         {
@@ -110,55 +110,25 @@ namespace JeuSAE
             WindowJeu menu = new WindowJeu();
             menu.ShowDialog();
             InitializeComponent();
-            Temps();
-            TempsMunitions();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
+            interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+            interval.Tick += GenerMunitionsConditions;
 
+            /*----------------------------------------------------*/
+            /*-------------------TEMPS----------------------------*/
+            /*----------------------------------------------------*/
+            mineuteur.Interval = TimeSpan.FromMilliseconds(16);
 
+            mineuteur.Tick += Moteur_Jeu;
 
+            mineuteur.Start();
         }
-        /*----------------------------------------------------*/
-        /*-------------------TEMPS----------------------------*/
-        /*----------------------------------------------------*/
-
-        public void Temps()
-        {
-            DispatcherTimer minuterie = new DispatcherTimer();
-
-                minuterie.Interval = TimeSpan.FromMilliseconds(16);
-
-                minuterie.Tick += Moteur_Jeu;
-
-                minuterie.Start();
-
-
-
-        }
-        public void TempsMunitions() 
-        {
-            DispatcherTimer inertval = new DispatcherTimer();
-
-                inertval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
-
-                inertval.Tick += GenerMunitionsConditions;
-
-            if (munitions == true)
-            {
-                inertval.Stop();
-            }
-            if (lancerTempsMunitions == true)
-            {
-                  inertval.Start();
-            }
-        }
-
     private void GenerMunitionsConditions(object sender, EventArgs e)
     {
-            // Appeler cette méthode à chaque tick du timer (toutes les 10 secondes)
-            if (munitions == false)
+            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
                 Generation_Munitions(nombreMunitionMaxMemeTemps);
             
     }
@@ -424,8 +394,7 @@ namespace JeuSAE
                 
 
             }
-            munitions = true;
-            lancerTempsMunitions = false;
+
 
     }
         private void NombreEnnemis()
@@ -542,9 +511,8 @@ namespace JeuSAE
                         nombreDeBalles = 15;
                         objetASupprimer.Add(x);
                         System.Threading.Thread.Sleep(80);
-                        munitions = false;
-                        lancerTempsMunitions = true;
-
+                        interval.Stop();
+                        interval.Start();
                     }
                 }
 
