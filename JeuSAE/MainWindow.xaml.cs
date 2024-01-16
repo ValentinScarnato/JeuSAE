@@ -528,7 +528,7 @@ namespace JeuSAE
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
                     vieJoueur -= 5;
-                    System.Threading.Thread.Sleep(80);
+                    Thread.Sleep(80);
 
                 }
 
@@ -604,6 +604,13 @@ namespace JeuSAE
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
         }
+        private void FinManche()
+        {
+            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
+            {
+
+            }
+        }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -615,7 +622,7 @@ namespace JeuSAE
             OrientationJoueur();
             Chronometre_Tick();
             GenerZombieConditions();
-
+            FinManche();
 
         }
 
