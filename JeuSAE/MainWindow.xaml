@@ -143,17 +143,6 @@
                 Content="5 ennemis restants"
                 FontSize="38"
                 Foreground="White" />
-            <Label
-                x:Name="orientation"
-                Canvas.Left="1110"
-                Canvas.Top="4"
-                Width="355"
-                Height="56"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Content="ORIENTATION"
-                FontSize="30"
-                Foreground="White" />
             <TextBlock
                 x:Name="texteMinuterie"
                 Canvas.Left="806"

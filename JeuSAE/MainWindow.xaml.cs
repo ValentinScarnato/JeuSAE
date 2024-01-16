@@ -69,7 +69,7 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-      
+
 
         ImageBrush pause = new ImageBrush();
 
@@ -81,7 +81,7 @@ namespace JeuSAE
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
- 
+
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
@@ -481,26 +481,30 @@ namespace JeuSAE
 
             if (orientationJoueur == ORIENTATION_GAUCHE)
             {
-               // joueur.Fill = joueurGauche;
 
                 joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2);
 
             }
             if (orientationJoueur == ORIENTATION_DROITE)
             {
-                joueur.Fill = joueurDroite;
+                joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
 
             }
             if (orientationJoueur == ORIENTATION_HAUT)
             {
 
-                joueur.RenderTransform = new RotateTransform(-90,joueur.Width/2,joueur.Height/2);
+                joueur.RenderTransform = new RotateTransform(-90, joueur.Width / 2, joueur.Height / 2);
             }
             if (orientationJoueur == ORIENTATION_BAS)
             {
 
                 joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);
             }
+        }
+        private void GenerZombieConditions()
+        {
+            if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
+                Generation_Zombies(nombreZombieMaxMemeTemps);
         }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
@@ -512,9 +516,7 @@ namespace JeuSAE
             Vie();
             OrientationJoueur();
             Chronometre_Tick();
-            if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
-                Generation_Zombies(nombreZombieMaxMemeTemps);
-            orientation.Content = orientationJoueur;
+
 
         }
 
