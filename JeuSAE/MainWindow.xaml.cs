@@ -165,7 +165,7 @@ namespace JeuSAE
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Space)
+            if (e.Key == tirer)
             {
                 GenerationBalle();
             }
@@ -254,16 +254,31 @@ namespace JeuSAE
                     Fill = Brushes.White,
                     Stroke = Brushes.Yellow
                 };
-                Canvas.SetTop(balle, Canvas.GetTop(joueur) - balle.Height);
-                Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 2);
+
                 if (orientationJoueur == ORIENTATION_GAUCHE)
+                {
                     balleG.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur)-balle.Width );
+                }
                 else if (orientationJoueur == ORIENTATION_DROITE)
+                {
                     balleD.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width );
+                }
                 else if (orientationJoueur == ORIENTATION_HAUT)
-                    balleH.Add(balle);
+                {
+                    balleH.Add(balle); 
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) -30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
+                }
                 else
+                {
                     balleB.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) +joueur.Height+30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
+                }
                 fond.Children.Add(balle);
                 nombreDeBalles--;
 
@@ -277,7 +292,6 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         public void Deplacements()
         {
-            Rect _joueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
@@ -344,8 +358,7 @@ namespace JeuSAE
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
 
-                /* int tempsEntreZombie = aleatoire.Next(TEMPS_MINIMAL_ENTRE_ZOMBIE, TEMPS_MAXIMAL_ENTRE_ZOMBIE);        Tentative de temps entre zombie (ça veut pas)
-                 System.Threading.Thread.Sleep(tempsEntreZombie*1000);*/
+
 
             }
 
@@ -356,7 +369,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
         {
-            
+
             Random aleatoire = new Random();
             for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
             {
@@ -562,8 +575,3 @@ namespace JeuSAE
 
     }
 }
-
-
-
-
-
