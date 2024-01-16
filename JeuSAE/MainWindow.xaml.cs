@@ -37,13 +37,13 @@ namespace JeuSAE
         private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool apparitionVie = true, apparitionMunitions = true;
+        bool apparitionVie = true, apparitionMunitions = true,vieInfinie=false,ballesInfinies=false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
-        int BANDEAU = 60;
+        private static int BANDEAU = 60;
         int vieJoueur = VIE_JOUEUR;
         private int nombreDeBalles = 15;
         Key avancer = Key.Z;
@@ -427,7 +427,7 @@ namespace JeuSAE
 
 
             Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (Canvas.GetTop(x) < 60)
+            if (Canvas.GetTop(x) < BANDEAU)
             {
                 objetASupprimer.Add(x);
                 return true;
