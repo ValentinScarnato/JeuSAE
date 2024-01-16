@@ -110,7 +110,6 @@ namespace JeuSAE
             Temps();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
-            Generation_Munitions(nombreMunitionMaxMemeTemps);
 
 
 
