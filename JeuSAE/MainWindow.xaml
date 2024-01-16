@@ -143,18 +143,6 @@
                 Content="5 ennemis restants"
                 FontSize="38"
                 Foreground="White" />
-            <Label
-                x:Name="orientation"
-                Canvas.Left="1110"
-                Canvas.Top="4"
-                Width="355"
-                Height="56"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Content="ORIENTATION"
-                FontSize="30"
-                Foreground="White" />
-
             <TextBlock
                 x:Name="texteMinuterie"
                 Canvas.Left="956"
@@ -165,17 +153,7 @@
                 FontSize="24"
                 FontWeight="Bold"
                 TextWrapping="Wrap"><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
-            <Button
-                x:Name="bouton_pause"
-                Canvas.Left="906"
-                Canvas.Top="8"
-                Width="45"
-                Height="45"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Click="bouton_pause_Click_1"
-                Content=""
-                Focusable="False" />
+            <Button x:Name="bouton_pause" Content="" Canvas.Left="906" Canvas.Top="8" Click="bouton_pause_Click" Height="45" Width="45"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="Black"/>
 
         </Canvas>
 
