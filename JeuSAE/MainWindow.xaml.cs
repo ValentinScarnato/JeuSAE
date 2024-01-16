@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace JeuSAE
 {
@@ -36,9 +37,11 @@ namespace JeuSAE
         private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
+        bool munitions = true, lancerTempsMunitions = true;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
+        private TimeSpan minuterieMunitions;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
         int BANDEAU = 60;
@@ -108,6 +111,7 @@ namespace JeuSAE
             menu.ShowDialog();
             InitializeComponent();
             Temps();
+            TempsMunitions();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
@@ -124,17 +128,44 @@ namespace JeuSAE
         {
             DispatcherTimer minuterie = new DispatcherTimer();
 
-            minuterie.Interval = TimeSpan.FromMilliseconds(16);
+                minuterie.Interval = TimeSpan.FromMilliseconds(16);
 
-            minuterie.Tick += Moteur_Jeu;
+                minuterie.Tick += Moteur_Jeu;
 
-            minuterie.Start();
+                minuterie.Start();
+
 
 
         }
+        public void TempsMunitions() 
+        {
+            DispatcherTimer inertval = new DispatcherTimer();
 
-        
-        private void bouton_pause_Click(object sender, RoutedEventArgs e)
+                inertval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+
+                inertval.Tick += GenerMunitionsConditions;
+
+            if (munitions == true)
+            {
+                inertval.Stop();
+            }
+            if (lancerTempsMunitions == true)
+            {
+                  inertval.Start();
+            }
+        }
+
+    private void GenerMunitionsConditions(object sender, EventArgs e)
+    {
+            // Appeler cette méthode à chaque tick du timer (toutes les 10 secondes)
+            if (munitions == false)
+                Generation_Munitions(nombreMunitionMaxMemeTemps);
+            
+    }
+
+
+
+    private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
             Pause pause = new Pause();
             pause.ShowDialog();
@@ -155,6 +186,7 @@ namespace JeuSAE
                 minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
             }
         }
+
 
         /*----------------------------------------------------*/
         /*-----------------Appui touche-----------------------*/
@@ -257,24 +289,24 @@ namespace JeuSAE
                 {
                     balleG.Add(balle);
                     Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur)-balle.Width );
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
                 }
                 else if (orientationJoueur == ORIENTATION_DROITE)
                 {
                     balleD.Add(balle);
                     Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width );
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
                 }
                 else if (orientationJoueur == ORIENTATION_HAUT)
                 {
-                    balleH.Add(balle); 
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) -30);
+                    balleH.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
                     Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
                 }
                 else
                 {
                     balleB.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) +joueur.Height+30);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
                     Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
                 }
                 fond.Children.Add(balle);
@@ -389,10 +421,13 @@ namespace JeuSAE
 
                 fond.Children.Add(boite_mun);
                 nombreMunitionsMap++;
+                
 
             }
+            munitions = true;
+            lancerTempsMunitions = false;
 
-        }
+    }
         private void NombreEnnemis()
         {
             if (ennemisRestants >= 1)
@@ -412,29 +447,49 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
+        private void Test(Rectangle x)
+        {
+            if (Canvas.GetTop(x) < 60)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) < 0)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) < 0)
+            {
+                objetASupprimer.Add(x);
+            }
+            if (Canvas.GetLeft(x) > fond.Width)
+            {
+                objetASupprimer.Add(x);
+            }
+        }
         private void Interactions()
         {
+            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
             foreach (Rectangle x in balleB)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) + VITESSE_BALLE_JOUEUR);
+                Test(x);
 
             }
             foreach (Rectangle x in balleD)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
             foreach (Rectangle x in balleG)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
             foreach (Rectangle x in balleH)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
-
+                Test(x);
             }
-            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
             foreach (var x in fond.Children.OfType<Rectangle>())
             {
@@ -442,10 +497,7 @@ namespace JeuSAE
                 {
 
 
-                    if (Canvas.GetTop(x) < 10)
-                    {
-                        objetASupprimer.Add(x);
-                    }
+
                     Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
 
 
@@ -490,6 +542,8 @@ namespace JeuSAE
                         nombreDeBalles = 15;
                         objetASupprimer.Add(x);
                         System.Threading.Thread.Sleep(80);
+                        munitions = false;
+                        lancerTempsMunitions = true;
 
                     }
                 }
