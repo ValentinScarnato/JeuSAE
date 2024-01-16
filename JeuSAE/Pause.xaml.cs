@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace JeuSAE
     /// </summary>
     public partial class Pause : Window
     {
+        MainWindow mainwindow;
         public Pause()
         {
             InitializeComponent();
@@ -36,7 +38,15 @@ namespace JeuSAE
 
         private void bouton_quitter_Click(object sender, RoutedEventArgs e)
         {
-            App.Current.Shutdown();
+            RedemarrerApplication();
+            this.DialogResult = false;
         }
+        public void RedemarrerApplication()
+        {
+            string cheminApplication = Process.GetCurrentProcess().MainModule.FileName;
+            Process.Start(cheminApplication);
+            Application.Current.Shutdown();
+        }
+        
     }
 }

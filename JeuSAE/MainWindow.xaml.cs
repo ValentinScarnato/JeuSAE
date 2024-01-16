@@ -33,7 +33,7 @@ namespace JeuSAE
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
-        private bool Pause { get; set; } = false;
+        private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
@@ -133,29 +133,27 @@ namespace JeuSAE
 
         }
 
-        private void bouton_pause_Click(object sender, EventArgs e)
+        
+        private void bouton_pause_Click_1(object sender, RoutedEventArgs e)
         {
             Pause pause = new Pause();
             pause.ShowDialog();
-            Pause = true;
+            Pose = true;
             Chronometre_Tick();
-
         }
 
         private void Chronometre_Tick()
         {
 
-            if (Pause == false)
+            if (Pose == false)
             {
                 minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
-                texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
+                //texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
             }
-            if (Pause == true)
+            else if (Pose == true)
             {
                 minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
             }
-
-
         }
 
         /*----------------------------------------------------*/

@@ -26,19 +26,26 @@
             Height="150"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            Background="#FFFFFF0A"
             BorderThickness="0,0,0,0"
             Click="solo_Click_1"
-            Content="Solo" Background="#FFFFFF0A" FontSize="40" FontFamily="Segoe UI" FontWeight="Bold" />
+            Content="Solo"
+            FontFamily="Segoe UI"
+            FontSize="40"
+            FontWeight="Bold" />
         <Button
             x:Name="quitter"
-            Canvas.Right="300"
             Canvas.Top="640"
+            Canvas.Right="300"
             Width="350"
             Height="150"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            Background="#FFFFFF07"
             BorderThickness="0,0,0,0"
-            Content="Quitter" Background="#FFFFFF07" FontSize="40" FontWeight="Bold" />
+            Content="Quitter"
+            FontSize="40"
+            FontWeight="Bold" />
         <Button
             x:Name="parametre"
             Canvas.Left="1600"

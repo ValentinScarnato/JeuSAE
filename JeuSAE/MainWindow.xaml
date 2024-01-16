@@ -145,11 +145,10 @@
                 Foreground="White" />
             <TextBlock
                 x:Name="texteMinuterie"
-                Canvas.Left="806"
-                Canvas.Top="101"
+                Canvas.Left="956"
                 Width="200"
                 Height="50"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="24"
                 FontWeight="Bold"
