@@ -37,7 +37,7 @@ namespace JeuSAE
         private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool apparitionVie = true, apparitionMunitions = true,vieInfinie=false,ballesInfinies=false;
+        bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
@@ -524,20 +524,13 @@ namespace JeuSAE
             foreach (Rectangle y in zombieListe)
             {
 
-
                 Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-
-
-
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
                     vieJoueur -= 5;
                     System.Threading.Thread.Sleep(80);
 
                 }
-
-
-
 
             }
             foreach (Rectangle y in objetASupprimer)
@@ -561,11 +554,6 @@ namespace JeuSAE
 
 
         }
-
-
-
-
-
 
 
         private void Vie()
