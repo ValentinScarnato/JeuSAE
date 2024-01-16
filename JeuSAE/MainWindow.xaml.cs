@@ -55,6 +55,13 @@ namespace JeuSAE
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombies = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
+        private List<Rectangle> balleG = new List<Rectangle>();
+        private List<Rectangle> balleD = new List<Rectangle>();
+        private List<Rectangle> balleH = new List<Rectangle>();
+        private List<Rectangle> balleB = new List<Rectangle>();
+
+
+
 
 
         /*----------------------------------------------------*/
@@ -249,8 +256,17 @@ namespace JeuSAE
                 };
                 Canvas.SetTop(balle, Canvas.GetTop(joueur) - balle.Height);
                 Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 2);
+                if (orientationJoueur == ORIENTATION_GAUCHE)
+                    balleG.Add(balle);
+                else if (orientationJoueur == ORIENTATION_DROITE)
+                    balleD.Add(balle);
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                    balleH.Add(balle);
+                else
+                    balleB.Add(balle);
                 fond.Children.Add(balle);
                 nombreDeBalles--;
+
             }
         }
 
@@ -340,6 +356,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
         {
+            
             Random aleatoire = new Random();
             for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
             {
@@ -386,6 +403,26 @@ namespace JeuSAE
         }
         private void Interactions()
         {
+            foreach (Rectangle x in balleB)
+            {
+                Canvas.SetTop(x, Canvas.GetTop(x) + VITESSE_BALLE_JOUEUR);
+
+            }
+            foreach (Rectangle x in balleD)
+            {
+                Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_BALLE_JOUEUR);
+
+            }
+            foreach (Rectangle x in balleG)
+            {
+                Canvas.SetLeft(x, Canvas.GetLeft(x) - VITESSE_BALLE_JOUEUR);
+
+            }
+            foreach (Rectangle x in balleH)
+            {
+                Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
+
+            }
             Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
 
             foreach (var x in fond.Children.OfType<Rectangle>())
@@ -393,7 +430,6 @@ namespace JeuSAE
                 if (x is Rectangle && (string)x.Tag == "Balle")
                 {
 
-                    Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
 
                     if (Canvas.GetTop(x) < 10)
                     {
@@ -516,6 +552,7 @@ namespace JeuSAE
             Vie();
             OrientationJoueur();
             Chronometre_Tick();
+            GenerZombieConditions();
 
 
         }
