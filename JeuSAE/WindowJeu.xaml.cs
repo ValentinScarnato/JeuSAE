@@ -25,6 +25,7 @@ namespace JeuSAE
         ImageBrush btn_solo = new ImageBrush();
         ImageBrush btn_1vs1 = new ImageBrush();
         ImageBrush btn_parametre = new ImageBrush();
+        ImageBrush LastNight = new ImageBrush();
 
 
        
@@ -44,6 +45,8 @@ namespace JeuSAE
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));
             parametre.Background = btn_parametre;
             
+            LastNight.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/LastNightWEWE.png"));
+            rectangle_LastNight.Fill = LastNight;
         }
 
 
@@ -67,9 +70,9 @@ namespace JeuSAE
             App.Current.Shutdown();
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
-
-
-
+        }
     }
 }

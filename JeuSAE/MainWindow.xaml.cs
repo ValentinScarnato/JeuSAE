@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace JeuSAE
 {
@@ -81,6 +82,8 @@ namespace JeuSAE
 
 
         ImageBrush pause = new ImageBrush();
+        DispatcherTimer interval = new DispatcherTimer();
+        DispatcherTimer mineuteur = new DispatcherTimer();
 
         public void GenerationImage()
         {
@@ -109,32 +112,39 @@ namespace JeuSAE
             WindowJeu menu = new WindowJeu();
             menu.ShowDialog();
             InitializeComponent();
-            Temps();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
+            interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+            interval.Tick += GenerMunitionsConditions;
 
+            /*----------------------------------------------------*/
+            /*-------------------TEMPS----------------------------*/
+            /*----------------------------------------------------*/
+            mineuteur.Interval = TimeSpan.FromMilliseconds(16);
 
+            mineuteur.Tick += Moteur_Jeu;
 
+            mineuteur.Start();
         }
-        /*----------------------------------------------------*/
-        /*-------------------TEMPS----------------------------*/
-        /*----------------------------------------------------*/
+    private void GenerMunitionsConditions(object sender, EventArgs e)
+    {
+            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
+            Generation_Munitions(nombreMunitionMaxMemeTemps);
+            interval.Stop();
+            
+    }
 
-        public void Temps()
+
+
+    private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer minuterie = new DispatcherTimer();
-
-            minuterie.Interval = TimeSpan.FromMilliseconds(16);
-
-            minuterie.Tick += Moteur_Jeu;
-
-            minuterie.Start();
-
-
+            Pause pause = new Pause();
+            pause.ShowDialog();
+            Pose = true;
+            Chronometre_Tick();
         }
-
 
 
 
@@ -150,14 +160,6 @@ namespace JeuSAE
             {
                 minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
             }
-        }
-
-        private void bouton_pause_Click(object sender, RoutedEventArgs e)
-        {
-            Pause pause = new Pause();
-            pause.ShowDialog();
-            Pose = true;
-            Chronometre_Tick();
         }
 
         /*----------------------------------------------------*/
@@ -395,7 +397,8 @@ namespace JeuSAE
 
             }
 
-        }
+
+    }
         private void NombreEnnemis()
         {
             if (ennemisRestants >= 1)
