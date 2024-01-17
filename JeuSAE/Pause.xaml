@@ -34,7 +34,7 @@
             VerticalAlignment="Top"
             Background="#FFFFFF0A"
             BorderBrush="#FF020202"
-            Content="Quitter"
+            Content="Menu Principal"
             FontSize="24"
             FontWeight="Bold" Click="bouton_quitter_Click" />
         <Label

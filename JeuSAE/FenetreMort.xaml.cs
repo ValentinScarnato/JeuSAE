@@ -30,17 +30,21 @@ namespace JeuSAE
             Process.Start(cheminApplication);
             Application.Current.Shutdown();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Menu(object sender, RoutedEventArgs e)
         {
             RedemarrerApplication();
             this.DialogResult = false;
 
         }
-       
+        private void Button_Quitter(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
 
-        /*WindowJeu windowJeu = new WindowJeu();
-            windowJeu.ShowDialog();
-            Close();
-        */
+        /*
+WindowJeu windowJeu = new WindowJeu();
+   windowJeu.ShowDialog();
+   Close();
+*/
     }
 }

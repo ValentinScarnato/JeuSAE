@@ -45,7 +45,7 @@
             BorderThickness="0,0,0,0"
             Content="Quitter"
             FontSize="40"
-            FontWeight="Bold" />
+            FontWeight="Bold" Click="quitter_Click" />
         <Button
             x:Name="parametre"
             Canvas.Left="1600"

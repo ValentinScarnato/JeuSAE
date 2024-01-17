@@ -20,7 +20,7 @@
             VerticalAlignment="Top"
             Background="#FFFDFF0A"
             BorderBrush="#FF060606"
-            Click="Button_Click"
+            Click="Button_Menu"
             Content="Menu Principal"
             FontSize="24"
             FontWeight="Bold" />
@@ -34,11 +34,11 @@
     VerticalAlignment="Center"
     Background="#FFFDFF0A"
     BorderBrush="#FF060606"
-    Click="Button_Click"
+    Click="Button_Quitter"
     Content="Quitter"
     FontSize="24"
     FontWeight="Bold" />
-        <TextBox
+        <Label
             x:Name="texte_mort"
             Canvas.Left="570"
             Canvas.Top="144"
@@ -48,8 +48,9 @@
             FontSize="72"
             FontWeight="Black"
             Foreground="#FFFB2D2D"
-            Text="VOU ETRE MORT"
-            TextWrapping="Wrap" Background="Black" />
+            Content="VOU ÊTRE MORT"
+            Background="Black"/>
+        <Label x:Name="NbKillGameOver" Content="Nombre de kill : " Canvas.Left="500" Canvas.Top="370" FontSize="52" Foreground="White" FontWeight="Bold"/>
 
     </Canvas>
 </Window>

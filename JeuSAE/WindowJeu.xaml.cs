@@ -22,8 +22,6 @@ namespace JeuSAE
     public partial class WindowJeu : Window
     {
         ImageBrush background_01 = new ImageBrush();
-        ImageBrush btn_solo = new ImageBrush();
-        ImageBrush btn_1vs1 = new ImageBrush();
         ImageBrush btn_parametre = new ImageBrush();
 
 
@@ -62,14 +60,14 @@ namespace JeuSAE
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
-            if ( this.DialogResult != true )
-            App.Current.Shutdown();
+
+            if (this.DialogResult != true)
+                App.Current.Shutdown();
         }
 
-
-
-
-
+        private void quitter_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }
