@@ -10,7 +10,7 @@
     Height="706"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Closed="Window_Closed">
     <Grid Background="Black">
         <Button
             x:Name="bouton_reprendre"
