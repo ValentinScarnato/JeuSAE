@@ -38,7 +38,7 @@ namespace JeuSAE
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
-        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
+        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 3;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
         string orientationJoueur = "droite";
@@ -544,6 +544,22 @@ namespace JeuSAE
                         Thread.Sleep(80);
                     }
 
+                }
+                if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
+                {
+                    Canvas.SetLeft(y, Canvas.GetLeft(y)-VITESSE_ZOMBIE);
+                }
+                if (Canvas.GetLeft(y) < Canvas.GetLeft(joueur))
+                {
+                    Canvas.SetLeft(y, Canvas.GetLeft(y) + VITESSE_ZOMBIE);
+                }
+                if (Canvas.GetTop(y) < Canvas.GetTop(joueur))
+                {
+                    Canvas.SetTop(y, Canvas.GetTop(y) + VITESSE_ZOMBIE);
+                }
+                if (Canvas.GetTop(y) > Canvas.GetTop(joueur))
+                {
+                    Canvas.SetTop(y, Canvas.GetTop(y) - VITESSE_ZOMBIE);
                 }
 
             }
