@@ -34,18 +34,27 @@
             VerticalAlignment="Top"
             Background="#FFFFFF0A"
             BorderBrush="#FF020202"
+            Click="bouton_quitter_Click"
             Content="Menu Principal"
             FontSize="24"
-            FontWeight="Bold" Click="bouton_quitter_Click" />
+            FontWeight="Bold" />
         <Label
             x:Name="texte_pause"
             Width="314"
             Margin="0,100,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
+            Content="PAUSE l l"
             FontSize="72"
-            Content="PAUSE l l" Foreground="White"
-            />
+            Foreground="White" />
+        <TextBlock
+            Margin="0,526,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            FontSize="24"
+            Foreground="Red"
+            Text="Appuyez sur K pour activer le code Triche"
+            TextWrapping="Wrap" />
 
     </Grid>
 </Window>

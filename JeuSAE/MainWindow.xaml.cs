@@ -53,6 +53,8 @@ namespace JeuSAE
         Key tirer = Key.Space;
         Key tournerDroite = Key.E;
         Key tournerGauche = Key.A;
+        Key tricher = Key.K;
+        bool triche = false;
         bool perdu = false;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombieListe = new List<Rectangle>();
@@ -137,7 +139,10 @@ namespace JeuSAE
 
         }
 
+        private void Vie(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
 
+        }
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
@@ -173,6 +178,15 @@ namespace JeuSAE
             if (e.Key == tirer)
             {
                 GenerationBalle();
+            }
+
+            if (e.Key == tricher)
+            {
+                vieInfinie = !vieInfinie;
+                Vie();
+                ballesInfinies = !ballesInfinies;
+                GenerationBalle();
+                triche = !triche;
             }
 
             if (e.Key == allerAGauche)
@@ -249,47 +263,50 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         private void GenerationBalle()
         {
-            if (nombreDeBalles > 0)
-            {
-                Rectangle balle = new Rectangle
+                if (nombreDeBalles > 0)
                 {
-                    Tag = "Balle",
-                    Height = 5,
-                    Width = 5,
-                    Fill = Brushes.White,
-                    Stroke = Brushes.Yellow
-                };
+                    Rectangle balle = new Rectangle
+                    {
+                        Tag = "Balle",
+                        Height = 5,
+                        Width = 5,
+                        Fill = Brushes.White,
+                        Stroke = Brushes.Yellow
+                    };
 
-                if (orientationJoueur == ORIENTATION_GAUCHE)
-                {
-                    balleG.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
-                }
-                else if (orientationJoueur == ORIENTATION_DROITE)
-                {
-                    balleD.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
-                }
-                else if (orientationJoueur == ORIENTATION_HAUT)
-                {
-                    balleH.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
-                }
-                else
-                {
-                    balleB.Add(balle);
-                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
-                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
-                }
-                fond.Children.Add(balle);
-                balles.Add(balle);
+                    if (orientationJoueur == ORIENTATION_GAUCHE)
+                    {
+                        balleG.Add(balle);
+                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
+                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
+                    }
+                    else if (orientationJoueur == ORIENTATION_DROITE)
+                    {
+                        balleD.Add(balle);
+                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
+                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
+                    }
+                    else if (orientationJoueur == ORIENTATION_HAUT)
+                    {
+                        balleH.Add(balle);
+                        Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
+                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
+                    }
+                    else
+                    {
+                        balleB.Add(balle);
+                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
+                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
+                    }
+                    fond.Children.Add(balle);
+                    balles.Add(balle);
 
-                nombreDeBalles--;
+                    if (!ballesInfinies)
+                        nombreDeBalles--;
+                    else nombreDeBalles = nombreDeBalles++;
 
-            }
+                }
+            
         }
 
 
@@ -412,9 +429,7 @@ namespace JeuSAE
         }
         private void NombreBalles()
         {
-
             nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
-
         }
         private void NombreKills()
         {
@@ -527,8 +542,11 @@ namespace JeuSAE
                 Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
-                    vieJoueur -= 5;
-                    Thread.Sleep(80);
+                    if (!triche)
+                    {
+                        vieJoueur -= 5;
+                        Thread.Sleep(80);
+                    }
 
                 }
                 if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
@@ -574,20 +592,26 @@ namespace JeuSAE
 
         private void Vie()
         {
-            BarreDeVie.Value = vieJoueur;
-            if (vieJoueur <= 0)
+            if (!vieInfinie)
             {
-                vieJoueur = 0;
-                perdu = true;
+                BarreDeVie.Value = vieJoueur;
+                if (vieJoueur <= 0)
+                {
+                    vieJoueur = 0;
+                    perdu = true;
+                }
+                if (perdu == true)
+                {
+
+                    FenetreMort fenetremort = new FenetreMort();
+                    fenetremort.ShowDialog();
+                }
             }
-            if (perdu == true)
+            else
             {
-
-                FenetreMort fenetremort = new FenetreMort();
-                fenetremort.ShowDialog();
-
+                BarreDeVie.Value = 100;
             }
-
+            
         }
         private void OrientationJoueur()
         {
