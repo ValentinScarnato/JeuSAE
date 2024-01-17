@@ -29,10 +29,11 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
-
+        int manche = 1;
         public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
+
         private static int VITESSE_BALLE_JOUEUR = 20;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
@@ -350,7 +351,7 @@ namespace JeuSAE
                         break;
                     case 2:
                         Canvas.SetTop(ennemi, (int)Application.Current.MainWindow.Height);
-                        Canvas.SetLeft(ennemi, (position.Next((int)ennemi.Height , (int)Application.Current.MainWindow.Width)));
+                        Canvas.SetLeft(ennemi, (position.Next((int)ennemi.Height, (int)Application.Current.MainWindow.Width)));
                         break;
                     case 3:
                         Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
@@ -518,7 +519,7 @@ namespace JeuSAE
             }
             foreach (Rectangle y in zombieListe)
             {
-
+                String orientationZombieX = "", orientationZombieY = "";
                 Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
@@ -532,20 +533,25 @@ namespace JeuSAE
                 if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
                 {
                     Canvas.SetLeft(y, Canvas.GetLeft(y) - VITESSE_ZOMBIE);
+                    orientationZombieX = ORIENTATION_GAUCHE;
 
                 }
                 if (Canvas.GetLeft(y) < Canvas.GetLeft(joueur))
                 {
                     Canvas.SetLeft(y, Canvas.GetLeft(y) + VITESSE_ZOMBIE);
+                    orientationZombieX = ORIENTATION_DROITE;
                 }
                 if (Canvas.GetTop(y) < Canvas.GetTop(joueur))
                 {
                     Canvas.SetTop(y, Canvas.GetTop(y) + VITESSE_ZOMBIE);
+                    orientationZombieY = ORIENTATION_HAUT;
                 }
                 if (Canvas.GetTop(y) > Canvas.GetTop(joueur))
                 {
                     Canvas.SetTop(y, Canvas.GetTop(y) - VITESSE_ZOMBIE);
+                    orientationZombieY = ORIENTATION_BAS;
                 }
+                OrientationZombie(y, orientationZombieX, orientationZombieY);
 
             }
             foreach (Rectangle y in objetASupprimer)
@@ -569,8 +575,32 @@ namespace JeuSAE
 
 
         }
+        private void OrientationZombie(Rectangle x, String orientationZombieX, String orientationZombieY)
+        {
+            x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
+
+            if (orientationZombieY == ORIENTATION_HAUT)
+                x.RenderTransform = new RotateTransform(90, x.Width / 2, x.Height / 2);
 
 
+            if (orientationZombieY == ORIENTATION_BAS)
+                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2);
+            if (orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(180, x.Width / 2, x.Height / 2);
+            if (orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
+
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(135, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(45, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(-135, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(-45, x.Width / 2, x.Height / 2);
+
+
+        }
         private void Vie()
         {
             if (!vieInfinie)
@@ -594,6 +624,7 @@ namespace JeuSAE
             }
 
         }
+
         private void OrientationJoueur()
         {
             joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
