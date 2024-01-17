@@ -34,7 +34,6 @@ namespace JeuSAE
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
-        private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
         bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
@@ -85,8 +84,8 @@ namespace JeuSAE
 
 
         ImageBrush pause = new ImageBrush();
-        DispatcherTimer interval = new DispatcherTimer();
-        DispatcherTimer mineuteur = new DispatcherTimer();
+        public DispatcherTimer interval = new DispatcherTimer();
+        public DispatcherTimer mineuteur = new DispatcherTimer();
 
         public void GenerationImage()
         {
@@ -142,26 +141,18 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
+            mineuteur.Stop();
+            interval.Stop();
             Pause pause = new Pause();
             pause.ShowDialog();
-            Pose = true;
-            Chronometre_Tick();
         }
 
 
 
         private void Chronometre_Tick()
         {
-
-            if (Pose == false)
-            {
-                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
-                //texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
-            }
-            else if (Pose == true)
-            {
-                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
-            }
+            minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
+            texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
         }
 
         /*----------------------------------------------------*/
