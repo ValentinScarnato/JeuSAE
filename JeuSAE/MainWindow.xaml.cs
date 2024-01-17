@@ -173,7 +173,7 @@ namespace JeuSAE
                 vieInfinie = !vieInfinie;
                 Vie();
                 ballesInfinies = !ballesInfinies;
-                GenerationBalle();
+                
                 triche = !triche;
             }
 
