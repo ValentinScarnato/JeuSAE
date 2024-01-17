@@ -67,7 +67,8 @@ namespace JeuSAE
         /*----------------------------------------------------*/
 
         private int nombreDeBalles = 15;
-        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
+        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
+        int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         int killsJoueur = 0;
         int vieJoueur = VIE_JOUEUR;
         int manche = 1;
@@ -89,11 +90,13 @@ namespace JeuSAE
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombieListe = new List<Rectangle>();
         private List<Rectangle> munitionListe = new List<Rectangle>();
+        private List<Rectangle> soinListe = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
         private List<Rectangle> balleG = new List<Rectangle>();
         private List<Rectangle> balleD = new List<Rectangle>();
         private List<Rectangle> balleH = new List<Rectangle>();
         private List<Rectangle> balleB = new List<Rectangle>();
+
 
         /*----------------------------------------------------*/
         /*--------------------IMAGEBRUSH----------------------*/
@@ -156,7 +159,7 @@ namespace JeuSAE
 
             interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
             interval.Tick += GenerMunitionsConditions;
-
+            interval.Tick += GenerKitSoinConditions;
             /*----------------------------------------------------*/
             /*-------------------TEMPS----------------------------*/
             /*----------------------------------------------------*/
@@ -333,7 +336,6 @@ namespace JeuSAE
 
                     munitionListe.Add(boiteMun);
                     fond.Children.Add(boiteMun);
-                    nombreMunitionsMap++;
 
                 }
             }
@@ -345,6 +347,43 @@ namespace JeuSAE
         {
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
             Generation_Munitions(nombreMunitionMaxMemeTemps);
+            interval.Stop();
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-----------------GENERATION DE SOIN-----------------*/
+        /*----------------------------------------------------*/
+
+        private void GenerationKitSoin(int nombreSoinMaXMemeTemps)
+        {
+            Random aleatoire = new Random();
+            if (apparitionVie)
+            {
+                for (int i = 0; i < nombreSoinMaXMemeTemps; i++)
+                {
+                    Rectangle kitSoin = new Rectangle
+                    {
+                        Tag = "Kit_Soin",
+                        Height = 45,
+                        Width = 52,
+                        Fill = soin
+                    };
+                    int pointApparition = aleatoire.Next(1, 1);
+
+                    Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
+                    Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
+
+                    soinListe.Add(kitSoin);
+                    fond.Children.Add(kitSoin);
+                }
+            }
+        }
+
+        private void GenerKitSoinConditions(object sender, EventArgs e)
+        {
+            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
+            GenerationKitSoin(nombreSoinMaXMemeTemps);
             interval.Stop();
 
         }
