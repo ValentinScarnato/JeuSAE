@@ -33,6 +33,8 @@ namespace JeuSAE
 
         private void bouton_reprendre_Click(object sender, RoutedEventArgs e)
         {
+            ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
+            ((MainWindow)Application.Current.MainWindow).interval.Start();
             Close();
         }
 
