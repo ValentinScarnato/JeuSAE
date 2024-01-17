@@ -37,14 +37,13 @@ namespace JeuSAE
         private bool Pose = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool munitions = true, lancerTempsMunitions = true;
+        bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
         public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 6;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         private TimeSpan minuterie;
-        private TimeSpan minuterieMunitions;
         string orientationJoueur = "droite";
         int killsJoueur = 0;
-        int BANDEAU = 60;
+        private static int BANDEAU = 60;
         int vieJoueur = VIE_JOUEUR;
         private int nombreDeBalles = 15;
         Key avancer = Key.Z;
@@ -56,7 +55,9 @@ namespace JeuSAE
         Key tournerGauche = Key.A;
         bool perdu = false;
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
-        private List<Rectangle> zombies = new List<Rectangle>();
+        private List<Rectangle> zombieListe = new List<Rectangle>();
+        private List<Rectangle> munitionListe = new List<Rectangle>();
+
         private List<Rectangle> balles = new List<Rectangle>();
         private List<Rectangle> balleG = new List<Rectangle>();
         private List<Rectangle> balleD = new List<Rectangle>();
@@ -82,6 +83,8 @@ namespace JeuSAE
 
 
         ImageBrush pause = new ImageBrush();
+        DispatcherTimer interval = new DispatcherTimer();
+        DispatcherTimer mineuteur = new DispatcherTimer();
 
         public void GenerationImage()
         {
@@ -110,68 +113,41 @@ namespace JeuSAE
             WindowJeu menu = new WindowJeu();
             menu.ShowDialog();
             InitializeComponent();
-            Temps();
-            TempsMunitions();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
+            interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+            interval.Tick += GenerMunitionsConditions;
 
+            /*----------------------------------------------------*/
+            /*-------------------TEMPS----------------------------*/
+            /*----------------------------------------------------*/
+            mineuteur.Interval = TimeSpan.FromMilliseconds(16);
 
+            mineuteur.Tick += Moteur_Jeu;
 
+            mineuteur.Start();
         }
-        /*----------------------------------------------------*/
-        /*-------------------TEMPS----------------------------*/
-        /*----------------------------------------------------*/
-
-        public void Temps()
+        private void GenerMunitionsConditions(object sender, EventArgs e)
         {
-            DispatcherTimer minuterie = new DispatcherTimer();
-
-                minuterie.Interval = TimeSpan.FromMilliseconds(16);
-
-                minuterie.Tick += Moteur_Jeu;
-
-                minuterie.Start();
-
-
+            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
+            Generation_Munitions(nombreMunitionMaxMemeTemps);
+            interval.Stop();
 
         }
-        public void TempsMunitions() 
-        {
-            DispatcherTimer inertval = new DispatcherTimer();
-
-                inertval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
-
-                inertval.Tick += GenerMunitionsConditions;
-
-            if (munitions == true)
-            {
-                inertval.Stop();
-            }
-            if (lancerTempsMunitions == true)
-            {
-                  inertval.Start();
-            }
-        }
-
-    private void GenerMunitionsConditions(object sender, EventArgs e)
-    {
-            // Appeler cette méthode à chaque tick du timer (toutes les 10 secondes)
-            if (munitions == false)
-                Generation_Munitions(nombreMunitionMaxMemeTemps);
-            
-    }
 
 
 
-    private void bouton_pause_Click(object sender, RoutedEventArgs e)
+        private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
             Pause pause = new Pause();
             pause.ShowDialog();
             Pose = true;
             Chronometre_Tick();
         }
+
+
 
         private void Chronometre_Tick()
         {
@@ -186,7 +162,6 @@ namespace JeuSAE
                 minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
             }
         }
-
 
         /*----------------------------------------------------*/
         /*-----------------Appui touche-----------------------*/
@@ -310,6 +285,8 @@ namespace JeuSAE
                     Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
                 }
                 fond.Children.Add(balle);
+                balles.Add(balle);
+
                 nombreDeBalles--;
 
             }
@@ -384,7 +361,7 @@ namespace JeuSAE
 
 
                 }
-
+                zombieListe.Add(ennemi);
                 fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
 
@@ -401,33 +378,31 @@ namespace JeuSAE
         {
 
             Random aleatoire = new Random();
-            for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
+            if (apparitionMunitions)
             {
-                Rectangle boite_mun = new Rectangle
+                for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
                 {
-                    Tag = "boite_munitions",
-                    Height = 45,
-                    Width = 52,
-                    Fill = boiteMunition
-                };
-                int pointApparition = aleatoire.Next(1, 1);
-                switch (pointApparition)
-                {
-                    case 1:
-                        Canvas.SetTop(boite_mun, aleatoire.Next(80, 900));
-                        Canvas.SetLeft(boite_mun, aleatoire.Next(20, 1730));
-                        break;
+                    Rectangle boiteMun = new Rectangle
+                    {
+                        Tag = "boite_munitions",
+                        Height = 45,
+                        Width = 52,
+                        Fill = boiteMunition
+                    };
+                    int pointApparition = aleatoire.Next(1, 1);
+
+                    Canvas.SetTop(boiteMun, aleatoire.Next(80, 900));
+                    Canvas.SetLeft(boiteMun, aleatoire.Next(20, 1730));
+
+                    munitionListe.Add(boiteMun);
+                    fond.Children.Add(boiteMun);
+                    nombreMunitionsMap++;
+
                 }
-
-                fond.Children.Add(boite_mun);
-                nombreMunitionsMap++;
-                
-
             }
-            munitions = true;
-            lancerTempsMunitions = false;
 
-    }
+
+        }
         private void NombreEnnemis()
         {
             if (ennemisRestants >= 1)
@@ -447,24 +422,52 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
-        private void Test(Rectangle x)
+        private bool InteractionBalles(Rectangle x, Rect zoneJoueur)
         {
-            if (Canvas.GetTop(x) < 60)
+
+
+            Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
+            if (Canvas.GetTop(x) < BANDEAU)
             {
                 objetASupprimer.Add(x);
+                return true;
             }
             if (Canvas.GetLeft(x) < 0)
             {
                 objetASupprimer.Add(x);
+                return true;
             }
             if (Canvas.GetLeft(x) < 0)
             {
                 objetASupprimer.Add(x);
+                return true;
             }
             if (Canvas.GetLeft(x) > fond.Width)
             {
                 objetASupprimer.Add(x);
+                return true;
             }
+            foreach (Rectangle y in zombieListe)
+            {
+
+                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+
+                if (balle.IntersectsWith(ennemiZone))
+                {
+
+                    objetASupprimer.Add(x);
+                    objetASupprimer.Add(y);
+                    nombreEnnemisMap--;
+                    ennemisRestants--;
+                    killsJoueur += 1;
+                    return true;
+                }
+
+            }
+
+
+
+            return false;
         }
         private void Interactions()
         {
@@ -472,92 +475,86 @@ namespace JeuSAE
             foreach (Rectangle x in balleB)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) + VITESSE_BALLE_JOUEUR);
-                Test(x);
+                if (InteractionBalles(x, zoneJoueur))
+                {
+                    objetASupprimer.Add(x);
 
+                }
             }
             foreach (Rectangle x in balleD)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_BALLE_JOUEUR);
-                Test(x);
+                if (InteractionBalles(x, zoneJoueur))
+                {
+                    objetASupprimer.Add(x);
+
+                }
             }
             foreach (Rectangle x in balleG)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - VITESSE_BALLE_JOUEUR);
-                Test(x);
+
+                if (InteractionBalles(x, zoneJoueur))
+                {
+                    objetASupprimer.Add(x);
+
+
+                }
             }
             foreach (Rectangle x in balleH)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
-                Test(x);
-            }
+                if (InteractionBalles(x, zoneJoueur))
+                {
+                    objetASupprimer.Add(x);
 
-            foreach (var x in fond.Children.OfType<Rectangle>())
+                }
+            }
+            foreach (Rectangle z in munitionListe)
             {
-                if (x is Rectangle && (string)x.Tag == "Balle")
+                Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(z), Canvas.GetTop(z), z.Width, z.Height);
+                if (zoneJoueur.IntersectsWith(boiteMunitionsZone))
                 {
+                    nombreDeBalles = 15;
+                    objetASupprimer.Add(z);
 
-
-
-                    Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-
-
-                    foreach (var y in fond.Children.OfType<Rectangle>())
-                    {
-
-                        if (y is Rectangle && (string)y.Tag == "Ennemi")
-                        {
-                            Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
-
-                            if (balle.IntersectsWith(ennemiZone))
-                            {
-                                objetASupprimer.Add(x);
-                                objetASupprimer.Add(y);
-                                nombreEnnemisMap--;
-                                ennemisRestants--;
-                                killsJoueur += 1;
-                            }
-
-                        }
-
-                    }
 
                 }
-                if (x is Rectangle && (string)x.Tag == "Ennemi")
+            }
+            foreach (Rectangle y in zombieListe)
+            {
+
+                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
+                    vieJoueur -= 5;
+                    Thread.Sleep(80);
 
-                    Rect ennemiZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                    if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
-                    {
-                        vieJoueur -= 5;
-                        System.Threading.Thread.Sleep(80);
-
-                    }
-                }
-                if (x is Rectangle && (string)x.Tag == "boite_munitions")
-                {
-
-                    Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-                    if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < MUNITIONS_MAX_JOUEUR)
-                    {
-                        nombreDeBalles = 15;
-                        objetASupprimer.Add(x);
-                        System.Threading.Thread.Sleep(80);
-                        munitions = false;
-                        lancerTempsMunitions = true;
-
-                    }
                 }
 
             }
-
-
-
-
             foreach (Rectangle y in objetASupprimer)
             {
                 fond.Children.Remove(y);
+                munitionListe.Remove(y);
+                zombieListe.Remove(y);
+                balles.Remove(y);
+                if (balleG.Contains(y))
+                    balleG.Remove(y);
+                if (balleD.Contains(y))
+                    balleD.Remove(y);
+                if (balleH.Contains(y))
+                    balleH.Remove(y);
+                if (balleB.Contains(y))
+                    balleB.Remove(y);
+
+
             }
+
+
+
         }
+
 
         private void Vie()
         {
@@ -607,6 +604,13 @@ namespace JeuSAE
             if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
                 Generation_Zombies(nombreZombieMaxMemeTemps);
         }
+        private void FinManche()
+        {
+            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
+            {
+
+            }
+        }
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -618,7 +622,7 @@ namespace JeuSAE
             OrientationJoueur();
             Chronometre_Tick();
             GenerZombieConditions();
-
+            FinManche();
 
         }
 

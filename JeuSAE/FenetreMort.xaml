@@ -40,11 +40,11 @@
     FontWeight="Bold" />
         <Label
             x:Name="texte_mort"
-            Canvas.Left="570"
+            Canvas.Left="550"
             Canvas.Top="144"
-            Width="610"
+            Width="650"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             FontSize="72"
             FontWeight="Black"
             Foreground="#FFFB2D2D"

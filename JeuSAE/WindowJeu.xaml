@@ -55,6 +55,18 @@
             BorderThickness="0,0,0,0"
             Click="parametre_Click"
             Content="" />
+        <Border
+            Width="1750"
+            Height="964"
+            BorderBrush="Black"
+            BorderThickness="1">
+            <Rectangle
+                x:Name="rectangle_LastNight"
+                Margin="421,180,421,599"
+                Opacity="0.99" Fill="Red" />
+        </Border>
+
+
 
     </Canvas>
 </Window>
