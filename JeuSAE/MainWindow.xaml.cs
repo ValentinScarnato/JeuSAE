@@ -139,10 +139,6 @@ namespace JeuSAE
 
         }
 
-        private void Vie(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-        }
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
@@ -609,7 +605,7 @@ namespace JeuSAE
             }
             else
             {
-                BarreDeVie.Value = 100;
+                BarreDeVie.Value = BarreDeVie.Maximum;
             }
             
         }
