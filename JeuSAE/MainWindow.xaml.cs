@@ -291,7 +291,7 @@ namespace JeuSAE
 
                 if (!ballesInfinies)
                     nombreDeBalles--;
-                else nombreDeBalles = nombreDeBalles++;
+                
 
             }
 
