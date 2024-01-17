@@ -259,50 +259,50 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         private void GenerationBalle()
         {
-                if (nombreDeBalles > 0)
+            if (nombreDeBalles > 0)
+            {
+                Rectangle balle = new Rectangle
                 {
-                    Rectangle balle = new Rectangle
-                    {
-                        Tag = "Balle",
-                        Height = 5,
-                        Width = 5,
-                        Fill = Brushes.White,
-                        Stroke = Brushes.Yellow
-                    };
+                    Tag = "Balle",
+                    Height = 5,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Yellow
+                };
 
-                    if (orientationJoueur == ORIENTATION_GAUCHE)
-                    {
-                        balleG.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
-                    }
-                    else if (orientationJoueur == ORIENTATION_DROITE)
-                    {
-                        balleD.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
-                    }
-                    else if (orientationJoueur == ORIENTATION_HAUT)
-                    {
-                        balleH.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
-                    }
-                    else
-                    {
-                        balleB.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
-                    }
-                    fond.Children.Add(balle);
-                    balles.Add(balle);
-
-                    if (!ballesInfinies)
-                        nombreDeBalles--;
-                    else nombreDeBalles = nombreDeBalles++;
-
+                if (orientationJoueur == ORIENTATION_GAUCHE)
+                {
+                    balleG.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
                 }
-            
+                else if (orientationJoueur == ORIENTATION_DROITE)
+                {
+                    balleD.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
+                }
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                {
+                    balleH.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
+                }
+                else
+                {
+                    balleB.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
+                }
+                fond.Children.Add(balle);
+                balles.Add(balle);
+
+                if (!ballesInfinies)
+                    nombreDeBalles--;
+                else nombreDeBalles = nombreDeBalles++;
+
+            }
+
         }
 
 
@@ -335,43 +335,36 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*-------------- GENERATION DE ZOMBIES ---------------*/
         /*----------------------------------------------------*/
+
         private void Generation_Zombies(int nombreZombieMaxMemeTemps)
         {
-            Random aleatoire = new Random();
             for (int i = 0; i < nombreZombieMaxMemeTemps; i++)
             {
                 Rectangle ennemi = new Rectangle
                 {
                     Tag = "Ennemi",
-                    Height = 86,
-                    Width = 86,
+                    Height = 80,
+                    Width = 80,
                     Fill = zombar
                 };
-                int pointApparition = aleatoire.Next(1, 5);
+                Random aleatoire = new Random(); Random position = new Random();
 
-                switch (pointApparition)
+                int coteApparition = aleatoire.Next(1, 4);
+
+                switch (coteApparition)
                 {
                     case 1:
-                        Canvas.SetTop(ennemi, 460);
-                        Canvas.SetLeft(ennemi, 1100);
+                        Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
+                        Canvas.SetLeft(ennemi, (-ennemi.Width));
                         break;
                     case 2:
-                        Canvas.SetTop(ennemi, 60);
-                        Canvas.SetLeft(ennemi, 300);
+                        Canvas.SetTop(ennemi, (int)Application.Current.MainWindow.Height);
+                        Canvas.SetLeft(ennemi, (position.Next((int)ennemi.Height , (int)Application.Current.MainWindow.Width)));
                         break;
                     case 3:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 400);
+                        Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
+                        Canvas.SetLeft(ennemi, ennemi.Width + (int)Application.Current.MainWindow.Width);
                         break;
-                    case 4:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 590);
-                        break;
-                    case 5:
-                        Canvas.SetTop(ennemi, 400);
-                        Canvas.SetLeft(ennemi, 1000);
-                        break;
-
 
                 }
                 zombieListe.Add(ennemi);
@@ -547,7 +540,8 @@ namespace JeuSAE
                 }
                 if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
                 {
-                    Canvas.SetLeft(y, Canvas.GetLeft(y)-VITESSE_ZOMBIE);
+                    Canvas.SetLeft(y, Canvas.GetLeft(y) - VITESSE_ZOMBIE);
+
                 }
                 if (Canvas.GetLeft(y) < Canvas.GetLeft(joueur))
                 {
@@ -607,7 +601,7 @@ namespace JeuSAE
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
             }
-            
+
         }
         private void OrientationJoueur()
         {
