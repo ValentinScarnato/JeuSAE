@@ -614,7 +614,7 @@ namespace JeuSAE
                 Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
                 if (zoneJoueur.IntersectsWith(kitSoinZone))
                 {
-                    BarreDeVie.Value = VIE_JOUEUR;
+                    vieJoueur = VIE_JOUEUR;
                     objetASupprimer.Add(w);
                 }
             }
