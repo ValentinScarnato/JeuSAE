@@ -41,6 +41,12 @@ namespace JeuSAE
             Application.Current.Shutdown();
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+
+        }
+
         /*
 WindowJeu windowJeu = new WindowJeu();
    windowJeu.ShowDialog();

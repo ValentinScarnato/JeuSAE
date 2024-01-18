@@ -34,18 +34,25 @@ namespace JeuSAE
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         private static int VITESSE_BALLE_JOUEUR = 20;
-        private bool Pose = false;
-        bool gauche, droite, haut, bas = false;
-        bool FinDePartie = false;
-        bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
-        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 3;
-        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0, nombreMunitionsMap = 0, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
-        private TimeSpan minuterie;
-        string orientationJoueur = "droite";
-        int killsJoueur = 0;
         private static int BANDEAU = 60;
-        int vieJoueur = VIE_JOUEUR;
-        private int nombreDeBalles = 15;
+        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 3;
+
+        /*----------------------------------------------------*/
+        /*--------------------TIMESPAN------------------------*/
+        /*----------------------------------------------------*/
+
+        private TimeSpan minuterie;
+
+        /*----------------------------------------------------*/
+        /*----------------------STRING------------------------*/
+        /*----------------------------------------------------*/
+
+        string orientationJoueur = "droite";
+
+        /*----------------------------------------------------*/
+        /*-----------------------KEY--------------------------*/
+        /*----------------------------------------------------*/
+
         Key avancer = Key.Z;
         Key reculer = Key.S;
         Key allerADroite = Key.D;
@@ -54,12 +61,36 @@ namespace JeuSAE
         Key tournerDroite = Key.E;
         Key tournerGauche = Key.A;
         Key tricher = Key.K;
+
+        /*----------------------------------------------------*/
+        /*-----------------------BOOLEAN----------------------*/
+        /*----------------------------------------------------*/
+
+        private int nombreDeBalles = 15;
+        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
+        int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
+        int killsJoueur = 0;
+        int vieJoueur = VIE_JOUEUR;
+        int manche = 1;
+
+        /*----------------------------------------------------*/
+        /*-----------------------BOOLEAN----------------------*/
+        /*----------------------------------------------------*/
+
+        bool gauche, droite, haut, bas = false;
+        bool FinDePartie = false;
+        bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
+
+        /*----------------------------------------------------*/
+        /*-----------------------LISTE------------------------*/
+        /*----------------------------------------------------*/
+
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombieListe = new List<Rectangle>();
         private List<Rectangle> munitionListe = new List<Rectangle>();
-
+        private List<Rectangle> soinListe = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
         private List<Rectangle> balleG = new List<Rectangle>();
         private List<Rectangle> balleD = new List<Rectangle>();
@@ -67,11 +98,8 @@ namespace JeuSAE
         private List<Rectangle> balleB = new List<Rectangle>();
 
 
-
-
-
         /*----------------------------------------------------*/
-        /*---------------GENERATION D'IMAGES------------------*/
+        /*--------------------IMAGEBRUSH----------------------*/
         /*----------------------------------------------------*/
 
         ImageBrush iconeMunition = new ImageBrush();
@@ -82,11 +110,20 @@ namespace JeuSAE
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
         ImageBrush boiteArme = new ImageBrush();
-
-
+        ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
-        DispatcherTimer interval = new DispatcherTimer();
-        DispatcherTimer mineuteur = new DispatcherTimer();
+
+        /*----------------------------------------------------*/
+        /*--------------------DISPATCHERTIMER-----------------*/
+        /*----------------------------------------------------*/
+
+        public DispatcherTimer interval = new DispatcherTimer();
+        public DispatcherTimer mineuteur = new DispatcherTimer();
+        public DispatcherTimer minuteur2 = new DispatcherTimer();
+
+        /*----------------------------------------------------*/
+        /*--------------- GENERATION IMAGE  ------------------*/
+        /*----------------------------------------------------*/
 
         public void GenerationImage()
         {
@@ -106,9 +143,11 @@ namespace JeuSAE
             iconeVie.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/coeurs.png"));
             icone_vie.Fill = iconeVie;
             zombar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/idle0000.png"));
+            soin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Healthcare.png"));
             pause.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/pause.png"));
             bouton_pause.Background = pause;
         }
+
         public MainWindow()
         {
 
@@ -117,20 +156,197 @@ namespace JeuSAE
             InitializeComponent();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
+            GenerationKitSoin(nombreSoinMaXMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
-            interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+            /*----------------------------------------------------*/
+            /*---------------------TEMPS--------------------------*/
+            /*----------------------------------------------------*/
+
+            interval.Interval = TimeSpan.FromSeconds(15);
             interval.Tick += GenerMunitionsConditions;
 
-            /*----------------------------------------------------*/
-            /*-------------------TEMPS----------------------------*/
-            /*----------------------------------------------------*/
+            minuteur2.Interval = TimeSpan.FromSeconds(30);
+            minuteur2.Tick += GenerKitSoinConditions;
+
             mineuteur.Interval = TimeSpan.FromMilliseconds(16);
-
             mineuteur.Tick += Moteur_Jeu;
-
             mineuteur.Start();
         }
+
+        /*----------------------------------------------------*/
+        /*-------------------TEMPS DE JEU TXT-----------------*/
+        /*----------------------------------------------------*/
+
+        private void TempsDeJeu()
+        {
+            minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
+            texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
+        }
+
+        /*----------------------------------------------------*/
+        /*--------------- GENERATION DE BALLES ---------------*/
+        /*----------------------------------------------------*/
+
+        private void GenerationBalle()
+        {
+            if (nombreDeBalles > 0)
+            {
+                Rectangle balle = new Rectangle
+                {
+                    Tag = "Balle",
+                    Height = 5,
+                    Width = 5,
+                    Fill = Brushes.White,
+                    Stroke = Brushes.Yellow
+                };
+
+                if (orientationJoueur == ORIENTATION_GAUCHE)
+                {
+                    balleG.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
+                }
+                else if (orientationJoueur == ORIENTATION_DROITE)
+                {
+                    balleD.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
+                }
+                else if (orientationJoueur == ORIENTATION_HAUT)
+                {
+                    balleH.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
+                }
+                else
+                {
+                    balleB.Add(balle);
+                    Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
+                    Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
+                }
+                fond.Children.Add(balle);
+                balles.Add(balle);
+
+                if (!ballesInfinies)
+                    nombreDeBalles--;
+                
+
+            }
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-------------------- DEPLACEMENTS ------------------*/
+        /*----------------------------------------------------*/
+
+        public void Deplacements()
+        {
+
+            if (gauche == true && Canvas.GetLeft(joueur) > 0)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
+            }
+
+            else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
+            }
+            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
+            }
+            else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
+            }
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-------------- GENERATION DE ZOMBIES ---------------*/
+        /*----------------------------------------------------*/
+
+        private void Generation_Zombies(int nombreZombieMaxMemeTemps)
+        {
+            for (int i = 0; i < nombreZombieMaxMemeTemps; i++)
+            {
+                Rectangle ennemi = new Rectangle
+                {
+                    Tag = "Ennemi",
+                    Height = 80,
+                    Width = 80,
+                    Fill = zombar
+                };
+                Random aleatoire = new Random(); Random position = new Random();
+
+                int coteApparition = aleatoire.Next(1, 4);
+
+                switch (coteApparition)
+                {
+                    case 1:
+                        Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
+                        Canvas.SetLeft(ennemi, (-ennemi.Width));
+                        break;
+                    case 2:
+                        Canvas.SetTop(ennemi, (int)Application.Current.MainWindow.Height);
+                        Canvas.SetLeft(ennemi, (position.Next((int)ennemi.Height, (int)Application.Current.MainWindow.Width)));
+                        break;
+                    case 3:
+                        Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
+                        Canvas.SetLeft(ennemi, ennemi.Width + (int)Application.Current.MainWindow.Width);
+                        break;
+
+                }
+                zombieListe.Add(ennemi);
+                fond.Children.Add(ennemi);
+                nombreEnnemisMap++;
+
+
+
+            }
+
+        }
+
+        private void GenerZombieConditions()
+        {
+            if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
+                Generation_Zombies(nombreZombieMaxMemeTemps);
+        }
+
+        /*----------------------------------------------------*/
+        /*--------------GENERATION DE MUNITIONS---------------*/
+        /*----------------------------------------------------*/
+
+        private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
+        {
+
+            Random aleatoire = new Random();
+            if (apparitionMunitions)
+            {
+                for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
+                {
+                    Rectangle boiteMun = new Rectangle
+                    {
+                        Tag = "boite_munitions",
+                        Height = 45,
+                        Width = 52,
+                        Fill = boiteMunition
+                    };
+                    int pointApparition = aleatoire.Next(1, 1);
+
+                    Canvas.SetTop(boiteMun, aleatoire.Next(80, 900));
+                    Canvas.SetLeft(boiteMun, aleatoire.Next(20, 1730));
+
+                    munitionListe.Add(boiteMun);
+                    fond.Children.Add(boiteMun);
+
+                }
+            }
+
+
+        }
+
         private void GenerMunitionsConditions(object sender, EventArgs e)
         {
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
@@ -139,33 +355,69 @@ namespace JeuSAE
 
         }
 
+        /*----------------------------------------------------*/
+        /*-----------------GENERATION DE SOIN-----------------*/
+        /*----------------------------------------------------*/
 
-        private void bouton_pause_Click(object sender, RoutedEventArgs e)
+        private void GenerationKitSoin(int nombreSoinMaXMemeTemps)
         {
-            Pause pause = new Pause();
-            pause.ShowDialog();
-            Pose = true;
-            Chronometre_Tick();
+            Random aleatoire = new Random();
+            if (apparitionVie)
+            {
+                for (int i = 0; i < nombreSoinMaXMemeTemps; i++)
+                {
+                    Rectangle kitSoin = new Rectangle
+                    {
+                        Tag = "Kit_Soin",
+                        Height = 45,
+                        Width = 52,
+                        Fill = soin
+                    };
+                    int pointApparition = aleatoire.Next(1, 1);
+
+                    Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
+                    Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
+
+                    soinListe.Add(kitSoin);
+                    fond.Children.Add(kitSoin);
+                }
+            }
         }
 
-
-
-        private void Chronometre_Tick()
+        private void GenerKitSoinConditions(object sender, EventArgs e)
         {
+            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
+            GenerationKitSoin(nombreSoinMaXMemeTemps);
+            minuteur2.Stop();
 
-            if (Pose == false)
-            {
-                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
-                //texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
-            }
-            else if (Pose == true)
-            {
-                minuterie = minuterie.Add(TimeSpan.FromMilliseconds(0));
-            }
         }
 
         /*----------------------------------------------------*/
-        /*-----------------Appui touche-----------------------*/
+        /*-------AFFICHAGE TEXT(KILL, ENNEMIS, BALLES,)-------*/
+        /*----------------------------------------------------*/
+
+        private void NombreEnnemis()
+        {
+            if (ennemisRestants >= 1)
+                nombre_ennemis.Content = ennemisRestants + " ennemis restants";
+            else
+                nombre_ennemis.Content = ennemisRestants + " ennemi restant";
+        }
+
+        private void NombreBalles()
+        {
+            nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
+        }
+
+        private void NombreKills()
+        {
+
+            nombre_kill.Content = killsJoueur;
+
+        }
+
+        /*----------------------------------------------------*/
+        /*-----------------GESTION DES TOUCHES----------------*/
         /*----------------------------------------------------*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -181,7 +433,7 @@ namespace JeuSAE
                 vieInfinie = !vieInfinie;
                 Vie();
                 ballesInfinies = !ballesInfinies;
-                GenerationBalle();
+
                 triche = !triche;
             }
 
@@ -234,8 +486,6 @@ namespace JeuSAE
             }
         }
 
-
-
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
 
@@ -251,188 +501,10 @@ namespace JeuSAE
                 bas = false;
         }
 
-
-
-
         /*----------------------------------------------------*/
-        /*--------------- GENERATION DE BALLES ---------------*/
+        /*-----------GESTION D'INTERACTION BALLES-------------*/
         /*----------------------------------------------------*/
-        private void GenerationBalle()
-        {
-                if (nombreDeBalles > 0)
-                {
-                    Rectangle balle = new Rectangle
-                    {
-                        Tag = "Balle",
-                        Height = 5,
-                        Width = 5,
-                        Fill = Brushes.White,
-                        Stroke = Brushes.Yellow
-                    };
 
-                    if (orientationJoueur == ORIENTATION_GAUCHE)
-                    {
-                        balleG.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 4.1);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) - balle.Width);
-                    }
-                    else if (orientationJoueur == ORIENTATION_DROITE)
-                    {
-                        balleD.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height / 1.4);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width);
-                    }
-                    else if (orientationJoueur == ORIENTATION_HAUT)
-                    {
-                        balleH.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) - 30);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 1.59);
-                    }
-                    else
-                    {
-                        balleB.Add(balle);
-                        Canvas.SetTop(balle, Canvas.GetTop(joueur) + joueur.Height + 30);
-                        Canvas.SetLeft(balle, Canvas.GetLeft(joueur) + joueur.Width / 3);
-                    }
-                    fond.Children.Add(balle);
-                    balles.Add(balle);
-
-                    if (!ballesInfinies)
-                        nombreDeBalles--;
-                    else nombreDeBalles = nombreDeBalles++;
-
-                }
-            
-        }
-
-
-
-        /*----------------------------------------------------*/
-        /*-------------------- DEPLACEMENTS ------------------*/
-        /*----------------------------------------------------*/
-        public void Deplacements()
-        {
-
-            if (gauche == true && Canvas.GetLeft(joueur) > 0)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
-            }
-
-            else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
-            }
-            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
-            }
-            else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
-            }
-
-        }
-        /*----------------------------------------------------*/
-        /*-------------- GENERATION DE ZOMBIES ---------------*/
-        /*----------------------------------------------------*/
-        private void Generation_Zombies(int nombreZombieMaxMemeTemps)
-        {
-            Random aleatoire = new Random();
-            for (int i = 0; i < nombreZombieMaxMemeTemps; i++)
-            {
-                Rectangle ennemi = new Rectangle
-                {
-                    Tag = "Ennemi",
-                    Height = 86,
-                    Width = 86,
-                    Fill = zombar
-                };
-                int pointApparition = aleatoire.Next(1, 5);
-
-                switch (pointApparition)
-                {
-                    case 1:
-                        Canvas.SetTop(ennemi, 460);
-                        Canvas.SetLeft(ennemi, 1100);
-                        break;
-                    case 2:
-                        Canvas.SetTop(ennemi, 60);
-                        Canvas.SetLeft(ennemi, 300);
-                        break;
-                    case 3:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 400);
-                        break;
-                    case 4:
-                        Canvas.SetTop(ennemi, 500);
-                        Canvas.SetLeft(ennemi, 590);
-                        break;
-                    case 5:
-                        Canvas.SetTop(ennemi, 400);
-                        Canvas.SetLeft(ennemi, 1000);
-                        break;
-
-
-                }
-                zombieListe.Add(ennemi);
-                fond.Children.Add(ennemi);
-                nombreEnnemisMap++;
-
-
-
-            }
-
-        }
-
-        /*----------------------------------------------------*/
-        /*--------------GENERATION DE MUNITIONS---------------*/
-        /*----------------------------------------------------*/
-        private void Generation_Munitions(int nombreMunitionMaxMemeTemps)
-        {
-
-            Random aleatoire = new Random();
-            if (apparitionMunitions)
-            {
-                for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
-                {
-                    Rectangle boiteMun = new Rectangle
-                    {
-                        Tag = "boite_munitions",
-                        Height = 45,
-                        Width = 52,
-                        Fill = boiteMunition
-                    };
-                    int pointApparition = aleatoire.Next(1, 1);
-
-                    Canvas.SetTop(boiteMun, aleatoire.Next(80, 900));
-                    Canvas.SetLeft(boiteMun, aleatoire.Next(20, 1730));
-
-                    munitionListe.Add(boiteMun);
-                    fond.Children.Add(boiteMun);
-                    nombreMunitionsMap++;
-
-                }
-            }
-
-
-        }
-        private void NombreEnnemis()
-        {
-            if (ennemisRestants >= 1)
-                nombre_ennemis.Content = ennemisRestants + " ennemis restants";
-            else
-                nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-        }
-        private void NombreBalles()
-        {
-            nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
-        }
-        private void NombreKills()
-        {
-
-            nombre_kill.Content = killsJoueur;
-
-        }
         private bool InteractionBalles(Rectangle x, Rect zoneJoueur)
         {
 
@@ -480,6 +552,11 @@ namespace JeuSAE
 
             return false;
         }
+
+        /*----------------------------------------------------*/
+        /*---------------GESTION D'INTERACTION----------------*/
+        /*----------------------------------------------------*/
+
         private void Interactions()
         {
             Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
@@ -532,9 +609,18 @@ namespace JeuSAE
 
                 }
             }
+            foreach (Rectangle w in soinListe)
+            {
+                Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
+                if (zoneJoueur.IntersectsWith(kitSoinZone))
+                {
+                    BarreDeVie.Value = VIE_JOUEUR;
+                    objetASupprimer.Add(w);
+                }
+            }
             foreach (Rectangle y in zombieListe)
             {
-
+                String orientationZombieX = "", orientationZombieY = "";
                 Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
@@ -547,20 +633,26 @@ namespace JeuSAE
                 }
                 if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
                 {
-                    Canvas.SetLeft(y, Canvas.GetLeft(y)-VITESSE_ZOMBIE);
+                    Canvas.SetLeft(y, Canvas.GetLeft(y) - VITESSE_ZOMBIE);
+                    orientationZombieX = ORIENTATION_GAUCHE;
+
                 }
                 if (Canvas.GetLeft(y) < Canvas.GetLeft(joueur))
                 {
                     Canvas.SetLeft(y, Canvas.GetLeft(y) + VITESSE_ZOMBIE);
+                    orientationZombieX = ORIENTATION_DROITE;
                 }
                 if (Canvas.GetTop(y) < Canvas.GetTop(joueur))
                 {
                     Canvas.SetTop(y, Canvas.GetTop(y) + VITESSE_ZOMBIE);
+                    orientationZombieY = ORIENTATION_HAUT;
                 }
                 if (Canvas.GetTop(y) > Canvas.GetTop(joueur))
                 {
                     Canvas.SetTop(y, Canvas.GetTop(y) - VITESSE_ZOMBIE);
+                    orientationZombieY = ORIENTATION_BAS;
                 }
+                OrientationZombie(y, orientationZombieX, orientationZombieY);
 
             }
             foreach (Rectangle y in objetASupprimer)
@@ -577,14 +669,15 @@ namespace JeuSAE
                     balleH.Remove(y);
                 if (balleB.Contains(y))
                     balleB.Remove(y);
-
-
             }
 
 
 
         }
 
+        /*----------------------------------------------------*/
+        /*----------------------CHEAT VIE---------------------*/
+        /*----------------------------------------------------*/
 
         private void Vie()
         {
@@ -607,8 +700,13 @@ namespace JeuSAE
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
             }
-            
+
         }
+
+        /*----------------------------------------------------*/
+        /*--------------------Orientation---------------------*/
+        /*----------------------------------------------------*/
+
         private void OrientationJoueur()
         {
             joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
@@ -635,18 +733,46 @@ namespace JeuSAE
                 joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);
             }
         }
-        private void GenerZombieConditions()
-        {
-            if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
-                Generation_Zombies(nombreZombieMaxMemeTemps);
-        }
-        private void FinManche()
-        {
-            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
-            {
 
-            }
+        private void OrientationZombie(Rectangle x, String orientationZombieX, String orientationZombieY)
+        {
+            x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
+
+            if (orientationZombieY == ORIENTATION_HAUT)
+                x.RenderTransform = new RotateTransform(90, x.Width / 2, x.Height / 2);
+
+
+            if (orientationZombieY == ORIENTATION_BAS)
+                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2);
+            if (orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(180, x.Width / 2, x.Height / 2);
+            if (orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
+
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(135, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(45, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)
+                x.RenderTransform = new RotateTransform(-135, x.Width / 2, x.Height / 2);
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE)
+                x.RenderTransform = new RotateTransform(-45, x.Width / 2, x.Height / 2);
+
+
         }
+
+        /*----------------------------------------------------*/
+        /*-----------------------Pause------------------------*/
+        /*----------------------------------------------------*/
+
+        private void bouton_pause_Click(object sender, RoutedEventArgs e)
+        {
+            mineuteur.Stop();
+            interval.Stop();
+            Pause pause = new Pause();
+            pause.ShowDialog();
+        }
+
         private void Moteur_Jeu(object sender, EventArgs e)
         {
             Deplacements();
@@ -656,14 +782,19 @@ namespace JeuSAE
             NombreKills();
             Vie();
             OrientationJoueur();
-            Chronometre_Tick();
+            TempsDeJeu();
             GenerZombieConditions();
             FinManche();
 
         }
 
+        private void FinManche()
+        {
+            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
+            {
 
-
+            }
+        }
 
     }
 }

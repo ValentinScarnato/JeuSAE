@@ -33,6 +33,9 @@ namespace JeuSAE
 
         private void bouton_reprendre_Click(object sender, RoutedEventArgs e)
         {
+            ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
+            ((MainWindow)Application.Current.MainWindow).interval.Start();
+            ((MainWindow)Application.Current.MainWindow).minuteur2.Start();
             Close();
         }
 
@@ -47,6 +50,11 @@ namespace JeuSAE
             Process.Start(cheminApplication);
             Application.Current.Shutdown();
         }
-        
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
+            ((MainWindow)Application.Current.MainWindow).interval.Start();
+        }
     }
 }
