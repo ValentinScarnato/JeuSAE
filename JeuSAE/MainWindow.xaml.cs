@@ -69,7 +69,7 @@ namespace JeuSAE
         private int nombreDeBalles = 15;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
-        public int killsJoueur = 0;
+        public int killsJoueur { get; set; } = 0;
         int vieJoueur = VIE_JOUEUR;
         int manche = 1;
 
@@ -414,7 +414,7 @@ namespace JeuSAE
             nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
         }
 
-        private void NombreKills()
+        public void NombreKills()
         {
 
             nombre_kill.Content = killsJoueur;
@@ -717,7 +717,7 @@ namespace JeuSAE
 
                     FenetreMort fenetremort = new FenetreMort();
                     fenetremort.ShowDialog();
-                    fenetremort.label_kill.Content = killsJoueur;
+                    fenetremort.NombreKills();
                 }
             }
             else

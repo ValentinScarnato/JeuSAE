@@ -20,9 +20,13 @@ namespace JeuSAE
     /// </summary>
     public partial class FenetreMort : Window
     {
+        private int killsJoueur;
+        MainWindow mainwindows;
         public FenetreMort()
         {
             InitializeComponent();
+            this.killsJoueur = killsJoueur;
+            label_kill.Content = $"Nombre de kills : {this.killsJoueur}";
         }
         public void RedemarrerApplication()
         {
@@ -46,7 +50,7 @@ namespace JeuSAE
             Application.Current.Shutdown();
 
         }
-
+        public void NombreKills() { }
         /*
 WindowJeu windowJeu = new WindowJeu();
    windowJeu.ShowDialog();

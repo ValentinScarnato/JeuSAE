@@ -9,60 +9,78 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid Background="Black">
+    <Grid x:Name="grid_parametre" Background="Black">
+        <Rectangle
+            x:Name="grid_Parametre"
+            Width="800"
+            Height="434"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Opacity="0.9"
+            Stroke="Black">
+            <Rectangle.Effect>
+                <BlurEffect />
+            </Rectangle.Effect>
+        </Rectangle>
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,50,0,0"
+            Margin="97,41,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Niveau Du Jeu : "
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,100,0,0"
+            Margin="97,91,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="DROITE : "
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,150,0,0"
+            Margin="97,141,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="HAUT : "
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,200,0,0"
+            Margin="97,191,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="BAS :"
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,250,0,0"
+            Margin="97,241,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="GAUCHE : "
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Label
-            Width="145"
+            Width="172"
             Height="35"
-            Margin="100,300,0,0"
+            Margin="97,291,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="TIRER : "
             FontSize="20"
+            FontWeight="Bold"
             Foreground="White" />
         <Button
             x:Name="Accepter"
@@ -84,8 +102,8 @@
             Click="click_Annuler"
             Content="RETOUR" />
         <ComboBox
-            Width="136"
-            Margin="260,61,0,0"
+            Width="160"
+            Margin="285,52,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
             <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
@@ -94,8 +112,8 @@
 
         <TextBox
             x:Name="bouton_reculer"
-            Width="120"
-            Margin="200,212,0,0"
+            Width="141"
+            Margin="214,203,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="S"
@@ -108,36 +126,37 @@
             Foreground="White" />
         <TextBox
             x:Name="bouton_droite"
-            Width="120"
-            Margin="200,112,0,0"
+            Width="141"
+            Margin="214,103,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="D"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="bouton_avancer"
-            Width="120"
-            Margin="200,160,0,0"
+            Width="141"
+            Margin="214,151,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="Z"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="bouton_gauche"
-            Width="120"
-            Margin="200,260,0,0"
+            Width="141"
+            Margin="214,251,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="Q"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="bouton_tirer"
-            Width="120"
-            Margin="200,310,0,0"
+            Width="141"
+            Margin="214,301,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="Espace"
             TextWrapping="Wrap" />
+
 
     </Grid>
 </Window>

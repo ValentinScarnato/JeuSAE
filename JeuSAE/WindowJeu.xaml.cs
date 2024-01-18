@@ -21,7 +21,7 @@ namespace JeuSAE
     /// </summary>
     public partial class WindowJeu : Window
     {
-        ImageBrush background_01 = new ImageBrush();
+        ImageBrush fondEcran = new ImageBrush();
         ImageBrush btn_parametre = new ImageBrush();
         ImageBrush LastNight = new ImageBrush();
 
@@ -36,8 +36,8 @@ namespace JeuSAE
 
             InitializeComponent();
             
-            background_01.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/zombie_decor.jpg"));
-            zombie_decor.Fill = background_01;
+            fondEcran.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Banger.png"));
+            zombie_decor.Fill = fondEcran;
             
 
             btn_parametre.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/bouton_parametre.png"));

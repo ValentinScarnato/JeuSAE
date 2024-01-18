@@ -26,13 +26,17 @@
             Height="150"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="#FFFFFF0A"
+            Background="#FFA1B0A2"
             BorderThickness="0,0,0,0"
             Click="solo_Click_1"
             Content="Solo"
             FontFamily="Segoe UI"
             FontSize="40"
-            FontWeight="Bold" />
+            FontWeight="Bold">
+            <Button.Effect>
+                <DropShadowEffect />
+            </Button.Effect>
+        </Button>
         <Button
             x:Name="quitter"
             Canvas.Top="640"
@@ -41,12 +45,16 @@
             Height="150"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Background="#FFFFFF07"
+            Background="#FFA1B0A2"
             BorderThickness="0,0,0,0"
             Click="quitter_Click"
             Content="Quitter"
             FontSize="40"
-            FontWeight="Bold" />
+            FontWeight="Bold">
+            <Button.Effect>
+                <DropShadowEffect />
+            </Button.Effect>
+        </Button>
         <Button
             x:Name="parametre"
             Canvas.Left="1600"
@@ -63,7 +71,7 @@
             BorderThickness="1">
             <Rectangle
                 x:Name="rectangle_LastNight"
-                Margin="421,180,421,599"
+                Margin="421,33,421,745"
                 Fill="Red"
                 Opacity="0.99" />
         </Border>

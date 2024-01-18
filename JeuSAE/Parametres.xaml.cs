@@ -19,12 +19,15 @@ namespace JeuSAE
     /// </summary>
     public partial class Parametres : Window
     {
+
         public Parametres()
         {
             InitializeComponent();
+            ImageBrush parametreFond = new ImageBrush();
+            parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Paramtre.png"));
+            grid_Parametre.Fill = parametreFond;
 
         }
-
 
         private void click_Annuler(object sender, RoutedEventArgs e)
         {
