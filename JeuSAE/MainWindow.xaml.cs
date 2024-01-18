@@ -119,6 +119,7 @@ namespace JeuSAE
 
         public DispatcherTimer interval = new DispatcherTimer();
         public DispatcherTimer mineuteur = new DispatcherTimer();
+        public DispatcherTimer minuteur2 = new DispatcherTimer();
 
         /*----------------------------------------------------*/
         /*--------------- GENERATION IMAGE  ------------------*/
@@ -155,23 +156,26 @@ namespace JeuSAE
             InitializeComponent();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
+            GenerationKitSoin(nombreSoinMaXMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
-            interval.Interval = TimeSpan.FromSeconds(15); // Intervalles de 15 secondes
+            /*----------------------------------------------------*/
+            /*---------------------TEMPS--------------------------*/
+            /*----------------------------------------------------*/
+
+            interval.Interval = TimeSpan.FromSeconds(15);
             interval.Tick += GenerMunitionsConditions;
-            interval.Tick += GenerKitSoinConditions;
-            /*----------------------------------------------------*/
-            /*-------------------TEMPS----------------------------*/
-            /*----------------------------------------------------*/
+
+            minuteur2.Interval = TimeSpan.FromSeconds(30);
+            minuteur2.Tick += GenerKitSoinConditions;
+
             mineuteur.Interval = TimeSpan.FromMilliseconds(16);
-
             mineuteur.Tick += Moteur_Jeu;
-
             mineuteur.Start();
         }
 
         /*----------------------------------------------------*/
-        /*-------------------TEMPS DE JEU---------------------*/
+        /*-------------------TEMPS DE JEU TXT-----------------*/
         /*----------------------------------------------------*/
 
         private void TempsDeJeu()
@@ -384,7 +388,7 @@ namespace JeuSAE
         {
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
             GenerationKitSoin(nombreSoinMaXMemeTemps);
-            interval.Stop();
+            minuteur2.Stop();
 
         }
 
@@ -605,6 +609,15 @@ namespace JeuSAE
 
                 }
             }
+            foreach (Rectangle w in soinListe)
+            {
+                Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
+                if (zoneJoueur.IntersectsWith(kitSoinZone))
+                {
+                    BarreDeVie.Value = VIE_JOUEUR;
+                    objetASupprimer.Add(w);
+                }
+            }
             foreach (Rectangle y in zombieListe)
             {
                 String orientationZombieX = "", orientationZombieY = "";
@@ -656,8 +669,6 @@ namespace JeuSAE
                     balleH.Remove(y);
                 if (balleB.Contains(y))
                     balleB.Remove(y);
-
-
             }
 
 

@@ -35,6 +35,7 @@ namespace JeuSAE
         {
             ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
             ((MainWindow)Application.Current.MainWindow).interval.Start();
+            ((MainWindow)Application.Current.MainWindow).minuteur2.Start();
             Close();
         }
 
