@@ -605,10 +605,11 @@ namespace JeuSAE
             foreach (Rectangle z in munitionListe)
             {
                 Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(z), Canvas.GetTop(z), z.Width, z.Height);
-                if (zoneJoueur.IntersectsWith(boiteMunitionsZone))
+                if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < 15)
                 {
                     nombreDeBalles = 15;
                     objetASupprimer.Add(z);
+                    interval.Start();
 
 
                 }
@@ -616,10 +617,11 @@ namespace JeuSAE
             foreach (Rectangle w in soinListe)
             {
                 Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
-                if (zoneJoueur.IntersectsWith(kitSoinZone))
+                if (zoneJoueur.IntersectsWith(kitSoinZone) && vieJoueur < 100)
                 {
                     vieJoueur = VIE_JOUEUR;
                     objetASupprimer.Add(w);
+                    minuteur2.Start();
                 }
             }
             foreach (Rectangle y in zombieListe)
@@ -663,6 +665,7 @@ namespace JeuSAE
             {
                 fond.Children.Remove(y);
                 munitionListe.Remove(y);
+                soinListe.Remove(y);
                 zombieListe.Remove(y);
                 balles.Remove(y);
                 if (balleG.Contains(y))
