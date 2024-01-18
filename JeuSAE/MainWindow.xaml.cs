@@ -586,7 +586,7 @@ namespace JeuSAE
                 {
                     objetASupprimer.Add(x);
 
-
+                    
                 }
             }
             foreach (Rectangle x in balleH)
