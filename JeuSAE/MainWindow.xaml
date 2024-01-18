@@ -116,14 +116,13 @@
                 VerticalAlignment="Top"
                 Fill="#FFFBE44B" />
             <Rectangle
-                x:Name="caisse_decor_2"
-                Canvas.Left="1330"
-                Canvas.Top="184"
-                Width="100"
-                Height="100"
+                x:Name="Feu"
+                Canvas.Left="1337"
+                Canvas.Top="596"
+                Width="60"
+                Height="50"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Fill="#FFFBE44B" />
+                VerticalAlignment="Top" />
             <Rectangle
                 x:Name="caisse_decor_4"
                 Canvas.Left="488"

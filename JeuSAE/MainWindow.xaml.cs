@@ -74,7 +74,7 @@ namespace JeuSAE
         int manche = 1;
 
         /*----------------------------------------------------*/
-        /*-----------------------BOOLEAN----------------------*/
+        /*-----------------------BOOLEEN----------------------*/
         /*----------------------------------------------------*/
 
         bool gauche, droite, haut, bas = false;
@@ -84,7 +84,7 @@ namespace JeuSAE
         bool perdu = false;
 
         /*----------------------------------------------------*/
-        /*-----------------------LISTE------------------------*/
+        /*-----------------------LISTES-----------------------*/
         /*----------------------------------------------------*/
 
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
@@ -96,6 +96,7 @@ namespace JeuSAE
         private List<Rectangle> balleD = new List<Rectangle>();
         private List<Rectangle> balleH = new List<Rectangle>();
         private List<Rectangle> balleB = new List<Rectangle>();
+        
 
 
         /*----------------------------------------------------*/
@@ -113,6 +114,7 @@ namespace JeuSAE
         ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
         ImageBrush map = new ImageBrush();
+        ImageBrush tir = new ImageBrush();  
 
         /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
@@ -130,7 +132,6 @@ namespace JeuSAE
         {
             caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
             caisse_decor_1.Fill = caisseDecor;
-            caisse_decor_2.Fill = caisseDecor;
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
@@ -149,6 +150,7 @@ namespace JeuSAE
             bouton_pause.Background = pause;
             map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
             fond.Background = map;
+
         }
 
         public MainWindow()
@@ -418,11 +420,12 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
-        
 
-        /*----------------------------------------------------*/
-        /*-----------------GESTION DES TOUCHES----------------*/
-        /*----------------------------------------------------*/
+
+
+            /*----------------------------------------------------*/
+            /*-----------------GESTION DES TOUCHES----------------*/
+            /*----------------------------------------------------*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -431,9 +434,10 @@ namespace JeuSAE
             {
                 GenerationBalle();
             }
-
+            //Code de triche
             if (e.Key == tricher)
             {
+                nombreDeBalles = 15;
                 vieInfinie = !vieInfinie;
                 Vie();
                 ballesInfinies = !ballesInfinies;
@@ -547,6 +551,11 @@ namespace JeuSAE
                     nombreEnnemisMap--;
                     ennemisRestants--;
                     killsJoueur += 1;
+                    Random rdm = new Random();
+                    if (rdm.Next(1, 5) == 1)
+                    {
+                        nombreDeBalles ++;
+                    }
                     return true;
                 }
 
@@ -677,8 +686,16 @@ namespace JeuSAE
                 if (balleB.Contains(y))
                     balleB.Remove(y);
             }
+            Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height);
 
-
+            if (zoneJoueur.IntersectsWith(feuZone) && vieJoueur > 0)
+            {
+                if (!triche)
+                {
+                    vieJoueur -= 3;
+                    Thread.Sleep(15);
+                }
+            }
 
         }
         /*----------------------------------------------------*/
@@ -706,6 +723,7 @@ namespace JeuSAE
             else
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
+                vieJoueur = VIE_JOUEUR;
             }
 
         }
