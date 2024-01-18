@@ -614,7 +614,7 @@ namespace JeuSAE
                 Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
                 if (zoneJoueur.IntersectsWith(kitSoinZone))
                 {
-                    BarreDeVie.Value = VIE_JOUEUR;
+                    BarreDeVie.Value = BarreDeVie.Maximum;
                     objetASupprimer.Add(w);
                 }
             }
@@ -659,6 +659,7 @@ namespace JeuSAE
             {
                 fond.Children.Remove(y);
                 munitionListe.Remove(y);
+                soinListe.Remove(y);
                 zombieListe.Remove(y);
                 balles.Remove(y);
                 if (balleG.Contains(y))
