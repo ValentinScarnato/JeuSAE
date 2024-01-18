@@ -43,9 +43,10 @@
             VerticalAlignment="Top"
             Background="#FFFFFF07"
             BorderThickness="0,0,0,0"
+            Click="quitter_Click"
             Content="Quitter"
             FontSize="40"
-            FontWeight="Bold" Click="quitter_Click" />
+            FontWeight="Bold" />
         <Button
             x:Name="parametre"
             Canvas.Left="1600"
@@ -63,7 +64,8 @@
             <Rectangle
                 x:Name="rectangle_LastNight"
                 Margin="421,180,421,599"
-                Opacity="0.99" Fill="Red" />
+                Fill="Red"
+                Opacity="0.99" />
         </Border>
 
 

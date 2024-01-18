@@ -54,11 +54,7 @@ namespace JeuSAE
 
         }
 
-        private void parametre_Click(object sender, RoutedEventArgs e)
-        {
-            Parametres parametre = new Parametres();
-            parametre.ShowDialog();
-        }
+        
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -71,6 +67,12 @@ namespace JeuSAE
         private void quitter_Click(object sender, RoutedEventArgs e)
         {
             App.Current.Shutdown();
+        }
+
+        public void parametre_Click(object sender, RoutedEventArgs e)
+        {
+            Parametres parametre = new Parametres();
+            parametre.ShowDialog();
         }
     }
 }

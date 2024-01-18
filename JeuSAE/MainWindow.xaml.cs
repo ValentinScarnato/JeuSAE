@@ -53,23 +53,23 @@ namespace JeuSAE
         /*-----------------------KEY--------------------------*/
         /*----------------------------------------------------*/
 
-        Key avancer = Key.Z;
+        public Key avancer = Key.Z;
         Key reculer = Key.S;
         Key allerADroite = Key.D;
         Key allerAGauche = Key.Q;
         Key tirer = Key.Space;
-        Key tournerDroite = Key.E;
+        public Key tournerDroite = Key.E;
         Key tournerGauche = Key.A;
         Key tricher = Key.K;
 
         /*----------------------------------------------------*/
-        /*-----------------------BOOLEAN----------------------*/
+        /*-----------------------INT--------------------------*/
         /*----------------------------------------------------*/
 
         private int nombreDeBalles = 15;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
-        int killsJoueur = 0;
+        public int killsJoueur = 0;
         int vieJoueur = VIE_JOUEUR;
         int manche = 1;
 
@@ -112,6 +112,7 @@ namespace JeuSAE
         ImageBrush boiteArme = new ImageBrush();
         ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
+        ImageBrush map = new ImageBrush();
 
         /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
@@ -146,6 +147,8 @@ namespace JeuSAE
             soin.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Healthcare.png"));
             pause.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/pause.png"));
             bouton_pause.Background = pause;
+            map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
+            fond.Background = map;
         }
 
         public MainWindow()
@@ -274,8 +277,8 @@ namespace JeuSAE
                 Rectangle ennemi = new Rectangle
                 {
                     Tag = "Ennemi",
-                    Height = 80,
-                    Width = 80,
+                    Height = 75,
+                    Width = 75,
                     Fill = zombar
                 };
                 Random aleatoire = new Random(); Random position = new Random();
@@ -415,6 +418,7 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
+        
 
         /*----------------------------------------------------*/
         /*-----------------GESTION DES TOUCHES----------------*/
@@ -674,7 +678,6 @@ namespace JeuSAE
 
 
         }
-
         /*----------------------------------------------------*/
         /*----------------------CHEAT VIE---------------------*/
         /*----------------------------------------------------*/
@@ -694,6 +697,7 @@ namespace JeuSAE
 
                     FenetreMort fenetremort = new FenetreMort();
                     fenetremort.ShowDialog();
+                    fenetremort.label_kill.Content = killsJoueur;
                 }
             }
             else

@@ -92,8 +92,8 @@
                 x:Name="joueur"
                 Canvas.Left="806"
                 Canvas.Top="441"
-                Width="138"
-                Height="82"
+                Width="100"
+                Height="60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Fill="Red" />
@@ -101,8 +101,8 @@
                 x:Name="caisse_decor_1"
                 Canvas.Left="228"
                 Canvas.Top="243"
-                Width="135"
-                Height="135"
+                Width="100"
+                Height="100"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="#FFFBE44B" />
@@ -110,8 +110,8 @@
                 x:Name="caisse_decor_3"
                 Canvas.Left="1192"
                 Canvas.Top="698"
-                Width="135"
-                Height="135"
+                Width="100"
+                Height="100"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="#FFFBE44B" />
@@ -119,8 +119,8 @@
                 x:Name="caisse_decor_2"
                 Canvas.Left="1330"
                 Canvas.Top="184"
-                Width="135"
-                Height="135"
+                Width="100"
+                Height="100"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="#FFFBE44B" />
@@ -128,8 +128,8 @@
                 x:Name="caisse_decor_4"
                 Canvas.Left="488"
                 Canvas.Top="679"
-                Width="135"
-                Height="135"
+                Width="100"
+                Height="100"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Fill="#FFFBE44B" />
@@ -145,14 +145,25 @@
                 Foreground="White" />
             <TextBlock
                 x:Name="texteMinuterie"
-                Canvas.Left="776"
+                Canvas.Left="1192"
+                Canvas.Top="14"
                 Width="200"
                 Height="50"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 FontSize="24"
                 FontWeight="Bold"
-                TextWrapping="Wrap" Canvas.Top="91"><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
+                Foreground="White"
+                TextWrapping="Wrap">
+                <TextBlock.TextEffects>
+                    <TextEffect />
+                </TextBlock.TextEffects>
+                <TextBlock.Style>
+                    <Style />
+                </TextBlock.Style>
+                <TextBlock.Effect>
+                    <DropShadowEffect />
+                </TextBlock.Effect><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
             <Button
                 x:Name="bouton_pause"
                 Canvas.Left="906"

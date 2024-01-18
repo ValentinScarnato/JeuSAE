@@ -51,6 +51,7 @@
             Content="VOU ÊTRE MORT"
             Background="Black"/>
         <Label x:Name="NbKillGameOver" Content="Nombre de kill : " Canvas.Left="500" Canvas.Top="370" FontSize="52" Foreground="White" FontWeight="Bold"/>
+        <Label x:Name="label_kill" Content="0" Canvas.Left="950" Canvas.Top="374" Height="90" Width="122" Foreground="#FFFB0000" FontSize="48" FontWeight="Bold"/>
 
     </Canvas>
 </Window>

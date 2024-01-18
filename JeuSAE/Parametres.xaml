@@ -98,7 +98,6 @@
             Margin="200,212,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            KeyDown="bouton_avancer_KeyDown"
             Text="S"
             TextWrapping="Wrap" />
         <Label
@@ -114,7 +113,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="D"
-            TextChanged="bouton_droite_TextChanged"
             TextWrapping="Wrap" />
         <TextBox
             x:Name="bouton_avancer"
