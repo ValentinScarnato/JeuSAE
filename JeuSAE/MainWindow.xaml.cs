@@ -18,8 +18,6 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using System.Threading;
-using System.IO;
-using WpfAnimatedGif;
 
 
 
