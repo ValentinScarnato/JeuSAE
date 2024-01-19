@@ -33,15 +33,16 @@ namespace JeuSAE
         public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
         public static int DEGATS_PAR_ZOMBIE = 10;
         public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
-        private static int VITESSE_BALLE_JOUEUR = 20;
-        private static int BANDEAU = 60;
-        public static int VITESSE_JOUEUR = 10, VITESSE_ZOMBIE = 3;
+        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
+        private static int BANDEAU = 60, VITESSE_ZOMBIE = 3;
+        public static double VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15;
 
         /*----------------------------------------------------*/
         /*--------------------TIMESPAN------------------------*/
         /*----------------------------------------------------*/
 
         private TimeSpan minuterie;
+        Pouvoirs pouvoirs;
 
         /*----------------------------------------------------*/
         /*----------------------STRING------------------------*/
@@ -724,6 +725,8 @@ namespace JeuSAE
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
                 vieJoueur = VIE_JOUEUR;
+                VITESSE_BALLE_JOUEUR = VITESSE_BALLE_TRICHE;
+                VITESSE_JOUEUR = VITESSE_JOUEUR_TRICHE;
             }
 
         }
@@ -809,8 +812,21 @@ namespace JeuSAE
             OrientationJoueur();
             TempsDeJeu();
             GenerZombieConditions();
+            BoostManche();
             FinManche();
 
+        }
+        private void BoostManche()
+        {
+            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
+            {
+                Pouvoirs pouvoirs = new Pouvoirs();
+                pouvoirs.boutonVieClick += Pouvoirs_boutonVieClick;
+                pouvoirs.boutonBallesClick += Pouvoirs_boutonBallesClick;
+                pouvoirs.boutonVitesseClick += Pouvoirs_boutonVitesseClick;
+                pouvoirs.PouvoirsFermer += Pouvoirs_FERMER;
+                pouvoirs.ShowDialog();
+            }
         }
 
         private void FinManche()
@@ -819,7 +835,32 @@ namespace JeuSAE
             {
 
             }
+            
+        }
+        private void Pouvoirs_boutonVieClick(object sender, EventArgs e)
+        {
+            vieJoueur += 10;
+            VIE_JOUEUR += 10;
+            pouvoirs.Close();
         }
 
+        private void Pouvoirs_boutonBallesClick(object sender, EventArgs e)
+        {
+            nombreDeBalles += 5;
+            MUNITIONS_MAX_JOUEUR += 5;
+            pouvoirs.Close();
+
+        }
+
+        private void Pouvoirs_boutonVitesseClick(object sender, EventArgs e)
+        {
+            VITESSE_JOUEUR = VITESSE_JOUEUR + (VITESSE_JOUEUR * 0.1);
+            pouvoirs.Close();
+        }
+        private void Pouvoirs_FERMER(object sender, EventArgs e)
+        {
+            
+        }
     }
+    
 }
