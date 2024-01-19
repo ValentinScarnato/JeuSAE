@@ -120,11 +120,10 @@ namespace JeuSAE
         ImageBrush zombar = new ImageBrush();
         ImageBrush boiteMunition = new ImageBrush();
         ImageBrush caisseDecor = new ImageBrush();
-        ImageBrush boiteArme = new ImageBrush();
         ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
         ImageBrush map = new ImageBrush();
-        ImageBrush tir = new ImageBrush();
+        ImageBrush feu_ = new ImageBrush();
 
         /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
@@ -160,7 +159,9 @@ namespace JeuSAE
             bouton_pause.Background = pause;
             map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
             fond.Background = map;
-
+            feu_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/feu.gif"));
+           
+            Feu.Fill = feu_;
         }
 
         public MainWindow()
