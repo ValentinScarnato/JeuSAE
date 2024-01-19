@@ -68,20 +68,22 @@ namespace JeuSAE
         /*-----------------------INT--------------------------*/
         /*----------------------------------------------------*/
 
-        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
+        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES=20, ZOMBIE_MEME_TEMPS=5;
         public static int DEGATS_PAR_ZOMBIE = 10;
         private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
         private static int BANDEAU = 60;
         private int nombreDeBalles = 15;
-        int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
+        int nombreZombieManche =0, nombreEnnemisMap , ennemisRestants, killManche;
+
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         public int killsJoueur { get; set; } = 0;
         int vieJoueur = VIE_JOUEUR;
         int manche = 1;
-
+        
         /*----------------------------------------------------*/
         /*-----------------------BOOLEEN----------------------*/
         /*----------------------------------------------------*/
+        bool nombreZombieInfZombieGen = false;
 
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
@@ -171,7 +173,8 @@ namespace JeuSAE
             Generation_Zombies(nombreZombieMaxMemeTemps);
             GenerationKitSoin(nombreSoinMaXMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
-
+            nombreZombieManche = NOMBRE_ZOMBIES +2 * (manche - 1);
+            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche-1);
 
 
             /*----------------------------------------------------*/
@@ -275,7 +278,7 @@ namespace JeuSAE
 
                 if (!ballesInfinies)
                     nombreDeBalles--;
-                
+
 
             }
 
@@ -311,10 +314,12 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*-------------- GENERATION DE ZOMBIES ---------------*/
         /*----------------------------------------------------*/
-
-        private void Generation_Zombies(int nombreZombieMaxMemeTemps)
+        private void Generation_Zombies(int zombiesGeneration)
         {
-            for (int i = 0; i < nombreZombieMaxMemeTemps; i++)
+            int i = 0;
+            if ( nombreZombieManche-killManche < zombiesGeneration)
+                zombiesGeneration = nombreZombieManche - killManche;
+            while (i < zombiesGeneration)
             {
                 Rectangle ennemi = new Rectangle
                 {
@@ -353,13 +358,32 @@ namespace JeuSAE
 
                 zombieListe.Add(ennemi);
                 nombreEnnemisMap++;
+                i++;
             }
         }
-
         private void GenerZombieConditions()
         {
-            if (nombreEnnemisMap == 0 && killsJoueur != NOMBRE_ZOMBIES_MANCHE)
+
+
+            if (nombreEnnemisMap == 0 && killManche != nombreZombieManche)
+            {
                 Generation_Zombies(nombreZombieMaxMemeTemps);
+            }
+
+
+
+        }
+        private void FinManche()
+        {
+            if (killManche == nombreZombieManche)
+            {
+                ennemisRestants = 0;
+                killManche = 0;
+                nombreZombieManche = NOMBRE_ZOMBIES+ 5*manche;
+                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS+ 2*manche;
+                manche++;
+            }
+
         }
 
         /*----------------------------------------------------*/
@@ -407,12 +431,12 @@ namespace JeuSAE
         /*-----------------GENERATION DE SOIN-----------------*/
         /*----------------------------------------------------*/
 
-        private void GenerationKitSoin(int nombreSoinMaXMemeTemps)
+        private void GenerationKitSoin(int nombreSoinMaxMemeTemps)
         {
             Random aleatoire = new Random();
             if (apparitionVie)
             {
-                for (int i = 0; i < nombreSoinMaXMemeTemps; i++)
+                for (int i = 0; i < nombreSoinMaxMemeTemps; i++)
                 {
                     Rectangle kitSoin = new Rectangle
                     {
@@ -446,10 +470,13 @@ namespace JeuSAE
 
         private void NombreEnnemis()
         {
-            if (ennemisRestants >= 1)
+            ennemisRestants = nombreZombieManche - killManche;
+            if (ennemisRestants > 1)
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
+            
+
         }
 
         private void NombreBalles()
@@ -460,7 +487,7 @@ namespace JeuSAE
             }
             else
             {
-                nombre_balles.Content = nombreDeBalles + " | " + "∞";
+                nombre_balles.Content = "∞" + " | " + "∞";
             }
         }
 
@@ -470,12 +497,18 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
+        public void Manche()
+        {
+
+            label_manche.Content = "Manche " + manche;
+
+        }
 
 
 
-            /*----------------------------------------------------*/
-            /*-----------------GESTION DES TOUCHES----------------*/
-            /*----------------------------------------------------*/
+        /*----------------------------------------------------*/
+        /*-----------------GESTION DES TOUCHES----------------*/
+        /*----------------------------------------------------*/
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -498,21 +531,15 @@ namespace JeuSAE
             if (e.Key == allerAGauche)
             {
                 gauche = true;
-
-
             }
 
             if (e.Key == allerADroite)
             {
                 droite = true;
-
-
             }
             if (e.Key == avancer)
             {
                 haut = true;
-
-
             }
             if (e.Key == reculer)
             {
@@ -601,10 +628,11 @@ namespace JeuSAE
                     nombreEnnemisMap--;
                     ennemisRestants--;
                     killsJoueur += 1;
+                    killManche += 1;
                     Random rdm = new Random();
                     if (rdm.Next(1, 5) == 1)
                     {
-                        nombreDeBalles ++;
+                        nombreDeBalles++;
                     }
                     return true;
                 }
@@ -649,7 +677,7 @@ namespace JeuSAE
                 {
                     objetASupprimer.Add(x);
 
-                    
+
                 }
             }
             foreach (Rectangle x in balleH)
@@ -852,6 +880,8 @@ namespace JeuSAE
 
         private void Moteur_Jeu(object sender, EventArgs e)
         {
+            GenerZombieConditions();
+            Manche();
             Deplacements();
             NombreEnnemis();
             Interactions();
@@ -861,19 +891,12 @@ namespace JeuSAE
             OrientationJoueur();
             TempsDeJeu();
             ChargerImagesZombie();
-            GenerZombieConditions();
             FinManche();
+            kill_manche.Content = killManche;
 
         }
 
-        private void FinManche()
-        {
-            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
-            {
 
-            }
-            
-        }
     }
-    
+
 }

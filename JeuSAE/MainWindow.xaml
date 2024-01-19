@@ -62,11 +62,11 @@
             <Label
                 x:Name="nombre_kill"
                 Canvas.Left="776"
-                Width="109"
+                Width="99"
                 Height="60"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="4"
+                VerticalAlignment="Center"
+                Content="X"
                 FontSize="38"
                 Foreground="Red" />
             <Label
@@ -76,7 +76,7 @@
                 Height="60"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="8 | 10"
+                Content="X | X"
                 FontSize="38"
                 Foreground="White" />
             <Rectangle
@@ -139,7 +139,7 @@
                 Height="60"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="5 ennemis restants"
+                Content="X ennemis restants"
                 FontSize="38"
                 Foreground="White" />
             <TextBlock
@@ -165,7 +165,7 @@
                 </TextBlock.Effect><Run Language="fr-fr" Text="00 : 00 : 00" /></TextBlock>
             <Button
                 x:Name="bouton_pause"
-                Canvas.Left="906"
+                Canvas.Left="1392"
                 Canvas.Top="8"
                 Width="45"
                 Height="45"
@@ -175,8 +175,24 @@
                 BorderBrush="Black"
                 Click="bouton_pause_Click"
                 Content=""
-                Focusable="False" />
+                Focusable="False" RenderTransformOrigin="-0.767,0.614" />
             <Image x:Name="feu" Height="50" Canvas.Left="1337" Canvas.Top="596" Width="60"/>
+            <Label x:Name="label_manche" Content="Manche X" 
+                   Canvas.Left="885" 
+                   Canvas.Top="-1" 
+                   Width="302"
+                   Height="60"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontSize="38"
+                   Foreground="White"/>
+            <Label x:Name="kill_manche" Content="Manche X" 
+                Canvas.Left="885" 
+                Canvas.Top="109" 
+                Width="302"
+                Height="60"
+                FontSize="38"
+                Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         </Canvas>
 
