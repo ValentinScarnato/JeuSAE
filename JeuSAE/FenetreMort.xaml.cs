@@ -22,11 +22,12 @@ namespace JeuSAE
     {
         private int killsJoueur;
         MainWindow mainwindows;
-        public FenetreMort()
+        public int valeurReçue { get; }
+        public FenetreMort( int nombreKills)
         {
             InitializeComponent();
-            this.killsJoueur = killsJoueur;
-            label_kill.Content = $"Nombre de kills : {this.killsJoueur}";
+
+            label_kill.Content =  nombreKills;
         }
         public void RedemarrerApplication()
         {

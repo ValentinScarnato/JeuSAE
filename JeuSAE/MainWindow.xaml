@@ -186,13 +186,6 @@
                    VerticalAlignment="Center"
                    FontSize="38"
                    Foreground="White"/>
-            <Label x:Name="kill_manche" Content="Manche X" 
-                Canvas.Left="885" 
-                Canvas.Top="109" 
-                Width="302"
-                Height="60"
-                FontSize="38"
-                Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         </Canvas>
 

@@ -793,7 +793,8 @@ namespace JeuSAE
                 if (perdu == true)
                 {
 
-                    FenetreMort fenetremort = new FenetreMort();
+                    FenetreMort fenetremort = new FenetreMort(killsJoueur);
+                    
                     fenetremort.ShowDialog();
                     fenetremort.NombreKills();
                 }
@@ -892,7 +893,7 @@ namespace JeuSAE
             TempsDeJeu();
             ChargerImagesZombie();
             FinManche();
-            kill_manche.Content = killManche;
+            
 
         }
 
