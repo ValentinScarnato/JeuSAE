@@ -90,7 +90,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="#FF57A52D"
-            Content="ACCEPTER" />
+            Content="ACCEPTER" Click="Accepter_Click" />
         <Button
             x:Name="Retour"
             Width="115"

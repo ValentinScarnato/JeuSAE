@@ -10,13 +10,13 @@
     Height="706"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d" Closed="Window_Closed">
-    <Grid Background="Black">
+    mc:Ignorable="d" Closed="Window_Closed" Closing="Window_Closing">
+    <Grid x:Name="fond" Background="Black">
         <Button
             x:Name="bouton_reprendre"
             Width="300"
             Height="100"
-            Margin="162,345,0,0"
+            Margin="147,345,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="#FFFFFF0A"
@@ -29,7 +29,7 @@
             x:Name="bouton_quitter"
             Width="300"
             Height="100"
-            Margin="648,345,0,0"
+            Margin="637,345,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="#FFFFFF0A"
@@ -53,8 +53,7 @@
             VerticalAlignment="Top"
             FontSize="24"
             Foreground="Red"
-            Text="Appuyez sur K pour activer le code Triche"
-            TextWrapping="Wrap" />
-
+            TextWrapping="Wrap" Width="383" ><Run Text="Appuyez sur K pour activer l"/><Run Language="fr-fr" Text="a"/><Run Language="fr-fr" Text=" "/><Run Text="Triche"/></TextBlock>
+        <TextBox x:Name="selectionner_manche" TextWrapping="Wrap" Text="1" Margin="448,211,448,382" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" TextChanged="selectionner_manche_TextChanged" GotFocus="selectionner_manche_GotFocus"/>
     </Grid>
 </Window>

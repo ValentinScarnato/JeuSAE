@@ -20,25 +20,40 @@ namespace JeuSAE
     public partial class Parametres : Window
     {
 
+        int mancheValeur = 1;
+        bool fermer = true;
         public Parametres()
         {
             InitializeComponent();
             ImageBrush parametreFond = new ImageBrush();
             parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Paramtre.png"));
             grid_Parametre.Fill = parametreFond;
+            ((MainWindow)Application.Current.MainWindow).TricheManche();
+
 
         }
 
         private void click_Annuler(object sender, RoutedEventArgs e)
         {
             this.Close();
-          
+
+
         }
-        /*
-        public void bouton_droite_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void Accepter_Click(object sender, RoutedEventArgs e)
         {
 
-            bouton_droite.Text = tournerDroite;
-        }*/
+            this.Close();
+
+
+        }
+
+        
+        /*
+public void bouton_droite_TextChanged(object sender, TextChangedEventArgs e)
+{
+
+bouton_droite.Text = tournerDroite;
+}*/
     }
 }

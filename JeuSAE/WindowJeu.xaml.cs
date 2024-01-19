@@ -77,7 +77,8 @@ namespace JeuSAE
 
         private void boutonPlus_Click(object sender, RoutedEventArgs e)
         {
-
+            Plus plus = new Plus();
+            plus.ShowDialog();
         }
     }
 }

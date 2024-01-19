@@ -117,7 +117,7 @@
                 Fill="#FFFBE44B" />
             <Rectangle
                 x:Name="Feu"
-                Canvas.Left="1337"
+                Canvas.Left="1310"
                 Canvas.Top="596"
                 Width="60"
                 Height="50"
@@ -176,7 +176,6 @@
                 Click="bouton_pause_Click"
                 Content=""
                 Focusable="False" RenderTransformOrigin="-0.767,0.614" />
-            <Image x:Name="feu" Height="50" Canvas.Left="1337" Canvas.Top="596" Width="60"/>
             <Label x:Name="label_manche" Content="Manche X" 
                    Canvas.Left="885" 
                    Canvas.Top="-1" 

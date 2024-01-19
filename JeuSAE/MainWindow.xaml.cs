@@ -35,7 +35,6 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*----------------------DOUBLE------------------------*/
         /*----------------------------------------------------*/
-
         public static double VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15, VITESSE_ZOMBIE = 3;
 
         /*----------------------------------------------------*/
@@ -78,7 +77,7 @@ namespace JeuSAE
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         public int killsJoueur { get; set; } = 0;
         int vieJoueur = VIE_JOUEUR;
-        int manche = 1;
+        public int manche = 1;
         
         /*----------------------------------------------------*/
         /*-----------------------BOOLEEN----------------------*/
@@ -192,6 +191,7 @@ namespace JeuSAE
             mineuteur.Tick += Moteur_Jeu;
             mineuteur.Start();
         }
+        
         private void ChargerImagesZombie()
         {
             for (int i = 0; i < imagesZombie.Length; i++)
@@ -372,6 +372,20 @@ namespace JeuSAE
             }
 
 
+
+        }
+        public void TricheManche()
+        {
+            foreach (Rectangle x in zombieListe)
+            {
+                objetASupprimer.Add(x);
+
+            }
+            ennemisRestants = 0;
+            nombreEnnemisMap = 0;
+            killManche = 0;
+            nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
+            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
 
         }
         private void FinManche()
