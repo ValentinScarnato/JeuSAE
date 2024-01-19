@@ -74,5 +74,10 @@ namespace JeuSAE
             Parametres parametre = new Parametres();
             parametre.ShowDialog();
         }
+
+        private void boutonPlus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

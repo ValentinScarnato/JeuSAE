@@ -75,6 +75,15 @@
                 Fill="Red"
                 Opacity="0.99" />
         </Border>
+        <Button
+            x:Name="boutonPlus"
+            Canvas.Left="48"
+            Canvas.Top="30"
+            Width="100"
+            Height="100"
+            Content="+"
+            FontSize="48"
+            FontWeight="Bold" Click="boutonPlus_Click" />
 
 
 

@@ -18,6 +18,10 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using System.Threading;
+using System.IO;
+using WpfAnimatedGif;
+
+
 
 namespace JeuSAE
 {
@@ -30,24 +34,23 @@ namespace JeuSAE
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
 
-        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
-        public static int DEGATS_PAR_ZOMBIE = 10;
-        public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
-        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
-        private static int BANDEAU = 60, VITESSE_ZOMBIE = 3;
-        public static double VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15;
+        /*----------------------------------------------------*/
+        /*----------------------DOUBLE------------------------*/
+        /*----------------------------------------------------*/
+
+        public static double VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15, VITESSE_ZOMBIE = 3;
 
         /*----------------------------------------------------*/
         /*--------------------TIMESPAN------------------------*/
         /*----------------------------------------------------*/
 
         private TimeSpan minuterie;
-        Pouvoirs pouvoirs;
 
         /*----------------------------------------------------*/
         /*----------------------STRING------------------------*/
         /*----------------------------------------------------*/
 
+        public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         string orientationJoueur = "droite";
 
         /*----------------------------------------------------*/
@@ -67,6 +70,10 @@ namespace JeuSAE
         /*-----------------------INT--------------------------*/
         /*----------------------------------------------------*/
 
+        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, NOMBRE_ZOMBIES_MANCHE = 20, VIE_JOUEUR = 100;
+        public static int DEGATS_PAR_ZOMBIE = 10;
+        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
+        private static int BANDEAU = 60;
         private int nombreDeBalles = 15;
         int ennemisRestants = NOMBRE_ZOMBIES_MANCHE, nombreEnnemisMap = 0;
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
@@ -97,7 +104,9 @@ namespace JeuSAE
         private List<Rectangle> balleD = new List<Rectangle>();
         private List<Rectangle> balleH = new List<Rectangle>();
         private List<Rectangle> balleB = new List<Rectangle>();
-        
+        private BitmapImage[] imagesZombie = new BitmapImage[16];
+        private int indexImageZombie = 0;
+
 
 
         /*----------------------------------------------------*/
@@ -115,7 +124,7 @@ namespace JeuSAE
         ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
         ImageBrush map = new ImageBrush();
-        ImageBrush tir = new ImageBrush();  
+        ImageBrush tir = new ImageBrush();
 
         /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
@@ -165,6 +174,8 @@ namespace JeuSAE
             GenerationKitSoin(nombreSoinMaXMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
 
+
+
             /*----------------------------------------------------*/
             /*---------------------TEMPS--------------------------*/
             /*----------------------------------------------------*/
@@ -179,6 +190,36 @@ namespace JeuSAE
             mineuteur.Tick += Moteur_Jeu;
             mineuteur.Start();
         }
+        private void ChargerImagesZombie()
+        {
+            for (int i = 0; i < imagesZombie.Length; i++)
+            {
+                string nomFichier = $"skeleton-move_{i + 1}.png";
+                string cheminImage = $"pack://siteoforigin:,,,/Image/{nomFichier}";
+                imagesZombie[i] = new BitmapImage(new Uri(cheminImage));
+            }
+        }
+
+        private void AnimerZombie(Rectangle ennemi)
+        {
+            if (imagesZombie.Length > 0)
+            {
+                BitmapImage image = imagesZombie[indexImageZombie];
+                ImageBrush brush = new ImageBrush();
+                brush.ImageSource = image;
+                ennemi.Fill = brush;
+                indexImageZombie = (indexImageZombie + 1) % imagesZombie.Length;
+            }
+        }
+
+        private void InitialiserAnimationZombie(Rectangle ennemi)
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(100); // Ajustez l'intervalle selon votre besoin
+            timer.Tick += (sender, e) => AnimerZombie(ennemi);
+            timer.Start();
+        }
+
 
         /*----------------------------------------------------*/
         /*-------------------TEMPS DE JEU TXT-----------------*/
@@ -280,11 +321,19 @@ namespace JeuSAE
                 Rectangle ennemi = new Rectangle
                 {
                     Tag = "Ennemi",
-                    Height = 75,
-                    Width = 75,
-                    Fill = zombar
+                    Height = 100,
+                    Width = 100,
                 };
-                Random aleatoire = new Random(); Random position = new Random();
+                /*
+                ImageBrush imageBrush = new ImageBrush();
+                imageBrush.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Image/zombieGif.gif"));
+                ennemi.Fill = imageBrush;*/
+
+                fond.Children.Add(ennemi);
+                InitialiserAnimationZombie(ennemi);
+
+                Random aleatoire = new Random();
+                Random position = new Random();
 
                 int coteApparition = aleatoire.Next(1, 4);
 
@@ -302,16 +351,11 @@ namespace JeuSAE
                         Canvas.SetTop(ennemi, position.Next((int)ennemi.Height + BANDEAU, (int)Application.Current.MainWindow.Height));
                         Canvas.SetLeft(ennemi, ennemi.Width + (int)Application.Current.MainWindow.Width);
                         break;
-
                 }
+
                 zombieListe.Add(ennemi);
-                fond.Children.Add(ennemi);
                 nombreEnnemisMap++;
-
-
-
             }
-
         }
 
         private void GenerZombieConditions()
@@ -412,7 +456,14 @@ namespace JeuSAE
 
         private void NombreBalles()
         {
-            nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
+            if (!triche)
+            {
+                nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
+            }
+            else
+            {
+                nombre_balles.Content = nombreDeBalles + " | " + "∞";
+            }
         }
 
         public void NombreKills()
@@ -705,7 +756,7 @@ namespace JeuSAE
 
         private void Vie()
         {
-            if (!vieInfinie)
+            if (!triche)
             {
                 BarreDeVie.Value = vieJoueur;
                 if (vieJoueur <= 0)
@@ -811,22 +862,10 @@ namespace JeuSAE
             Vie();
             OrientationJoueur();
             TempsDeJeu();
+            ChargerImagesZombie();
             GenerZombieConditions();
-            BoostManche();
             FinManche();
 
-        }
-        private void BoostManche()
-        {
-            if (killsJoueur == NOMBRE_ZOMBIES_MANCHE)
-            {
-                Pouvoirs pouvoirs = new Pouvoirs();
-                pouvoirs.boutonVieClick += Pouvoirs_boutonVieClick;
-                pouvoirs.boutonBallesClick += Pouvoirs_boutonBallesClick;
-                pouvoirs.boutonVitesseClick += Pouvoirs_boutonVitesseClick;
-                pouvoirs.PouvoirsFermer += Pouvoirs_FERMER;
-                pouvoirs.ShowDialog();
-            }
         }
 
         private void FinManche()
@@ -835,30 +874,6 @@ namespace JeuSAE
             {
 
             }
-            
-        }
-        private void Pouvoirs_boutonVieClick(object sender, EventArgs e)
-        {
-            vieJoueur += 10;
-            VIE_JOUEUR += 10;
-            pouvoirs.Close();
-        }
-
-        private void Pouvoirs_boutonBallesClick(object sender, EventArgs e)
-        {
-            nombreDeBalles += 5;
-            MUNITIONS_MAX_JOUEUR += 5;
-            pouvoirs.Close();
-
-        }
-
-        private void Pouvoirs_boutonVitesseClick(object sender, EventArgs e)
-        {
-            VITESSE_JOUEUR = VITESSE_JOUEUR + (VITESSE_JOUEUR * 0.1);
-            pouvoirs.Close();
-        }
-        private void Pouvoirs_FERMER(object sender, EventArgs e)
-        {
             
         }
     }

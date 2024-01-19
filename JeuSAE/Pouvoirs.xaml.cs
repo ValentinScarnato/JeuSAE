@@ -33,6 +33,8 @@ namespace JeuSAE
         private void boutonVie_Click(object sender, RoutedEventArgs e)
         {
             boutonVieClick?.Invoke(this, EventArgs.Empty);
+            this.Close();
+            
         }
 
         private void boutonBalles_Click(object sender, RoutedEventArgs e)

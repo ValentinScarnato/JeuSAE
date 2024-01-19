@@ -176,6 +176,7 @@
                 Click="bouton_pause_Click"
                 Content=""
                 Focusable="False" />
+            <Image x:Name="feu" Height="50" Canvas.Left="1337" Canvas.Top="596" Width="60"/>
 
         </Canvas>
 
