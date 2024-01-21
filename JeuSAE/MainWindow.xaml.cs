@@ -660,7 +660,7 @@ namespace JeuSAE
             }
             foreach (Rectangle zomb in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
-                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle y en Rect
+                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle zomb en Rect
 
                 if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
@@ -732,10 +732,15 @@ namespace JeuSAE
                 if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < munitionMaxJoueur) // test de la collision entre le joueur et la boite de munition et si le nombre de balles est inférieur au nombre maximal de balles
                 {
                     if (!difficile)
-                        nombreDeBalles = munitionMaxJoueur; // mettre le nombre de balles au max
+                        nombreDeBalles = munitionMaxJoueur; // si la difficulté n'est pas en difficile mettre le nombre maximal de balles
                     else
-                        nombreDeBalles = nombreDeBalles+munitionMaxJoueur / 2;
-                    objetASupprimer.Add(z);
+                    {
+                        if (nombreDeBalles + munitionMaxJoueur / 2 < munitionMaxJoueur) 
+                            nombreDeBalles += munitionMaxJoueur / 2; // si la difficulté est en difficile et que si on ajoute la moitiée des munitions maximales est inférieur au nombre maximal de balles , ajout de la moitiée du nombre maximal de balles
+                        else
+                            nombreDeBalles = munitionMaxJoueur; // si l'on ajoute la moitiée du nombre maximal de balles et que c'est supérieur au nombre maximal de balles, le nombre de balles sera égal au nombre maximal de balles 
+                    }
+                    objetASupprimer.Add(z); // ajout de la boite de munition aux objets a supprimer
                     interval.Start();
 
                 }
