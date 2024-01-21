@@ -839,10 +839,10 @@ namespace JeuSAE
                     fenetremort.ShowDialog(); // ouverture de la fenetre mort
                 }
             }
-            else
+            else //si la triche est activée
             {
-                BarreDeVie.Value = BarreDeVie.Maximum;
-                vieJoueur = VIE_JOUEUR;
+                vieJoueur = VIE_JOUEUR; //vie joueur à 100
+                BarreDeVie.Value = vieJoueur; // actualiser barre de vie selon la vie du joueur
             }
 
         }
@@ -853,53 +853,48 @@ namespace JeuSAE
 
         private void OrientationJoueur()
         {
-            joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
 
-            if (orientationJoueur == ORIENTATION_GAUCHE)
+            if (orientationJoueur == ORIENTATION_GAUCHE) // si l'orientaion joueur est gauche
             {
 
-                joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2); //faire tourner le joueur de 180 °
 
             }
-            if (orientationJoueur == ORIENTATION_DROITE)
+            if (orientationJoueur == ORIENTATION_DROITE) // si l'orientaion joueur est droite
             {
-                joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de 0 °
 
             }
-            if (orientationJoueur == ORIENTATION_HAUT)
+            if (orientationJoueur == ORIENTATION_HAUT) // si l'orientaion joueur est haut
             {
 
-                joueur.RenderTransform = new RotateTransform(-90, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(-90, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de -90 °
             }
-            if (orientationJoueur == ORIENTATION_BAS)
+            if (orientationJoueur == ORIENTATION_BAS) // si l'orientaion joueur est bas
             {
 
-                joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de 90 °
             }
         }
 
         private void OrientationZombie(Rectangle x, String orientationZombieX, String orientationZombieY)
         {
-            x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
-
-            if (orientationZombieY == ORIENTATION_HAUT)
+            if (orientationZombieY == ORIENTATION_HAUT) //si l'orientation verticale du zombie est haut, faire tourner de 90 °
                 x.RenderTransform = new RotateTransform(90, x.Width / 2, x.Height / 2);
-
-
-            if (orientationZombieY == ORIENTATION_BAS)
-                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2);
-            if (orientationZombieX == ORIENTATION_GAUCHE)
+            if (orientationZombieY == ORIENTATION_BAS) //si l'orientation verticale du zombie est bas, faire tourner de -90 °
+                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2); 
+            if (orientationZombieX == ORIENTATION_GAUCHE) //si l'orientation horizontale du zombie est gauche, faire tourner de 180 °
                 x.RenderTransform = new RotateTransform(180, x.Width / 2, x.Height / 2);
-            if (orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieX == ORIENTATION_DROITE) //si l'orientation horizontale du zombie est droite, faire tourner de 0 °
                 x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
-
-            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE)
+            
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE) // si l'orientation du zombie verticale est haut et l'orientation horiziontale gauche, appliquer un angle de 135°
                 x.RenderTransform = new RotateTransform(135, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)// si l'orientation du zombie verticale est haut et l'orientation horiziontale droite, appliquer un angle de 45°
                 x.RenderTransform = new RotateTransform(45, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)// si l'orientation du zombie verticale est bas et l'orientation horiziontale gauche, appliquer un angle de -135°
                 x.RenderTransform = new RotateTransform(-135, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE) // si l'orientation du zombie verticale est bas et l'orientation horiziontale droite, appliquer un angle de -45°
                 x.RenderTransform = new RotateTransform(-45, x.Width / 2, x.Height / 2);
 
 
@@ -911,11 +906,11 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-            mineuteur.Stop();
+            mineuteur.Stop(); // quand le bouton pause est cliqué, le minuteur et l'interval se stoppent
             interval.Stop();
 
-            Pause pause = new Pause();
-            pause.ShowDialog();
+            Pause pause = new Pause(); // nouvelle fenetre pause
+            pause.ShowDialog(); // ouverture fenetre pause
         }
 
 
