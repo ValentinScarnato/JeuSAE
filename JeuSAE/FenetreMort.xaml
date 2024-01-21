@@ -9,7 +9,12 @@
     Width="1750"
     Height="980"
     mc:Ignorable="d" WindowStartupLocation="CenterScreen" Closed="Window_Closed" ResizeMode="NoResize">
-    <Canvas Background="Black">
+    <Canvas x:Name="CanvasMort" Background="Black">
+        <Rectangle x:Name="rectangleMort" Height="954" Stroke="Black" Width="1750">
+            <Rectangle.Effect>
+                <BlurEffect/>
+            </Rectangle.Effect>
+        </Rectangle>
         <Button
             x:Name="bouton_menu"
             Canvas.Left="400"
@@ -48,10 +53,10 @@
             FontSize="72"
             FontWeight="Black"
             Foreground="#FFFB2D2D"
-            Content="VOU ÊTRE MORT"
-            Background="Black"/>
+            Content="VOUS ÊTES MORT"/>
         <Label x:Name="NbKillGameOver" Content="Nombre de kill : " Canvas.Left="500" Canvas.Top="370" FontSize="52" Foreground="White" FontWeight="Bold"/>
         <Label x:Name="label_kill" Content="0" Canvas.Left="950" Canvas.Top="374" Height="90" Width="122" Foreground="#FFFB0000" FontSize="48" FontWeight="Bold"/>
+
 
     </Canvas>
 </Window>

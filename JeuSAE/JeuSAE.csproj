@@ -105,6 +105,9 @@
     <None Update="Image\Map..png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Image\mort.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Image\munition.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

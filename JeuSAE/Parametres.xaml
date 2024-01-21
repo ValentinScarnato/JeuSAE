@@ -67,7 +67,7 @@
         <Label
         Width="172"
         Height="35"
-        Margin="444,111,0,0"
+        Margin="444,118,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Content="GAUCHE  : "
@@ -77,7 +77,7 @@
         <Label
         Width="172"
         Height="35"
-        Margin="255,38,0,0"
+        Margin="110,56,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Content="TIRER  : "
@@ -139,7 +139,7 @@
         <TextBox
         x:Name="bouton_gauche"
         Width="142"
-        Margin="560,121,0,0"
+        Margin="560,128,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
@@ -147,15 +147,15 @@
         <TextBox
         x:Name="bouton_tirer"
         Width="141"
-        Margin="372,48,0,0"
+        Margin="227,66,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
         TextWrapping="Wrap" />
         <Label x:Name="triche"
-            Width="172"
+            Width="173"
             Height="33"
-            Margin="454,91,0,0"
+            Margin="439,56,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="TRICHER : "
@@ -164,8 +164,8 @@
             Foreground="White" />
         <TextBox
             x:Name="bouton_triche"
-            Width="141"
-            Margin="575,100,0,0"
+            Width="142"
+            Margin="560,65,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text=""
