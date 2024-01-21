@@ -31,15 +31,15 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
-        public static int MUNITIONS_MAX_JOUEUR = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES = 20, ZOMBIE_MEME_TEMPS = 5;
+        public static int MUNITIONS_MAX_DEBUT = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES = 20, ZOMBIE_MEME_TEMPS = 5;
         public static int DEGATS_PAR_ZOMBIE = 10;
-        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
+        private static int VITESSE_BALLE = 20, VITESSE_BALLE_TRICHE = 30;
         private static int BANDEAU = 60;
         /*----------------------------------------------------*/
         /*----------------------DOUBLE------------------------*/
         /*----------------------------------------------------*/
-        public static double VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15, VITESSE_ZOMBIE = 3;
-
+        public static int VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15, VITESSE_ZOMBIE = 3;
+        int vitesseJoueur = VITESSE_JOUEUR, vitesseBalle = VITESSE_BALLE, munitionMaxJoueur= MUNITIONS_MAX_DEBUT;
         /*----------------------------------------------------*/
         /*--------------------TIMESPAN------------------------*/
         /*----------------------------------------------------*/
@@ -71,7 +71,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
 
 
-        private int nombreDeBalles = 15;
+        private int nombreDeBalles = MUNITIONS_MAX_DEBUT;
         int nombreZombieManche = 0, nombreEnnemisMap, ennemisRestants, killManche;
 
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
@@ -85,7 +85,7 @@ namespace JeuSAE
         public bool difficile = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool  vieInfinie = false, ballesInfinies = false;
+        bool vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
 
@@ -160,7 +160,7 @@ namespace JeuSAE
             feu_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/feu.gif"));
             Feu.Fill = feu_;
             Balle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/balle.png"));
-            
+
         }
 
         public MainWindow()
@@ -313,23 +313,31 @@ namespace JeuSAE
 
         public void Deplacements()
         {
+            if (!triche)
+            {
 
+                vitesseJoueur = VITESSE_JOUEUR;
+            }
+            else
+            {
+                vitesseJoueur = VITESSE_JOUEUR_TRICHE;
+            }
             if (gauche == true && Canvas.GetLeft(joueur) > 0)
             {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - VITESSE_JOUEUR);
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - vitesseJoueur);
             }
 
             else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
             {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + VITESSE_JOUEUR);
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + vitesseJoueur);
             }
             else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
             {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - VITESSE_JOUEUR);
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - vitesseJoueur);
             }
             else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
             {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + VITESSE_JOUEUR);
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + vitesseJoueur);
             }
 
         }
@@ -406,9 +414,10 @@ namespace JeuSAE
             ennemisRestants = 0;
             nombreEnnemisMap = 0;
             killManche = 0;
-            nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
-            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
-
+            nombreZombieManche = NOMBRE_ZOMBIES + 5 * (manche - 1);
+            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * (manche - 1);
+            if (!difficile)
+                munitionMaxJoueur = MUNITIONS_MAX_DEBUT +(1*manche)-1;
         }
         private void FinManche()
         {
@@ -416,10 +425,15 @@ namespace JeuSAE
             {
                 ennemisRestants = 0;
                 killManche = 0;
-                nombreZombieManche = NOMBRE_ZOMBIES+ 5*manche;
-                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS+ 2*manche;
-                MUNITIONS_MAX_JOUEUR++;
-                VIE_JOUEUR += 5;
+                nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
+                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
+                if (!difficile)
+                {
+
+                    munitionMaxJoueur++; 
+                    nombreDeBalles = munitionMaxJoueur;
+                    VIE_JOUEUR += 5;
+                }
                 manche++;
             }
 
@@ -471,23 +485,23 @@ namespace JeuSAE
         private void GenerationKitSoin(int nombreSoinMaxMemeTemps)
         {
             Random aleatoire = new Random();
-            
-                for (int i = 0; i < nombreSoinMaxMemeTemps; i++)
+
+            for (int i = 0; i < nombreSoinMaxMemeTemps; i++)
+            {
+                Rectangle kitSoin = new Rectangle
                 {
-                    Rectangle kitSoin = new Rectangle
-                    {
-                        Tag = "Kit_Soin",
-                        Height = 45,
-                        Width = 52,
-                        Fill = soin
-                    };
-                    int pointApparition = aleatoire.Next(1, 1);
-                    Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
-                    Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
-                    soinListe.Add(kitSoin);
-                    fond.Children.Add(kitSoin);
-                }
-            
+                    Tag = "Kit_Soin",
+                    Height = 45,
+                    Width = 52,
+                    Fill = soin
+                };
+                int pointApparition = aleatoire.Next(1, 1);
+                Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
+                Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
+                soinListe.Add(kitSoin);
+                fond.Children.Add(kitSoin);
+            }
+
         }
 
         private void GenerKitSoinConditions(object sender, EventArgs e)
@@ -512,14 +526,14 @@ namespace JeuSAE
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-            
+
         }
 
         private void NombreBalles()
         {
             if (!triche)
             {
-                nombre_balles.Content = nombreDeBalles + " | " + MUNITIONS_MAX_JOUEUR;
+                nombre_balles.Content = nombreDeBalles + " | " + munitionMaxJoueur;
             }
             else
             {
@@ -556,7 +570,7 @@ namespace JeuSAE
             //Code de triche
             if (e.Key == tricher)
             {
-                nombreDeBalles = 15;
+                nombreDeBalles = munitionMaxJoueur;
                 vieInfinie = !vieInfinie;
                 Vie();
                 ballesInfinies = !ballesInfinies;
@@ -684,9 +698,13 @@ namespace JeuSAE
         private void Interactions()
         {
             Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
+            if (!triche)
+                vitesseBalle = VITESSE_BALLE;
+            else
+                vitesseBalle = VITESSE_BALLE_TRICHE;
             foreach (Rectangle x in balleB)
             {
-                Canvas.SetTop(x, Canvas.GetTop(x) + VITESSE_BALLE_JOUEUR);
+                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle);
                 if (InteractionBalles(x, zoneJoueur))
                 {
                     objetASupprimer.Add(x);
@@ -695,7 +713,7 @@ namespace JeuSAE
             }
             foreach (Rectangle x in balleD)
             {
-                Canvas.SetLeft(x, Canvas.GetLeft(x) + VITESSE_BALLE_JOUEUR);
+                Canvas.SetLeft(x, Canvas.GetLeft(x) + vitesseBalle);
                 if (InteractionBalles(x, zoneJoueur))
                 {
                     objetASupprimer.Add(x);
@@ -704,7 +722,7 @@ namespace JeuSAE
             }
             foreach (Rectangle x in balleG)
             {
-                Canvas.SetLeft(x, Canvas.GetLeft(x) - VITESSE_BALLE_JOUEUR);
+                Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle);
 
                 if (InteractionBalles(x, zoneJoueur))
                 {
@@ -715,7 +733,7 @@ namespace JeuSAE
             }
             foreach (Rectangle x in balleH)
             {
-                Canvas.SetTop(x, Canvas.GetTop(x) - VITESSE_BALLE_JOUEUR);
+                Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle);
                 if (InteractionBalles(x, zoneJoueur))
                 {
                     objetASupprimer.Add(x);
@@ -835,8 +853,6 @@ namespace JeuSAE
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
                 vieJoueur = VIE_JOUEUR;
-                VITESSE_BALLE_JOUEUR = VITESSE_BALLE_TRICHE;
-                VITESSE_JOUEUR = VITESSE_JOUEUR_TRICHE;
             }
 
         }
@@ -908,7 +924,9 @@ namespace JeuSAE
             mineuteur.Stop();
             interval.Stop();
             Pause pause = new Pause();
-            pause.ShowDialog();
+
+            pause.ShowDialog();            
+
         }
 
 

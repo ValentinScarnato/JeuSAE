@@ -22,14 +22,13 @@ namespace JeuSAE
     /// </summary>
     public partial class Pause : Window
     {
-        MainWindow mainwindow;
         int mancheValeur;
         bool fermer = true;
         public Pause()
         {
             InitializeComponent();
             fond.Children.Add(erreurLabel);
-
+            selectionner_manche.Text = ((MainWindow)Application.Current.MainWindow).manche + "";
         }
 
         Label erreurLabel = new Label
@@ -43,7 +42,7 @@ namespace JeuSAE
             Height = 100
 
         };
-        
+
 
         private void selectionner_manche_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -58,25 +57,34 @@ namespace JeuSAE
                 }
                 if (mancheValeur >= 1)
                 {
-                    fermer = true;
                     erreurLabel.Foreground = Brushes.Transparent;
-                    ((MainWindow)Application.Current.MainWindow).manche=mancheValeur;
+                    fermer = true;
+                    int temp = ((MainWindow)Application.Current.MainWindow).manche;
+                    ((MainWindow)Application.Current.MainWindow).manche = mancheValeur;
+                    if (temp != ((MainWindow)Application.Current.MainWindow).manche)
+                    {
+                        ((MainWindow)Application.Current.MainWindow).TricheManche();
+                    }
+
+
                 }
             }
             else
             {
                 erreurLabel.Foreground = Brushes.Red;
 
-                erreurLabel.Content="Pas un nombre";
+                erreurLabel.Content = "Pas un nombre";
                 fermer = false;
-
             }
+
+
         }
 
 
         private void selectionner_manche_GotFocus(object sender, RoutedEventArgs e)
         {
             selectionner_manche.Clear();
+
         }
         private void bouton_reprendre_Click(object sender, RoutedEventArgs e)
         {
@@ -85,7 +93,6 @@ namespace JeuSAE
                 ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
                 ((MainWindow)Application.Current.MainWindow).interval.Start();
                 ((MainWindow)Application.Current.MainWindow).minuteur2.Start();
-                ((MainWindow)Application.Current.MainWindow).TricheManche();
 
                 Close();
             }
@@ -113,7 +120,6 @@ namespace JeuSAE
             if (fermer)
             {
                 ((MainWindow)Application.Current.MainWindow).mineuteur.Start();
-                ((MainWindow)Application.Current.MainWindow).TricheManche();
 
                 ((MainWindow)Application.Current.MainWindow).interval.Start();
                 ((MainWindow)Application.Current.MainWindow).minuteur2.Start();
@@ -126,7 +132,7 @@ namespace JeuSAE
         {
             if (!fermer)
                 e.Cancel = true;
-            ((MainWindow)Application.Current.MainWindow).TricheManche();
+
 
         }
     }

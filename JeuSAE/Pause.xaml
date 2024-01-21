@@ -54,6 +54,6 @@
             FontSize="24"
             Foreground="Red"
             TextWrapping="Wrap" Width="383" ><Run Text="Appuyez sur K pour activer l"/><Run Language="fr-fr" Text="a"/><Run Language="fr-fr" Text=" "/><Run Text="Triche"/></TextBlock>
-        <TextBox x:Name="selectionner_manche" TextWrapping="Wrap" Text="1" Margin="448,211,448,382" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" TextChanged="selectionner_manche_TextChanged" GotFocus="selectionner_manche_GotFocus"/>
+        <TextBox x:Name="selectionner_manche" TextWrapping="Wrap" Text="" Margin="448,211,448,382" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" TextChanged="selectionner_manche_TextChanged" GotFocus="selectionner_manche_GotFocus"/>
     </Grid>
 </Window>
