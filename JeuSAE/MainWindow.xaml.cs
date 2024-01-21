@@ -803,12 +803,13 @@ namespace JeuSAE
                 balleD.Remove(y);
                 balleH.Remove(y);
                 balleB.Remove(y);
+                // suppression du rectangle y de toutes les listes
             }
-            Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height);
+            Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height); // conversion du Rectangle feu vers un Rect feuZone
 
-            if (zoneJoueur.IntersectsWith(feuZone) && vieJoueur > 0)
+            if (zoneJoueur.IntersectsWith(feuZone) && vieJoueur > 0) // test de collision entre le joueur et le feu
             {
-                if (!triche)
+                if (!triche) // si la triche est désactivée, le joueur perdera 2 de vie toutes les 15 ms
                 {
                     vieJoueur -= 2;
                     Thread.Sleep(15);
