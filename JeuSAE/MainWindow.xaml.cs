@@ -784,12 +784,12 @@ namespace JeuSAE
                     Canvas.SetTop(y, Canvas.GetTop(y) + VITESSE_ZOMBIE);
                     orientationZombieY = ORIENTATION_HAUT;
                 }
-                if (Canvas.GetTop(y) > Canvas.GetTop(joueur))
+                if (Canvas.GetTop(y) > Canvas.GetTop(joueur)) // si le zombie est plus bas que le joueur
                 {
                     Canvas.SetTop(y, Canvas.GetTop(y) - VITESSE_ZOMBIE);
                     orientationZombieY = ORIENTATION_BAS;
                 }
-                OrientationZombie(y, orientationZombieX, orientationZombieY);
+                OrientationZombie(y, orientationZombieX, orientationZombieY); //appel de la méthode orientation zombie en envoyant l'orientation verticale et horizontale
 
             }
             foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
