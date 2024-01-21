@@ -20,14 +20,22 @@ namespace JeuSAE
     public partial class Parametres : Window
     {
 
-        
+        /*Key droite = Key.D;
+        Key haut = Key.Z;
+        Key gauche = Key.Q;
+        Key bas = Key.S;*/
+
         public Parametres()
         {
             InitializeComponent();
             ImageBrush parametreFond = new ImageBrush();
             parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Paramtre.png"));
             grid_Parametre.Fill = parametreFond;
-            ((MainWindow)Application.Current.MainWindow).TricheManche();
+           /* droite = ((MainWindow)Application.Current.MainWindow).allerADroite;
+            haut = ((MainWindow)Application.Current.MainWindow).avancer;
+            gauche = ((MainWindow)Application.Current.MainWindow).allerADroite;
+            bas = ((MainWindow)Application.Current.MainWindow).reculer;*/
+
 
 
         }
@@ -47,12 +55,72 @@ namespace JeuSAE
 
         }
 
-        
-        /*
-public void bouton_droite_TextChanged(object sender, TextChangedEventArgs e)
-{
 
-bouton_droite.Text = tournerDroite;
-}*/
+       
+
+
+
+
+
+
+
+        private void bouton_droite_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+           /* bouton_droite.Text = "";
+
+            droite = e.Key;
+            ((MainWindow)Application.Current.MainWindow).allerADroite = droite;
+            KeyConverter keyConverter = new KeyConverter();
+            bouton_droite.Text = keyConverter.ConvertToString(droite);
+            bouton_droite.Focus();*/
+        }
+
+        private void bouton_droite_GotFocus(object sender, RoutedEventArgs e)
+        {
+          // bouton_droite.Text ="" ;
+
+        }
+
+
+
+        private void bouton_droite_KeyDown(object sender, KeyEventArgs e)
+        {
+           /* bouton_droite.Text = "";
+            bouton_droite.Focus();*/
+
+
+        }
+
+        private void bouton_avancer_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            /*bouton_gauche.Text = "";
+
+            gauche = e.Key;
+            ((MainWindow)Application.Current.MainWindow).allerAGauche = gauche;
+            KeyConverter keyConverter = new KeyConverter();
+            bouton_droite.Text = keyConverter.ConvertToString(gauche);
+            bouton_avancer.Focus();     */
+        }
+
+        private void bouton_avancer_GotFocus(object sender, RoutedEventArgs e)
+        {
+           // bouton_droite.Text = "";
+
+
+        }
+
+        private void bouton_avancer_KeyDown(object sender, KeyEventArgs e)
+        {
+            bouton_droite.Text = "";
+            bouton_avancer.Focus();
+
+
+        }
+
+
+
+
+
+
     }
 }

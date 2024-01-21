@@ -55,13 +55,13 @@ namespace JeuSAE
         /*----------------------------------------------------*/
 
         public Key avancer = Key.Z;
-        Key reculer = Key.S;
-        Key allerADroite = Key.D;
-        Key allerAGauche = Key.Q;
-        Key tirer = Key.Space;
+        public Key reculer = Key.S;
+        public Key allerADroite = Key.D;
+        public Key allerAGauche = Key.Q;
+        public Key tirer = Key.Space;
         public Key tournerDroite = Key.E;
-        Key tournerGauche = Key.A;
-        Key tricher = Key.K;
+        public Key tournerGauche = Key.A;
+        public Key tricher = Key.K;
 
         /*----------------------------------------------------*/
         /*-----------------------INT--------------------------*/
