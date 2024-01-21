@@ -20,10 +20,12 @@ namespace JeuSAE
     public partial class Parametres : Window
     {
 
-        /*Key droite = Key.D;
-        Key haut = Key.Z;
-        Key gauche = Key.Q;
-        Key bas = Key.S;*/
+        Key droite;
+        Key haut;
+        Key gauche;
+        Key bas;
+        Key tirer;
+        KeyConverter convertir = new KeyConverter();
 
         public Parametres()
         {
@@ -31,11 +33,16 @@ namespace JeuSAE
             ImageBrush parametreFond = new ImageBrush();
             parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Paramtre.png"));
             grid_Parametre.Fill = parametreFond;
-           /* droite = ((MainWindow)Application.Current.MainWindow).allerADroite;
+            droite = ((MainWindow)Application.Current.MainWindow).allerADroite;
             haut = ((MainWindow)Application.Current.MainWindow).avancer;
             gauche = ((MainWindow)Application.Current.MainWindow).allerADroite;
-            bas = ((MainWindow)Application.Current.MainWindow).reculer;*/
-
+            bas = ((MainWindow)Application.Current.MainWindow).reculer;
+            tirer = ((MainWindow)Application.Current.MainWindow).tirer;
+            bouton_droite.Text = convertir.ConvertToString(droite);
+            bouton_avancer.Text = convertir.ConvertToString(haut);
+            bouton_reculer.Text = convertir.ConvertToString(bas);
+            bouton_gauche.Text = convertir.ConvertToString(gauche);
+            bouton_tirer.Text = convertir.ConvertToString(tirer);
 
 
         }
@@ -55,72 +62,16 @@ namespace JeuSAE
 
         }
 
+        
 
-       
-
-
-
-
-
-
-
-        private void bouton_droite_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void normal_Selected(object sender, RoutedEventArgs e)
         {
-           /* bouton_droite.Text = "";
-
-            droite = e.Key;
-            ((MainWindow)Application.Current.MainWindow).allerADroite = droite;
-            KeyConverter keyConverter = new KeyConverter();
-            bouton_droite.Text = keyConverter.ConvertToString(droite);
-            bouton_droite.Focus();*/
-        }
-
-        private void bouton_droite_GotFocus(object sender, RoutedEventArgs e)
-        {
-          // bouton_droite.Text ="" ;
 
         }
 
-
-
-        private void bouton_droite_KeyDown(object sender, KeyEventArgs e)
+        private void difficile_Selected(object sender, RoutedEventArgs e)
         {
-           /* bouton_droite.Text = "";
-            bouton_droite.Focus();*/
-
 
         }
-
-        private void bouton_avancer_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            /*bouton_gauche.Text = "";
-
-            gauche = e.Key;
-            ((MainWindow)Application.Current.MainWindow).allerAGauche = gauche;
-            KeyConverter keyConverter = new KeyConverter();
-            bouton_droite.Text = keyConverter.ConvertToString(gauche);
-            bouton_avancer.Focus();     */
-        }
-
-        private void bouton_avancer_GotFocus(object sender, RoutedEventArgs e)
-        {
-           // bouton_droite.Text = "";
-
-
-        }
-
-        private void bouton_avancer_KeyDown(object sender, KeyEventArgs e)
-        {
-            bouton_droite.Text = "";
-            bouton_avancer.Focus();
-
-
-        }
-
-
-
-
-
-
     }
 }
