@@ -664,7 +664,7 @@ namespace JeuSAE
                     killsJoueur += 1;
                     killManche += 1;
                     Random rdm = new Random();
-                    if (rdm.Next(1, 5) == 1)
+                    if (rdm.Next(1, 4) == 1)
                     {
                         nombreDeBalles++;
                     }
@@ -751,7 +751,7 @@ namespace JeuSAE
                     if (!triche)
                     {
                         vieJoueur -= 5;
-                        Thread.Sleep(50);
+                        Thread.Sleep(30);
                     }
 
                 }
