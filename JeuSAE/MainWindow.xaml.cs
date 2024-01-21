@@ -31,15 +31,14 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
-        public static int MUNITIONS_MAX_DEBUT = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES = 20, ZOMBIE_MEME_TEMPS = 5;
-        public static int DEGATS_PAR_ZOMBIE = 10;
-        private static int VITESSE_BALLE = 20, VITESSE_BALLE_TRICHE = 30;
-        private static int BANDEAU = 60;
+        public static readonly int MUNITIONS_MAX_DEBUT = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES = 20, ZOMBIE_MEME_TEMPS = 5;
+        public static readonly int DEGATS_PAR_ZOMBIE = 10;
+        private static readonly int VITESSE_BALLE = 20, VITESSE_BALLE_TRICHE = 30;
+        private static readonly int BANDEAU = 60;
         /*----------------------------------------------------*/
         /*----------------------DOUBLE------------------------*/
         /*----------------------------------------------------*/
         public static int VITESSE_JOUEUR = 8, VITESSE_JOUEUR_TRICHE = 15, VITESSE_ZOMBIE = 3;
-        int vitesseJoueur = VITESSE_JOUEUR, vitesseBalle = VITESSE_BALLE, munitionMaxJoueur= MUNITIONS_MAX_DEBUT;
         /*----------------------------------------------------*/
         /*--------------------TIMESPAN------------------------*/
         /*----------------------------------------------------*/
@@ -71,13 +70,14 @@ namespace JeuSAE
         /*----------------------------------------------------*/
 
 
-        private int nombreDeBalles = MUNITIONS_MAX_DEBUT;
+        int nombreDeBalles = MUNITIONS_MAX_DEBUT;
         int nombreZombieManche = 0, nombreEnnemisMap, ennemisRestants, killManche;
-
+        int vitesseJoueur = VITESSE_JOUEUR, vitesseBalle = VITESSE_BALLE, munitionMaxJoueur = MUNITIONS_MAX_DEBUT;
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
-        public int killsJoueur { get; set; } = 0;
+        public int killsJoueur = 0;
         int vieJoueur = VIE_JOUEUR;
         public int manche = 1;
+        int chanceBalle;
 
         /*----------------------------------------------------*/
         /*-----------------------BOOLEEN----------------------*/
@@ -172,7 +172,7 @@ namespace JeuSAE
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             if (!difficile)
-                GenerationKitSoin(nombreSoinMaXMemeTemps);
+                GenerationKitSoin();
             Generation_Munitions(nombreMunitionMaxMemeTemps);
             nombreZombieManche = NOMBRE_ZOMBIES + 2 * (manche - 1);
             nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche - 1);
@@ -357,10 +357,7 @@ namespace JeuSAE
                     Height = 100,
                     Width = 100,
                 };
-                /*
-                ImageBrush imageBrush = new ImageBrush();
-                imageBrush.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Image/zombieGif.gif"));
-                ennemi.Fill = imageBrush;*/
+                
 
                 fond.Children.Add(ennemi);
                 InitialiserAnimationZombie(ennemi);
@@ -416,7 +413,7 @@ namespace JeuSAE
             nombreZombieManche = NOMBRE_ZOMBIES + 5 * (manche - 1);
             nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * (manche - 1);
             if (!difficile)
-                munitionMaxJoueur = MUNITIONS_MAX_DEBUT +(1*manche)-1;
+                munitionMaxJoueur = MUNITIONS_MAX_DEBUT + (1 * manche) - 1;
         }
         private void FinManche()
         {
@@ -429,9 +426,9 @@ namespace JeuSAE
                 if (!difficile)
                 {
 
-                    munitionMaxJoueur++; 
+                    munitionMaxJoueur++;
                     nombreDeBalles = munitionMaxJoueur;
-                    VIE_JOUEUR += 5;
+                    vieJoueur += 5;
                 }
                 manche++;
             }
@@ -481,25 +478,24 @@ namespace JeuSAE
         /*-----------------GENERATION DE SOIN-----------------*/
         /*----------------------------------------------------*/
 
-        private void GenerationKitSoin(int nombreSoinMaxMemeTemps)
+        private void GenerationKitSoin()
         {
             Random aleatoire = new Random();
 
-            for (int i = 0; i < nombreSoinMaxMemeTemps; i++)
+
+            Rectangle kitSoin = new Rectangle
             {
-                Rectangle kitSoin = new Rectangle
-                {
-                    Tag = "Kit_Soin",
-                    Height = 45,
-                    Width = 52,
-                    Fill = soin
-                };
-                int pointApparition = aleatoire.Next(1, 1);
-                Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
-                Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
-                soinListe.Add(kitSoin);
-                fond.Children.Add(kitSoin);
-            }
+                Tag = "Kit_Soin",
+                Height = 45,
+                Width = 52,
+                Fill = soin
+            };
+            int pointApparition = aleatoire.Next(1, 1);
+            Canvas.SetTop(kitSoin, aleatoire.Next((int)kitSoin.Height + BANDEAU, 900));
+            Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
+            soinListe.Add(kitSoin);
+            fond.Children.Add(kitSoin);
+
 
         }
 
@@ -508,7 +504,7 @@ namespace JeuSAE
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
             if (!difficile)
             {
-                GenerationKitSoin(nombreSoinMaXMemeTemps);
+                GenerationKitSoin();
                 minuteur2.Stop();
             }
 
@@ -525,7 +521,7 @@ namespace JeuSAE
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-            
+
         }
 
         private void NombreBalles()
@@ -634,7 +630,7 @@ namespace JeuSAE
         }
 
         /*----------------------------------------------------*/
-        /*-----------GESTION D'INTERACTION BALLES-------------*/
+        /*---------------INTERACTION BALLES-------------------*/
         /*----------------------------------------------------*/
 
         private bool InteractionBalles(Rectangle x, Rect zoneJoueur)
@@ -662,24 +658,28 @@ namespace JeuSAE
                 objetASupprimer.Add(x);
                 return true;
             }
-            foreach (Rectangle y in zombieListe)
+            foreach (Rectangle y in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
 
-                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height); //convertir le rectangle y en Rect
 
-                if (balle.IntersectsWith(ennemiZone))
+                if (balle.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
 
-                    objetASupprimer.Add(x);
-                    objetASupprimer.Add(y);
-                    nombreEnnemisMap--;
-                    ennemisRestants--;
-                    killsJoueur += 1;
-                    killManche += 1;
-                    Random rdm = new Random();
-                    if (rdm.Next(1, 4) == 1)
+                    objetASupprimer.Add(x); // ajout de la balle aux objets a supprimer
+                    objetASupprimer.Add(y); // ajout du zombie aux objets a supprimer
+                    nombreEnnemisMap--; // il y a un ennemi sur la carte en moins
+                    ennemisRestants--; // il y a un ennemi restant en moins
+                    killsJoueur += 1; // le joueur a tué un zombie donc il a un kill en plus
+                    killManche += 1; // le joueur a tué un zombie dans la manche donc il a un kill en plus pour la manche
+                    Random aleatoire = new Random();
+                    if (!difficile)
+                        chanceBalle = 5;// une chance sur 5 de récupérer une balle si difficulté normale
+                    else
+                        chanceBalle = 7;// une chance sur 7 de récupérer une balle si difficulté difficile
+                    if (aleatoire.Next(1, chanceBalle) == 1)
                     {
-                        nombreDeBalles++;
+                        nombreDeBalles++; // augmentation du nombre de balles
                     }
                     return true;
                 }
@@ -921,8 +921,9 @@ namespace JeuSAE
         {
             mineuteur.Stop();
             interval.Stop();
+
             Pause pause = new Pause();
-            pause.ShowDialog();            
+            pause.ShowDialog();
         }
 
 
