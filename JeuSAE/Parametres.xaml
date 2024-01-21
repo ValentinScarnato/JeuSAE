@@ -9,7 +9,7 @@
     Width="800"
     Height="450"
     mc:Ignorable="d" ResizeMode="NoResize">
-    
+
     <Grid x:Name="grid" Background="Black">
         <Canvas x:Name="fond" Height="450"/>
         <Rectangle
@@ -27,7 +27,7 @@
         <Label
         Width="172"
         Height="35"
-        Margin="97,41,0,0"
+        Margin="212,263,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Content="Niveau Du Jeu : "
@@ -37,50 +37,50 @@
         <Label
         Width="172"
         Height="35"
-        Margin="97,91,0,0"
+        Margin="444,177,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="DROITE : "
+        Content="DROITE  : "
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
         <Label
         Width="172"
         Height="35"
-        Margin="97,141,0,0"
+        Margin="110,111,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="HAUT : "
+        Content="HAUT  : "
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
         <Label
         Width="172"
         Height="35"
-        Margin="97,191,0,0"
+        Margin="110,174,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="BAS :"
+        Content="BAS  :"
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
         <Label
         Width="172"
         Height="35"
-        Margin="97,241,0,0"
+        Margin="444,111,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="GAUCHE : "
+        Content="GAUCHE  : "
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
         <Label
         Width="172"
         Height="35"
-        Margin="97,291,0,0"
+        Margin="255,38,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="TIRER : "
+        Content="TIRER  : "
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
@@ -88,7 +88,7 @@
         x:Name="Accepter"
         Width="115"
         Height="25"
-        Margin="255,365,0,0"
+        Margin="255,351,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Background="#FF57A52D"
@@ -97,15 +97,15 @@
         x:Name="Retour"
         Width="115"
         Height="25"
-        Margin="0,365,255,0"
-        HorizontalAlignment="right"
+        Margin="0,351,255,0"
+        HorizontalAlignment="Right"
         VerticalAlignment="Top"
         Background="#FFBF1616"
         Click="click_Annuler"
         Content="RETOUR" />
         <ComboBox
         Width="160"
-        Margin="285,52,0,0"
+        Margin="400,274,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top">
             <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
@@ -114,32 +114,32 @@
 
         <TextBox
         x:Name="bouton_reculer"
-        Width="141"
-        Margin="214,203,0,0"
+        Width="140"
+        Margin="228,186,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text="S"
         TextWrapping="Wrap" />
         <TextBox
         x:Name="bouton_droite"
-        Width="141"
-        Margin="214,100,0,0"
+        Width="142"
+        Margin="560,186,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text="D"
         TextWrapping="Wrap" PreviewKeyDown="bouton_droite_PreviewKeyDown" GotFocus="bouton_droite_GotFocus"  KeyDown="bouton_droite_KeyDown" />
         <TextBox
         x:Name="bouton_avancer"
-        Width="141"
-        Margin="214,151,0,0"
+        Width="140"
+        Margin="228,121,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text="Z"
         TextWrapping="Wrap" PreviewKeyDown="bouton_avancer_PreviewKeyDown" GotFocus="bouton_avancer_GotFocus" KeyDown="bouton_avancer_KeyDown" />
         <TextBox
         x:Name="bouton_gauche"
-        Width="141"
-        Margin="214,251,0,0"
+        Width="142"
+        Margin="560,121,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text="Q"
@@ -147,7 +147,7 @@
         <TextBox
         x:Name="bouton_tirer"
         Width="141"
-        Margin="214,301,0,0"
+        Margin="372,48,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text="Espace"

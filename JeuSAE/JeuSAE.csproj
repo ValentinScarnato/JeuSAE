@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Image\balle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Image\Banger.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
