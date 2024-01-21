@@ -357,7 +357,7 @@ namespace JeuSAE
                     Height = 100,
                     Width = 100,
                 };
-                
+
 
                 fond.Children.Add(ennemi);
                 InitialiserAnimationZombie(ennemi);
@@ -633,7 +633,7 @@ namespace JeuSAE
         /*---------------INTERACTION BALLES-------------------*/
         /*----------------------------------------------------*/
 
-        private bool InteractionBalles(Rectangle balle)// cette méthode sert a tester si une balle sort du canvas ou touche un zombie et retourne un booléen
+        private void InteractionBalles(Rectangle balle)// cette méthode sert gérer les intéractions du Rectangle balle récupéré avec les limites du jeu et les collisions avec les zombies
         {
 
 
@@ -641,26 +641,21 @@ namespace JeuSAE
             if (Canvas.GetTop(balle) < BANDEAU)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse le bandeau en allant vers le haut, elle sera supprimée
-                return true;
             }
             if (Canvas.GetTop(balle) > fond.Height)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse la hauteur du canvas, elle sera supprimée
-                return true;
             }
             if (Canvas.GetLeft(balle) < 0)
             {
                 objetASupprimer.Add(balle);// si la balle dépasse du coté gauche du canvas, elle sera supprimée
-                return true;
             }
             if (Canvas.GetLeft(balle) > fond.Width)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse la largeur du canvas, elle sera supprimée
-                return true;
             }
             foreach (Rectangle zomb in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
-
                 Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle y en Rect
 
                 if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
@@ -681,11 +676,9 @@ namespace JeuSAE
                     {
                         nombreDeBalles++; // augmentation du nombre de balles
                     }
-                    return true;
                 }
 
             }
-            return false;
         }
 
         /*----------------------------------------------------*/
@@ -702,40 +695,27 @@ namespace JeuSAE
             foreach (Rectangle x in balleB) // boucler pour chaque rectangle présent dans la liste balleB (balles qui partent vers le bas)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle); // faire aller la balle vers le bas du canvas
-                if (InteractionBalles(x)) // appel de la fonction Interaction balles en envoyant la balle qui part vers le bas et la zone joueur
-                {
-                    objetASupprimer.Add(x);
+                InteractionBalles(x); // appel de la fonction Interaction balles en envoyant la balle qui part vers le bas 
 
-                }
             }
-            foreach (Rectangle x in balleD)
+            foreach (Rectangle x in balleD) //boucler pour chaque Rectangle présent dans la liste balleD (balle qui partent vers la droite)
             {
-                Canvas.SetLeft(x, Canvas.GetLeft(x) + vitesseBalle);
-                if (InteractionBalles(x))
-                {
-                    objetASupprimer.Add(x);
+                Canvas.SetLeft(x, Canvas.GetLeft(x) + vitesseBalle); // faire aller la balle vers la droite
+                InteractionBalles(x); // appel de la méthode InteractionBalles en envoyant la balle qui part vers la droite
 
-                }
             }
-            foreach (Rectangle x in balleG)
+            foreach (Rectangle x in balleG) // boucler pour chaque rectangle dans la liste balleG (balles qui partent vers la gauche)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle);
+                InteractionBalles(x);
 
-                if (InteractionBalles(x))
-                {
-                    objetASupprimer.Add(x);
-
-
-                }
             }
             foreach (Rectangle x in balleH)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle);
-                if (InteractionBalles(x))
-                {
-                    objetASupprimer.Add(x);
+                InteractionBalles(x);
 
-                }
+
             }
             foreach (Rectangle z in munitionListe)
             {
@@ -745,7 +725,6 @@ namespace JeuSAE
                     nombreDeBalles = 15;
                     objetASupprimer.Add(z);
                     interval.Start();
-
 
                 }
             }
