@@ -177,7 +177,6 @@ namespace JeuSAE
             nombreZombieManche = NOMBRE_ZOMBIES +2 * (manche - 1);
             nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche-1);
 
-
             /*----------------------------------------------------*/
             /*---------------------TEMPS--------------------------*/
             /*----------------------------------------------------*/
@@ -400,6 +399,7 @@ namespace JeuSAE
                 nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS+ 2*manche;
                 MUNITIONS_MAX_JOUEUR++;
                 VIE_JOUEUR += 5;
+                VITESSE_JOUEUR += 0.5;
                 manche++;
             }
 
@@ -513,9 +513,7 @@ namespace JeuSAE
         }
         public void Manche()
         {
-
             label_manche.Content = "Manche " + manche;
-
         }
 
 
@@ -781,7 +779,7 @@ namespace JeuSAE
             {
                 if (!triche)
                 {
-                    vieJoueur -= 3;
+                    vieJoueur -= 2;
                     Thread.Sleep(15);
                 }
             }
@@ -805,7 +803,7 @@ namespace JeuSAE
                 {
 
                     FenetreMort fenetremort = new FenetreMort(killsJoueur);
-                    
+                    this.Hide();
                     fenetremort.ShowDialog();
                     fenetremort.NombreKills();
                 }
@@ -814,8 +812,8 @@ namespace JeuSAE
             {
                 BarreDeVie.Value = BarreDeVie.Maximum;
                 vieJoueur = VIE_JOUEUR;
-                VITESSE_BALLE_JOUEUR = VITESSE_BALLE_TRICHE;
-                VITESSE_JOUEUR = VITESSE_JOUEUR_TRICHE;
+                //VITESSE_BALLE_JOUEUR = VITESSE_BALLE_TRICHE;
+                //VITESSE_JOUEUR = VITESSE_JOUEUR_TRICHE;
             }
 
         }
