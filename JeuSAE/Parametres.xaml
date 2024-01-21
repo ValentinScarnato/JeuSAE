@@ -152,6 +152,24 @@
         VerticalAlignment="Top"
         Text=""
         TextWrapping="Wrap" />
+        <Label x:Name="triche"
+            Width="172"
+            Height="33"
+            Margin="454,91,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="TRICHER : "
+            FontSize="20"
+            FontWeight="Bold"
+            Foreground="White" />
+        <TextBox
+            x:Name="bouton_triche"
+            Width="141"
+            Margin="575,100,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text=""
+            TextWrapping="Wrap" />
 
 
     </Grid>
