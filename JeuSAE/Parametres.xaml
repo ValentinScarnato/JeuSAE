@@ -108,8 +108,8 @@
         Margin="400,274,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top">
-            <ComboBoxItem IsSelected="True">Normal</ComboBoxItem>
-            <ComboBoxItem>Difficile</ComboBoxItem>
+            <ComboBoxItem x:Name="normal" IsSelected="True" Selected="normal_Selected">Normal</ComboBoxItem>
+            <ComboBoxItem x:Name="difficile" Selected="difficile_Selected">Difficile</ComboBoxItem>
         </ComboBox>
 
         <TextBox
@@ -118,7 +118,7 @@
         Margin="228,186,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Text="S"
+        Text=""
         TextWrapping="Wrap" />
         <TextBox
         x:Name="bouton_droite"
@@ -126,23 +126,23 @@
         Margin="560,186,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Text="D"
-        TextWrapping="Wrap" PreviewKeyDown="bouton_droite_PreviewKeyDown" GotFocus="bouton_droite_GotFocus"  KeyDown="bouton_droite_KeyDown" />
+        Text=""
+        TextWrapping="Wrap" />
         <TextBox
         x:Name="bouton_avancer"
         Width="140"
         Margin="228,121,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Text="Z"
-        TextWrapping="Wrap" PreviewKeyDown="bouton_avancer_PreviewKeyDown" GotFocus="bouton_avancer_GotFocus" KeyDown="bouton_avancer_KeyDown" />
+        Text=""
+        TextWrapping="Wrap" />
         <TextBox
         x:Name="bouton_gauche"
         Width="142"
         Margin="560,121,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Text="Q"
+        Text=""
         TextWrapping="Wrap" />
         <TextBox
         x:Name="bouton_tirer"
@@ -150,7 +150,7 @@
         Margin="372,48,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Text="Espace"
+        Text=""
         TextWrapping="Wrap" />
 
 
