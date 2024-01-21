@@ -122,6 +122,7 @@ namespace JeuSAE
         ImageBrush pause = new ImageBrush();
         ImageBrush map = new ImageBrush();
         ImageBrush feu_ = new ImageBrush();
+        ImageBrush Balle = new ImageBrush();
 
         /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
@@ -142,7 +143,6 @@ namespace JeuSAE
             caisse_decor_3.Fill = caisseDecor;
             caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
-
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
             joueur.Fill = joueur_;
             iconeCrane.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/crane.png"));
@@ -158,8 +158,9 @@ namespace JeuSAE
             map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
             fond.Background = map;
             feu_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/feu.gif"));
-
             Feu.Fill = feu_;
+            Balle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/balle.png"));
+            
         }
 
         public MainWindow()
@@ -237,10 +238,11 @@ namespace JeuSAE
         private void InitialiserAnimationZombie(Rectangle ennemi)
         {
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100); // Ajustez l'intervalle selon votre besoin
+            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += (sender, e) => AnimerZombie(ennemi);
             timer.Start();
         }
+
 
 
         /*----------------------------------------------------*/
@@ -266,7 +268,7 @@ namespace JeuSAE
                     Tag = "Balle",
                     Height = 5,
                     Width = 5,
-                    Fill = Brushes.White,
+                    Fill = Balle,
                     Stroke = Brushes.Yellow
                 };
 
@@ -414,8 +416,10 @@ namespace JeuSAE
             {
                 ennemisRestants = 0;
                 killManche = 0;
-                nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
-                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
+                nombreZombieManche = NOMBRE_ZOMBIES+ 5*manche;
+                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS+ 2*manche;
+                MUNITIONS_MAX_JOUEUR++;
+                VIE_JOUEUR += 5;
                 manche++;
             }
 
@@ -455,7 +459,6 @@ namespace JeuSAE
 
         private void GenerMunitionsConditions(object sender, EventArgs e)
         {
-            // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
             Generation_Munitions(nombreMunitionMaxMemeTemps);
             interval.Stop();
 
@@ -479,10 +482,8 @@ namespace JeuSAE
                         Fill = soin
                     };
                     int pointApparition = aleatoire.Next(1, 1);
-
                     Canvas.SetTop(kitSoin, aleatoire.Next(80, 900));
                     Canvas.SetLeft(kitSoin, aleatoire.Next(20, 1730));
-
                     soinListe.Add(kitSoin);
                     fond.Children.Add(kitSoin);
                 }
@@ -511,8 +512,7 @@ namespace JeuSAE
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-
-
+            
         }
 
         private void NombreBalles()
@@ -674,9 +674,6 @@ namespace JeuSAE
                 }
 
             }
-
-
-
             return false;
         }
 
@@ -756,7 +753,7 @@ namespace JeuSAE
                     if (!triche)
                     {
                         vieJoueur -= 5;
-                        Thread.Sleep(80);
+                        Thread.Sleep(50);
                     }
 
                 }
@@ -830,7 +827,6 @@ namespace JeuSAE
                 {
 
                     FenetreMort fenetremort = new FenetreMort(killsJoueur);
-
                     fenetremort.ShowDialog();
                     fenetremort.NombreKills();
                 }
@@ -914,8 +910,6 @@ namespace JeuSAE
             Pause pause = new Pause();
             pause.ShowDialog();
         }
-
-        
 
 
     }
