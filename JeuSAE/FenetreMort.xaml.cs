@@ -28,6 +28,9 @@ namespace JeuSAE
             InitializeComponent();
 
             label_kill.Content =  nombreKills;
+            ImageBrush mort = new ImageBrush();
+            mort.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/mort.png"));
+            rectangleMort.Fill = mort;
         }
         public void RedemarrerApplication()
         {

@@ -177,7 +177,6 @@ namespace JeuSAE
             nombreZombieManche = NOMBRE_ZOMBIES + 2 * (manche - 1);
             nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche - 1);
 
-
             /*----------------------------------------------------*/
             /*---------------------TEMPS--------------------------*/
             /*----------------------------------------------------*/
@@ -526,7 +525,7 @@ namespace JeuSAE
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-
+            
         }
 
         private void NombreBalles()
@@ -549,9 +548,7 @@ namespace JeuSAE
         }
         public void Manche()
         {
-
             label_manche.Content = "Manche " + manche;
-
         }
 
 
@@ -680,7 +677,7 @@ namespace JeuSAE
                     killsJoueur += 1;
                     killManche += 1;
                     Random rdm = new Random();
-                    if (rdm.Next(1, 5) == 1)
+                    if (rdm.Next(1, 4) == 1)
                     {
                         nombreDeBalles++;
                     }
@@ -771,7 +768,7 @@ namespace JeuSAE
                     if (!triche)
                     {
                         vieJoueur -= 5;
-                        Thread.Sleep(50);
+                        Thread.Sleep(30);
                     }
 
                 }
@@ -821,7 +818,7 @@ namespace JeuSAE
             {
                 if (!triche)
                 {
-                    vieJoueur -= 3;
+                    vieJoueur -= 2;
                     Thread.Sleep(15);
                 }
             }
@@ -845,6 +842,7 @@ namespace JeuSAE
                 {
 
                     FenetreMort fenetremort = new FenetreMort(killsJoueur);
+                    this.Hide();
                     fenetremort.ShowDialog();
                     fenetremort.NombreKills();
                 }
@@ -924,9 +922,7 @@ namespace JeuSAE
             mineuteur.Stop();
             interval.Stop();
             Pause pause = new Pause();
-
             pause.ShowDialog();            
-
         }
 
 
