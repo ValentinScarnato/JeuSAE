@@ -20,8 +20,7 @@ namespace JeuSAE
     public partial class Parametres : Window
     {
 
-        int mancheValeur = 1;
-        bool fermer = true;
+        
         public Parametres()
         {
             InitializeComponent();
