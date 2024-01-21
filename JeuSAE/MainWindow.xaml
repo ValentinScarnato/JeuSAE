@@ -98,24 +98,6 @@
                 VerticalAlignment="Top"
                 Fill="Red" />
             <Rectangle
-                x:Name="caisse_decor_1"
-                Canvas.Left="228"
-                Canvas.Top="243"
-                Width="100"
-                Height="100"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Fill="#FFFBE44B" />
-            <Rectangle
-                x:Name="caisse_decor_3"
-                Canvas.Left="1192"
-                Canvas.Top="698"
-                Width="100"
-                Height="100"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Fill="#FFFBE44B" />
-            <Rectangle
                 x:Name="Feu"
                 Canvas.Left="1310"
                 Canvas.Top="596"
@@ -123,15 +105,6 @@
                 Height="50"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" />
-            <Rectangle
-                x:Name="caisse_decor_4"
-                Canvas.Left="488"
-                Canvas.Top="679"
-                Width="100"
-                Height="100"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Fill="#FFFBE44B" />
             <Label
                 x:Name="nombre_ennemis"
                 Canvas.Left="296"

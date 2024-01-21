@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,7 +38,7 @@ namespace JeuSAE
             grid_Parametre.Fill = parametreFond;
             droite = ((MainWindow)Application.Current.MainWindow).allerADroite;
             haut = ((MainWindow)Application.Current.MainWindow).avancer;
-            gauche = ((MainWindow)Application.Current.MainWindow).allerADroite;
+            gauche = ((MainWindow)Application.Current.MainWindow).allerAGauche;
             bas = ((MainWindow)Application.Current.MainWindow).reculer;
             tirer = ((MainWindow)Application.Current.MainWindow).tirer;
             tricher = ((MainWindow)Application.Current.MainWindow).tricher;
@@ -48,20 +49,18 @@ namespace JeuSAE
             bouton_tirer.Text = convertir.ConvertToString(tirer);
             bouton_triche.Text = convertir.ConvertToString(tricher);
 
-
         }
 
         private void click_Annuler(object sender, RoutedEventArgs e)
         {
             this.Close();
-
-
         }
 
         private void Accepter_Click(object sender, RoutedEventArgs e)
         {
 
             this.Close();
+
             ((MainWindow)Application.Current.MainWindow).difficile = difficulteDifficile;
 
         }
