@@ -823,21 +823,20 @@ namespace JeuSAE
 
         private void Vie()
         {
-            if (!triche)
+            if (!triche) //si la triche est désactivée
             {
-                BarreDeVie.Value = vieJoueur;
-                if (vieJoueur <= 0)
+                BarreDeVie.Value = vieJoueur; // actualiser la barre de vie selon la vie du joueur
+                if (vieJoueur <= 0) // si la vie du joueur est égale ou inférieure à 0 
                 {
-                    vieJoueur = 0;
-                    perdu = true;
+                    vieJoueur = 0; //pour que la vie ne passe pas en néfatif
+                    perdu = true; // le booléen perdu passe en vrai
                 }
-                if (perdu == true)
+                if (perdu) // si perdu est vrai 
                 {
 
-                    FenetreMort fenetremort = new FenetreMort(killsJoueur);
-                    this.Hide();
-                    fenetremort.ShowDialog();
-                    fenetremort.NombreKills();
+                    FenetreMort fenetremort = new FenetreMort(); // nouvelle fenetre de mort
+                    this.Hide(); // cacher le MainWindow
+                    fenetremort.ShowDialog(); // ouverture de la fenetre mort
                 }
             }
             else
