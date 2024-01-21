@@ -49,8 +49,9 @@ namespace JeuSAE
         /*----------------------STRING------------------------*/
         /*----------------------------------------------------*/
 
-        public static String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
+        public static readonly String ORIENTATION_HAUT = "haut", ORIENTATION_BAS = "bas", ORIENTATION_DROITE = "droite", ORIENTATION_GAUCHE = "gauche";
         string orientationJoueur = "droite";
+        String orientationZombieX = "", orientationZombieY = "";
 
         /*----------------------------------------------------*/
         /*-----------------------KEY--------------------------*/
@@ -633,7 +634,7 @@ namespace JeuSAE
         /*---------------INTERACTION BALLES-------------------*/
         /*----------------------------------------------------*/
 
-        private void InteractionBalles(Rectangle balle)// cette méthode sert gérer les intéractions du Rectangle balle récupéré avec les limites du jeu et les collisions avec les zombies
+        private bool InteractionBalles(Rectangle balle)// cette méthode sert a tester si une balle sort du canvas ou touche un zombie et retourne un booléen
         {
 
 
@@ -641,22 +642,26 @@ namespace JeuSAE
             if (Canvas.GetTop(balle) < BANDEAU)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse le bandeau en allant vers le haut, elle sera supprimée
+                return true;
             }
             if (Canvas.GetTop(balle) > fond.Height)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse la hauteur du canvas, elle sera supprimée
+                return true;
             }
             if (Canvas.GetLeft(balle) < 0)
             {
                 objetASupprimer.Add(balle);// si la balle dépasse du coté gauche du canvas, elle sera supprimée
+                return true;
             }
             if (Canvas.GetLeft(balle) > fond.Width)
             {
                 objetASupprimer.Add(balle); // si la balle dépasse la largeur du canvas, elle sera supprimée
+                return true;
             }
             foreach (Rectangle zomb in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
-                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle y en Rect
+                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle zomb en Rect
 
                 if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
@@ -676,9 +681,11 @@ namespace JeuSAE
                     {
                         nombreDeBalles++; // augmentation du nombre de balles
                     }
+                    return true;
                 }
 
             }
+            return false;
         }
 
         /*----------------------------------------------------*/
@@ -694,54 +701,64 @@ namespace JeuSAE
                 vitesseBalle = VITESSE_BALLE_TRICHE;
             foreach (Rectangle x in balleB) // boucler pour chaque rectangle présent dans la liste balleB (balles qui partent vers le bas)
             {
-                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle); // faire aller la balle vers le bas du canvas
-                InteractionBalles(x); // appel de la fonction Interaction balles en envoyant la balle qui part vers le bas 
-
+                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle); // faire aller la balle vers le bas 
+                if (InteractionBalles(x)) // appel de la fonction Interaction balles en envoyant la balle qui part vers le bas 
+                    objetASupprimer.Add(x);
             }
             foreach (Rectangle x in balleD) //boucler pour chaque Rectangle présent dans la liste balleD (balle qui partent vers la droite)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) + vitesseBalle); // faire aller la balle vers la droite
-                InteractionBalles(x); // appel de la méthode InteractionBalles en envoyant la balle qui part vers la droite
+                if (InteractionBalles(x))
+                    objetASupprimer.Add(x); // appel de la méthode InteractionBalles en envoyant la balle qui part vers la droite
 
             }
             foreach (Rectangle x in balleG) // boucler pour chaque rectangle dans la liste balleG (balles qui partent vers la gauche)
             {
-                Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle);
-                InteractionBalles(x);
+                Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle); // faire partir la balle vers la gauche
+                if (InteractionBalles(x))// appel de la fonction Interaction balles en envoyant la balle qui part vers la gauche
+                    objetASupprimer.Add(x);
 
             }
-            foreach (Rectangle x in balleH)
+            foreach (Rectangle x in balleH) // boucler pour chaque rectangle dans la liste balleH (balles qui partent vers le haut)
             {
-                Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle);
-                InteractionBalles(x);
+                Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle); // faire partir la balle vers le haut
+                if (InteractionBalles(x))// appel de la fonction Interaction balles en envoyant la balle qui part vers le haut
+                    objetASupprimer.Add(x);
 
 
             }
-            foreach (Rectangle z in munitionListe)
+            foreach (Rectangle muni in munitionListe) //boucler pour chaque rectancle dans la liste des boites de munitions
             {
-                Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(z), Canvas.GetTop(z), z.Width, z.Height);
-                if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < 15)
+                Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(muni), Canvas.GetTop(muni), muni.Width, muni.Height); // convertir la boite de munitions en Rect
+                if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < munitionMaxJoueur) // test de la collision entre le joueur et la boite de munition et si le nombre de balles est inférieur au nombre maximal de balles
                 {
-                    nombreDeBalles = 15;
-                    objetASupprimer.Add(z);
-                    interval.Start();
+                    if (!difficile)
+                        nombreDeBalles = munitionMaxJoueur; // si la difficulté n'est pas en difficile mettre le nombre maximal de balles
+                    else
+                    {
+                        if (nombreDeBalles + munitionMaxJoueur / 2 < munitionMaxJoueur)
+                            nombreDeBalles += munitionMaxJoueur / 2; // si la difficulté est en difficile et que si on ajoute la moitiée des munitions maximales est inférieur au nombre maximal de balles , ajout de la moitiée du nombre maximal de balles
+                        else
+                            nombreDeBalles = munitionMaxJoueur; // si l'on ajoute la moitiée du nombre maximal de balles et que c'est supérieur au nombre maximal de balles, le nombre de balles sera égal au nombre maximal de balles 
+                    }
+                    objetASupprimer.Add(muni); // ajout de la boite de munition aux objets a supprimer
+                    interval.Start(); // démarage de l'interval enrtre deux boites de munition
 
                 }
             }
-            foreach (Rectangle w in soinListe)
+            foreach (Rectangle soin in soinListe) // boucler pour chaque rectangle dans la liste des soins
             {
-                Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
+                Rect kitSoinZone = new Rect(Canvas.GetLeft(soin), Canvas.GetTop(soin), soin.Width, soin.Height);
                 if (zoneJoueur.IntersectsWith(kitSoinZone) && vieJoueur < 100)
                 {
                     vieJoueur = VIE_JOUEUR;
-                    objetASupprimer.Add(w);
+                    objetASupprimer.Add(soin);
                     minuteur2.Start();
                 }
             }
-            foreach (Rectangle y in zombieListe)
+            foreach (Rectangle zomb in zombieListe)
             {
-                String orientationZombieX = "", orientationZombieY = "";
-                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height);
+                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
                     if (!triche)
@@ -751,51 +768,29 @@ namespace JeuSAE
                     }
 
                 }
-                if (Canvas.GetLeft(y) > Canvas.GetLeft(joueur))
-                {
-                    Canvas.SetLeft(y, Canvas.GetLeft(y) - VITESSE_ZOMBIE);
-                    orientationZombieX = ORIENTATION_GAUCHE;
-
-                }
-                if (Canvas.GetLeft(y) < Canvas.GetLeft(joueur))
-                {
-                    Canvas.SetLeft(y, Canvas.GetLeft(y) + VITESSE_ZOMBIE);
-                    orientationZombieX = ORIENTATION_DROITE;
-                }
-                if (Canvas.GetTop(y) < Canvas.GetTop(joueur))
-                {
-                    Canvas.SetTop(y, Canvas.GetTop(y) + VITESSE_ZOMBIE);
-                    orientationZombieY = ORIENTATION_HAUT;
-                }
-                if (Canvas.GetTop(y) > Canvas.GetTop(joueur))
-                {
-                    Canvas.SetTop(y, Canvas.GetTop(y) - VITESSE_ZOMBIE);
-                    orientationZombieY = ORIENTATION_BAS;
-                }
-                OrientationZombie(y, orientationZombieX, orientationZombieY);
+                DeplacementZombie(zomb);
+                
+                OrientationZombie(zomb, orientationZombieX, orientationZombieY); //appel de la méthode orientation zombie en envoyant l'orientation verticale et horizontale
 
             }
-            foreach (Rectangle y in objetASupprimer)
+            foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
             {
                 fond.Children.Remove(y);
                 munitionListe.Remove(y);
                 soinListe.Remove(y);
                 zombieListe.Remove(y);
                 balles.Remove(y);
-                if (balleG.Contains(y))
-                    balleG.Remove(y);
-                if (balleD.Contains(y))
-                    balleD.Remove(y);
-                if (balleH.Contains(y))
-                    balleH.Remove(y);
-                if (balleB.Contains(y))
-                    balleB.Remove(y);
+                balleG.Remove(y);
+                balleD.Remove(y);
+                balleH.Remove(y);
+                balleB.Remove(y);
+                // suppression du rectangle y de toutes les listes
             }
-            Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height);
+            Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height); // conversion du Rectangle feu vers un Rect feuZone
 
-            if (zoneJoueur.IntersectsWith(feuZone) && vieJoueur > 0)
+            if (zoneJoueur.IntersectsWith(feuZone) && vieJoueur > 0) // test de collision entre le joueur et le feu
             {
-                if (!triche)
+                if (!triche) // si la triche est désactivée, le joueur perdera 2 de vie toutes les 15 ms
                 {
                     vieJoueur -= 2;
                     Thread.Sleep(15);
@@ -803,33 +798,56 @@ namespace JeuSAE
             }
 
         }
+        public void DeplacementZombie(Rectangle zomb)
+        {
+            if (Canvas.GetLeft(zomb) > Canvas.GetLeft(joueur)) // si le zombie se trouve a droite du joueur
+            {
+                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers la gauche
+                orientationZombieX = ORIENTATION_GAUCHE; // définir orientation horizontale vers la gauche
+
+            }
+            if (Canvas.GetLeft(zomb) < Canvas.GetLeft(joueur)) // si le zombie se trouve a la gauche du joueur
+            {
+                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + VITESSE_ZOMBIE); //  faire aller le zombie vers la droite
+                orientationZombieX = ORIENTATION_DROITE; // définir orientation horizontale vers la droie
+            }
+            if (Canvas.GetTop(zomb) < Canvas.GetTop(joueur)) // si le zombie est en dessous du joueur
+            {
+                Canvas.SetTop(zomb, Canvas.GetTop(zomb) + VITESSE_ZOMBIE); // faire aller le zombie vers le bas
+                orientationZombieY = ORIENTATION_HAUT; // définir l'orientation verticale du joueur vers le haut
+            }
+            if (Canvas.GetTop(zomb) > Canvas.GetTop(joueur)) // si le zombie est au dessus du joueur
+            {
+                Canvas.SetTop(zomb, Canvas.GetTop(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers le bas
+                orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
+            }
+        }
         /*----------------------------------------------------*/
         /*----------------------CHEAT VIE---------------------*/
         /*----------------------------------------------------*/
 
         private void Vie()
         {
-            if (!triche)
+            if (!triche) //si la triche est désactivée
             {
-                BarreDeVie.Value = vieJoueur;
-                if (vieJoueur <= 0)
+                BarreDeVie.Value = vieJoueur; // actualiser la barre de vie selon la vie du joueur
+                if (vieJoueur <= 0) // si la vie du joueur est égale ou inférieure à 0 
                 {
-                    vieJoueur = 0;
-                    perdu = true;
+                    vieJoueur = 0; //pour que la vie ne passe pas en néfatif
+                    perdu = true; // le booléen perdu passe en vrai
                 }
-                if (perdu == true)
+                if (perdu) // si perdu est vrai 
                 {
 
-                    FenetreMort fenetremort = new FenetreMort(killsJoueur);
-                    this.Hide();
-                    fenetremort.ShowDialog();
-                    fenetremort.NombreKills();
+                    FenetreMort fenetremort = new FenetreMort(); // nouvelle fenetre de mort
+                    this.Hide(); // cacher le MainWindow
+                    fenetremort.ShowDialog(); // ouverture de la fenetre mort
                 }
             }
-            else
+            else //si la triche est activée
             {
-                BarreDeVie.Value = BarreDeVie.Maximum;
-                vieJoueur = VIE_JOUEUR;
+                vieJoueur = VIE_JOUEUR; //vie joueur à 100
+                BarreDeVie.Value = vieJoueur; // actualiser barre de vie selon la vie du joueur
             }
 
         }
@@ -840,53 +858,48 @@ namespace JeuSAE
 
         private void OrientationJoueur()
         {
-            joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
 
-            if (orientationJoueur == ORIENTATION_GAUCHE)
+            if (orientationJoueur == ORIENTATION_GAUCHE) // si l'orientaion joueur est gauche
             {
 
-                joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(180, joueur.Width / 2, joueur.Height / 2); //faire tourner le joueur de 180 °
 
             }
-            if (orientationJoueur == ORIENTATION_DROITE)
+            if (orientationJoueur == ORIENTATION_DROITE) // si l'orientaion joueur est droite
             {
-                joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(0, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de 0 °
 
             }
-            if (orientationJoueur == ORIENTATION_HAUT)
+            if (orientationJoueur == ORIENTATION_HAUT) // si l'orientaion joueur est haut
             {
 
-                joueur.RenderTransform = new RotateTransform(-90, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(-90, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de -90 °
             }
-            if (orientationJoueur == ORIENTATION_BAS)
+            if (orientationJoueur == ORIENTATION_BAS) // si l'orientaion joueur est bas
             {
 
-                joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);
+                joueur.RenderTransform = new RotateTransform(90, joueur.Width / 2, joueur.Height / 2);//faire tourner le joueur de 90 °
             }
         }
 
         private void OrientationZombie(Rectangle x, String orientationZombieX, String orientationZombieY)
         {
-            x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
-
-            if (orientationZombieY == ORIENTATION_HAUT)
+            if (orientationZombieY == ORIENTATION_HAUT) //si l'orientation verticale du zombie est haut, faire tourner de 90 °
                 x.RenderTransform = new RotateTransform(90, x.Width / 2, x.Height / 2);
-
-
-            if (orientationZombieY == ORIENTATION_BAS)
-                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2);
-            if (orientationZombieX == ORIENTATION_GAUCHE)
+            if (orientationZombieY == ORIENTATION_BAS) //si l'orientation verticale du zombie est bas, faire tourner de -90 °
+                x.RenderTransform = new RotateTransform(-90, x.Width / 2, x.Height / 2); 
+            if (orientationZombieX == ORIENTATION_GAUCHE) //si l'orientation horizontale du zombie est gauche, faire tourner de 180 °
                 x.RenderTransform = new RotateTransform(180, x.Width / 2, x.Height / 2);
-            if (orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieX == ORIENTATION_DROITE) //si l'orientation horizontale du zombie est droite, faire tourner de 0 °
                 x.RenderTransform = new RotateTransform(0, x.Width / 2, x.Height / 2);
-
-            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE)
+            
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_GAUCHE) // si l'orientation du zombie verticale est haut et l'orientation horiziontale gauche, appliquer un angle de 135°
                 x.RenderTransform = new RotateTransform(135, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieY == ORIENTATION_HAUT && orientationZombieX == ORIENTATION_DROITE)// si l'orientation du zombie verticale est haut et l'orientation horiziontale droite, appliquer un angle de 45°
                 x.RenderTransform = new RotateTransform(45, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_GAUCHE)// si l'orientation du zombie verticale est bas et l'orientation horiziontale gauche, appliquer un angle de -135°
                 x.RenderTransform = new RotateTransform(-135, x.Width / 2, x.Height / 2);
-            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE)
+            if (orientationZombieY == ORIENTATION_BAS && orientationZombieX == ORIENTATION_DROITE) // si l'orientation du zombie verticale est bas et l'orientation horiziontale droite, appliquer un angle de -45°
                 x.RenderTransform = new RotateTransform(-45, x.Width / 2, x.Height / 2);
 
 
@@ -898,11 +911,11 @@ namespace JeuSAE
 
         private void bouton_pause_Click(object sender, RoutedEventArgs e)
         {
-            mineuteur.Stop();
+            mineuteur.Stop(); // quand le bouton pause est cliqué, le minuteur et l'interval se stoppent
             interval.Stop();
 
-            Pause pause = new Pause();
-            pause.ShowDialog();
+            Pause pause = new Pause(); // nouvelle fenetre pause
+            pause.ShowDialog(); // ouverture fenetre pause
         }
 
 

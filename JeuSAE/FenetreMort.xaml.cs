@@ -20,14 +20,12 @@ namespace JeuSAE
     /// </summary>
     public partial class FenetreMort : Window
     {
-        private int killsJoueur;
         MainWindow mainwindows;
-        public int valeurReçue { get; }
-        public FenetreMort( int nombreKills)
+        public FenetreMort()
         {
             InitializeComponent();
 
-            label_kill.Content =  nombreKills;
+            label_kill.Content = ((MainWindow)Application.Current.MainWindow).killsJoueur;
             ImageBrush mort = new ImageBrush();
             mort.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/mort.png"));
             rectangleMort.Fill = mort;
@@ -54,11 +52,6 @@ namespace JeuSAE
             Application.Current.Shutdown();
 
         }
-        public void NombreKills() { }
-        /*
-WindowJeu windowJeu = new WindowJeu();
-   windowJeu.ShowDialog();
-   Close();
-*/
+
     }
 }
