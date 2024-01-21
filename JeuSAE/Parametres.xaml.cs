@@ -25,7 +25,9 @@ namespace JeuSAE
         Key gauche;
         Key bas;
         Key tirer;
+        Key tricher;
         KeyConverter convertir = new KeyConverter();
+        bool difficulteDifficile;
 
         public Parametres()
         {
@@ -38,11 +40,13 @@ namespace JeuSAE
             gauche = ((MainWindow)Application.Current.MainWindow).allerADroite;
             bas = ((MainWindow)Application.Current.MainWindow).reculer;
             tirer = ((MainWindow)Application.Current.MainWindow).tirer;
+            tricher = ((MainWindow)Application.Current.MainWindow).tricher;
             bouton_droite.Text = convertir.ConvertToString(droite);
             bouton_avancer.Text = convertir.ConvertToString(haut);
             bouton_reculer.Text = convertir.ConvertToString(bas);
             bouton_gauche.Text = convertir.ConvertToString(gauche);
             bouton_tirer.Text = convertir.ConvertToString(tirer);
+            bouton_triche.Text = convertir.ConvertToString(tricher);
 
 
         }
@@ -58,19 +62,20 @@ namespace JeuSAE
         {
 
             this.Close();
-
+            ((MainWindow)Application.Current.MainWindow).difficile = difficulteDifficile;
 
         }
 
-        
+
 
         private void normal_Selected(object sender, RoutedEventArgs e)
         {
-
+            difficulteDifficile = false;
         }
 
         private void difficile_Selected(object sender, RoutedEventArgs e)
         {
+            difficulteDifficile = true;
 
         }
     }

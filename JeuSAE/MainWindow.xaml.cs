@@ -31,7 +31,10 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         /*--------------------CONSTANTES----------------------*/
         /*----------------------------------------------------*/
-
+        public static int MUNITIONS_MAX_JOUEUR = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES = 20, ZOMBIE_MEME_TEMPS = 5;
+        public static int DEGATS_PAR_ZOMBIE = 10;
+        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
+        private static int BANDEAU = 60;
         /*----------------------------------------------------*/
         /*----------------------DOUBLE------------------------*/
         /*----------------------------------------------------*/
@@ -67,26 +70,22 @@ namespace JeuSAE
         /*-----------------------INT--------------------------*/
         /*----------------------------------------------------*/
 
-        public static int TEMPS_MAXIMAL_ENTRE_ZOMBIE = 8, TEMPS_MINIMAL_ENTRE_ZOMBIE = 3, MUNITIONS_MAX_JOUEUR = 15, VIE_JOUEUR = 100, NOMBRE_ZOMBIES=20, ZOMBIE_MEME_TEMPS=5;
-        public static int DEGATS_PAR_ZOMBIE = 10;
-        private static int VITESSE_BALLE_JOUEUR = 20, VITESSE_BALLE_TRICHE = 30;
-        private static int BANDEAU = 60;
+
         private int nombreDeBalles = 15;
-        int nombreZombieManche =0, nombreEnnemisMap , ennemisRestants, killManche;
+        int nombreZombieManche = 0, nombreEnnemisMap, ennemisRestants, killManche;
 
         int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         public int killsJoueur { get; set; } = 0;
         int vieJoueur = VIE_JOUEUR;
         public int manche = 1;
-        
+
         /*----------------------------------------------------*/
         /*-----------------------BOOLEEN----------------------*/
         /*----------------------------------------------------*/
-        bool nombreZombieInfZombieGen = false;
-
+        public bool difficile = false;
         bool gauche, droite, haut, bas = false;
         bool FinDePartie = false;
-        bool apparitionVie = true, apparitionMunitions = true, vieInfinie = false, ballesInfinies = false;
+        bool  vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
 
@@ -159,7 +158,7 @@ namespace JeuSAE
             map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
             fond.Background = map;
             feu_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/feu.gif"));
-           
+
             Feu.Fill = feu_;
         }
 
@@ -171,10 +170,11 @@ namespace JeuSAE
             InitializeComponent();
             GenerationImage();
             Generation_Zombies(nombreZombieMaxMemeTemps);
-            GenerationKitSoin(nombreSoinMaXMemeTemps);
+            if (!difficile)
+                GenerationKitSoin(nombreSoinMaXMemeTemps);
             Generation_Munitions(nombreMunitionMaxMemeTemps);
-            nombreZombieManche = NOMBRE_ZOMBIES +2 * (manche - 1);
-            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche-1);
+            nombreZombieManche = NOMBRE_ZOMBIES + 2 * (manche - 1);
+            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 1 * (manche - 1);
 
 
             /*----------------------------------------------------*/
@@ -191,7 +191,27 @@ namespace JeuSAE
             mineuteur.Tick += Moteur_Jeu;
             mineuteur.Start();
         }
-        
+        /*----------------------------------------------------*/
+        /*-------------- Moteur du jeu -----------------------*/
+        /*----------------------------------------------------*/
+        private void Moteur_Jeu(object sender, EventArgs e)
+        {
+            GenerZombieConditions();
+            Manche();
+            Deplacements();
+            NombreEnnemis();
+            Interactions();
+            NombreBalles();
+            NombreKills();
+            Vie();
+            OrientationJoueur();
+            TempsDeJeu();
+            ChargerImagesZombie();
+            FinManche();
+
+
+        }
+
         private void ChargerImagesZombie()
         {
             for (int i = 0; i < imagesZombie.Length; i++)
@@ -318,7 +338,7 @@ namespace JeuSAE
         private void Generation_Zombies(int zombiesGeneration)
         {
             int i = 0;
-            if ( nombreZombieManche-killManche < zombiesGeneration)
+            if (nombreZombieManche - killManche < zombiesGeneration)
                 zombiesGeneration = nombreZombieManche - killManche;
             while (i < zombiesGeneration)
             {
@@ -394,8 +414,8 @@ namespace JeuSAE
             {
                 ennemisRestants = 0;
                 killManche = 0;
-                nombreZombieManche = NOMBRE_ZOMBIES+ 5*manche;
-                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS+ 2*manche;
+                nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
+                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
                 manche++;
             }
 
@@ -409,27 +429,26 @@ namespace JeuSAE
         {
 
             Random aleatoire = new Random();
-            if (apparitionMunitions)
+
+            for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
             {
-                for (int i = 0; i < nombreMunitionMaxMemeTemps; i++)
+                Rectangle boiteMun = new Rectangle
                 {
-                    Rectangle boiteMun = new Rectangle
-                    {
-                        Tag = "boite_munitions",
-                        Height = 45,
-                        Width = 52,
-                        Fill = boiteMunition
-                    };
-                    int pointApparition = aleatoire.Next(1, 1);
+                    Tag = "boite_munitions",
+                    Height = 45,
+                    Width = 52,
+                    Fill = boiteMunition
+                };
+                int pointApparition = aleatoire.Next(1, 1);
 
-                    Canvas.SetTop(boiteMun, aleatoire.Next(80, 900));
-                    Canvas.SetLeft(boiteMun, aleatoire.Next(20, 1730));
+                Canvas.SetTop(boiteMun, aleatoire.Next(80, 900));
+                Canvas.SetLeft(boiteMun, aleatoire.Next(20, 1730));
 
-                    munitionListe.Add(boiteMun);
-                    fond.Children.Add(boiteMun);
+                munitionListe.Add(boiteMun);
+                fond.Children.Add(boiteMun);
 
-                }
             }
+
 
 
         }
@@ -449,8 +468,7 @@ namespace JeuSAE
         private void GenerationKitSoin(int nombreSoinMaxMemeTemps)
         {
             Random aleatoire = new Random();
-            if (apparitionVie)
-            {
+            
                 for (int i = 0; i < nombreSoinMaxMemeTemps; i++)
                 {
                     Rectangle kitSoin = new Rectangle
@@ -468,14 +486,17 @@ namespace JeuSAE
                     soinListe.Add(kitSoin);
                     fond.Children.Add(kitSoin);
                 }
-            }
+            
         }
 
         private void GenerKitSoinConditions(object sender, EventArgs e)
         {
             // Appeler cette méthode à chaque tick du timer (toutes les 15 secondes)
-            GenerationKitSoin(nombreSoinMaXMemeTemps);
-            minuteur2.Stop();
+            if (!difficile)
+            {
+                GenerationKitSoin(nombreSoinMaXMemeTemps);
+                minuteur2.Stop();
+            }
 
         }
 
@@ -490,7 +511,7 @@ namespace JeuSAE
                 nombre_ennemis.Content = ennemisRestants + " ennemis restants";
             else
                 nombre_ennemis.Content = ennemisRestants + " ennemi restant";
-            
+
 
         }
 
@@ -809,7 +830,7 @@ namespace JeuSAE
                 {
 
                     FenetreMort fenetremort = new FenetreMort(killsJoueur);
-                    
+
                     fenetremort.ShowDialog();
                     fenetremort.NombreKills();
                 }
@@ -894,23 +915,7 @@ namespace JeuSAE
             pause.ShowDialog();
         }
 
-        private void Moteur_Jeu(object sender, EventArgs e)
-        {
-            GenerZombieConditions();
-            Manche();
-            Deplacements();
-            NombreEnnemis();
-            Interactions();
-            NombreBalles();
-            NombreKills();
-            Vie();
-            OrientationJoueur();
-            TempsDeJeu();
-            ChargerImagesZombie();
-            FinManche();
-            
-
-        }
+        
 
 
     }
