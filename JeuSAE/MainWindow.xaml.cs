@@ -633,41 +633,41 @@ namespace JeuSAE
         /*---------------INTERACTION BALLES-------------------*/
         /*----------------------------------------------------*/
 
-        private bool InteractionBalles(Rectangle x)// cette méthode sert a tester si une balle sort du canvas ou touche un zombie et retourne un booléen
+        private bool InteractionBalles(Rectangle balle)// cette méthode sert a tester si une balle sort du canvas ou touche un zombie et retourne un booléen
         {
 
 
-            Rect balle = new Rect(Canvas.GetLeft(x), Canvas.GetTop(x), x.Width, x.Height);
-            if (Canvas.GetTop(x) < BANDEAU)
+            Rect balleR = new Rect(Canvas.GetLeft(balle), Canvas.GetTop(balle), balle.Width, balle.Height); // convertir le Rectangle de la balle
+            if (Canvas.GetTop(balle) < BANDEAU)
             {
-                objetASupprimer.Add(x);
+                objetASupprimer.Add(balle); // si la balle dépasse le bandeau en allant vers le haut, elle sera supprimée
                 return true;
             }
-            if (Canvas.GetLeft(x) < 0)
+            if (Canvas.GetTop(balle) > fond.Height)
             {
-                objetASupprimer.Add(x);
+                objetASupprimer.Add(balle); // si la balle dépasse la hauteur du canvas, elle sera supprimée
                 return true;
             }
-            if (Canvas.GetLeft(x) < 0)
+            if (Canvas.GetLeft(balle) < 0)
             {
-                objetASupprimer.Add(x);
+                objetASupprimer.Add(balle);// si la balle dépasse du coté gauche du canvas, elle sera supprimée
                 return true;
             }
-            if (Canvas.GetLeft(x) > fond.Width)
+            if (Canvas.GetLeft(balle) > fond.Width)
             {
-                objetASupprimer.Add(x);
+                objetASupprimer.Add(balle); // si la balle dépasse la largeur du canvas, elle sera supprimée
                 return true;
             }
-            foreach (Rectangle y in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
+            foreach (Rectangle zomb in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
 
-                Rect ennemiZone = new Rect(Canvas.GetLeft(y), Canvas.GetTop(y), y.Width, y.Height); //convertir le rectangle y en Rect
+                Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle y en Rect
 
-                if (balle.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
+                if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
 
-                    objetASupprimer.Add(x); // ajout de la balle aux objets a supprimer
-                    objetASupprimer.Add(y); // ajout du zombie aux objets a supprimer
+                    objetASupprimer.Add(balle); // ajout de la balle aux objets a supprimer
+                    objetASupprimer.Add(zomb); // ajout du zombie aux objets a supprimer
                     nombreEnnemisMap--; // il y a un ennemi sur la carte en moins
                     ennemisRestants--; // il y a un ennemi restant en moins
                     killsJoueur += 1; // le joueur a tué un zombie donc il a un kill en plus
