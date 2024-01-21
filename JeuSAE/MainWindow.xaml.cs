@@ -715,43 +715,43 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle); // faire partir la balle vers la gauche
                 if (InteractionBalles(x))// appel de la fonction Interaction balles en envoyant la balle qui part vers la gauche
-                    objetASupprimer.Add(x); 
+                    objetASupprimer.Add(x);
 
             }
             foreach (Rectangle x in balleH) // boucler pour chaque rectangle dans la liste balleH (balles qui partent vers le haut)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle); // faire partir la balle vers le haut
                 if (InteractionBalles(x))// appel de la fonction Interaction balles en envoyant la balle qui part vers le haut
-                    objetASupprimer.Add(x); 
+                    objetASupprimer.Add(x);
 
 
             }
-            foreach (Rectangle z in munitionListe) //boucler pour chaque rectancle dans la liste des boites de munitions
+            foreach (Rectangle muni in munitionListe) //boucler pour chaque rectancle dans la liste des boites de munitions
             {
-                Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(z), Canvas.GetTop(z), z.Width, z.Height); // convertir la boite de munitions en Rect
+                Rect boiteMunitionsZone = new Rect(Canvas.GetLeft(muni), Canvas.GetTop(muni), muni.Width, muni.Height); // convertir la boite de munitions en Rect
                 if (zoneJoueur.IntersectsWith(boiteMunitionsZone) && nombreDeBalles < munitionMaxJoueur) // test de la collision entre le joueur et la boite de munition et si le nombre de balles est inférieur au nombre maximal de balles
                 {
                     if (!difficile)
                         nombreDeBalles = munitionMaxJoueur; // si la difficulté n'est pas en difficile mettre le nombre maximal de balles
                     else
                     {
-                        if (nombreDeBalles + munitionMaxJoueur / 2 < munitionMaxJoueur) 
+                        if (nombreDeBalles + munitionMaxJoueur / 2 < munitionMaxJoueur)
                             nombreDeBalles += munitionMaxJoueur / 2; // si la difficulté est en difficile et que si on ajoute la moitiée des munitions maximales est inférieur au nombre maximal de balles , ajout de la moitiée du nombre maximal de balles
                         else
                             nombreDeBalles = munitionMaxJoueur; // si l'on ajoute la moitiée du nombre maximal de balles et que c'est supérieur au nombre maximal de balles, le nombre de balles sera égal au nombre maximal de balles 
                     }
-                    objetASupprimer.Add(z); // ajout de la boite de munition aux objets a supprimer
-                    interval.Start();
+                    objetASupprimer.Add(muni); // ajout de la boite de munition aux objets a supprimer
+                    interval.Start(); // démarage de l'interval enrtre deux boites de munition
 
                 }
             }
-            foreach (Rectangle w in soinListe)
+            foreach (Rectangle soin in soinListe) // boucler pour chaque rectangle dans la liste des soins
             {
-                Rect kitSoinZone = new Rect(Canvas.GetLeft(w), Canvas.GetTop(w), w.Width, w.Height);
+                Rect kitSoinZone = new Rect(Canvas.GetLeft(soin), Canvas.GetTop(soin), soin.Width, soin.Height);
                 if (zoneJoueur.IntersectsWith(kitSoinZone) && vieJoueur < 100)
                 {
                     vieJoueur = VIE_JOUEUR;
-                    objetASupprimer.Add(w);
+                    objetASupprimer.Add(soin);
                     minuteur2.Start();
                 }
             }
@@ -792,21 +792,17 @@ namespace JeuSAE
                 OrientationZombie(y, orientationZombieX, orientationZombieY);
 
             }
-            foreach (Rectangle y in objetASupprimer)
+            foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
             {
                 fond.Children.Remove(y);
                 munitionListe.Remove(y);
                 soinListe.Remove(y);
                 zombieListe.Remove(y);
                 balles.Remove(y);
-                if (balleG.Contains(y))
-                    balleG.Remove(y);
-                if (balleD.Contains(y))
-                    balleD.Remove(y);
-                if (balleH.Contains(y))
-                    balleH.Remove(y);
-                if (balleB.Contains(y))
-                    balleB.Remove(y);
+                balleG.Remove(y);
+                balleD.Remove(y);
+                balleH.Remove(y);
+                balleB.Remove(y);
             }
             Rect feuZone = new Rect(Canvas.GetLeft(Feu), Canvas.GetTop(Feu), Feu.Width, Feu.Height);
 
