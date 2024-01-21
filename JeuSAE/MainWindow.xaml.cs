@@ -633,7 +633,7 @@ namespace JeuSAE
         /*---------------INTERACTION BALLES-------------------*/
         /*----------------------------------------------------*/
 
-        private bool InteractionBalles(Rectangle x, Rect zoneJoueur)
+        private bool InteractionBalles(Rectangle x)// cette méthode sert a tester si une balle sort du canvas ou touche un zombie et retourne un booléen
         {
 
 
@@ -694,15 +694,15 @@ namespace JeuSAE
 
         private void Interactions()
         {
-            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height);
-            if (!triche)
+            Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height); // convertir le Rectangle joueur en Rect
+            if (!triche) // si la triche est désactivée la vitesse de balles sera égale a la constante VITESSE_BALLE
                 vitesseBalle = VITESSE_BALLE;
-            else
+            else // si la triche est activée la vitesse de balles sera égale a la constante VITESSE_BALLE_TRICHE
                 vitesseBalle = VITESSE_BALLE_TRICHE;
-            foreach (Rectangle x in balleB)
+            foreach (Rectangle x in balleB) // boucler pour chaque rectangle présent dans la liste balleB (balles qui partent vers le bas)
             {
-                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle);
-                if (InteractionBalles(x, zoneJoueur))
+                Canvas.SetTop(x, Canvas.GetTop(x) + vitesseBalle); // faire aller la balle vers le bas du canvas
+                if (InteractionBalles(x)) // appel de la fonction Interaction balles en envoyant la balle qui part vers le bas et la zone joueur
                 {
                     objetASupprimer.Add(x);
 
@@ -711,7 +711,7 @@ namespace JeuSAE
             foreach (Rectangle x in balleD)
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) + vitesseBalle);
-                if (InteractionBalles(x, zoneJoueur))
+                if (InteractionBalles(x))
                 {
                     objetASupprimer.Add(x);
 
@@ -721,7 +721,7 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(x, Canvas.GetLeft(x) - vitesseBalle);
 
-                if (InteractionBalles(x, zoneJoueur))
+                if (InteractionBalles(x))
                 {
                     objetASupprimer.Add(x);
 
@@ -731,7 +731,7 @@ namespace JeuSAE
             foreach (Rectangle x in balleH)
             {
                 Canvas.SetTop(x, Canvas.GetTop(x) - vitesseBalle);
-                if (InteractionBalles(x, zoneJoueur))
+                if (InteractionBalles(x))
                 {
                     objetASupprimer.Add(x);
 
