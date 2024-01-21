@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Image\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,10 @@
     <None Remove="joueur_shotgun.png" />
     <None Remove="LastNight.png" />
     <None Remove="zombie gif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Image\logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,6 +94,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Image\LastNightWEWE.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Image\logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Image\Map..png">
