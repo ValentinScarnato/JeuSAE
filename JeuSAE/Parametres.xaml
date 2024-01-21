@@ -119,7 +119,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" />
+        TextWrapping="Wrap" IsReadOnly="True" />
         <TextBox
         x:Name="bouton_droite"
         Width="142"
@@ -127,7 +127,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" />
+        TextWrapping="Wrap" IsReadOnly="True" />
         <TextBox
         x:Name="bouton_avancer"
         Width="140"
@@ -135,7 +135,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" />
+        TextWrapping="Wrap" IsReadOnly="True" />
         <TextBox
         x:Name="bouton_gauche"
         Width="142"
@@ -143,7 +143,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" />
+        TextWrapping="Wrap" IsReadOnly="True" />
         <TextBox
         x:Name="bouton_tirer"
         Width="141"
@@ -151,7 +151,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" />
+        TextWrapping="Wrap" IsReadOnly="True" />
         <Label x:Name="triche"
             Width="173"
             Height="33"
@@ -169,7 +169,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text=""
-            TextWrapping="Wrap" />
+            TextWrapping="Wrap" IsReadOnly="True" />
 
 
     </Grid>
