@@ -964,37 +964,7 @@ namespace JeuSAE
                         Deplacements();
                     }
                 }
-                foreach (Rectangle zomb in zombieListe)
-                {
-                    Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
-                    if (caisseZone.IntersectsWith(ennemiZone))
-                    {
-                        if (gaucheZombies == true)
-                        {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 25);
-                        }
-
-                        else if (droiteZombies == true)
-                        {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 25);
-                        }
-                        else if (hautZombies == true)
-                        {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 25);
-                        }
-                        else if (basZombies == true)
-                        {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 25);
-                        }
-
-                        else
-                        {
-                            Deplacements();
-                        }
-                    }
-                    
-
-                }
+                
             }
             //CaisseZombieEtJoueur();
             foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
