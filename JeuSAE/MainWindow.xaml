@@ -16,7 +16,7 @@
     <Grid x:Name="grille_fenetre">
         <Canvas
             x:Name="fond"
-            Grid.ColumnSpan="3"
+            Grid.ColumnSpan="2"
             Background="#FF717171"
             Focusable="True">
             <Rectangle
