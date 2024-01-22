@@ -831,6 +831,7 @@ namespace JeuSAE
 
             }
             return false;
+
         }
 
         /*----------------------------------------------------*/
@@ -943,20 +944,20 @@ namespace JeuSAE
                     {
                         if (gaucheZombies == true)
                         {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 10);
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 25);
                         }
 
                         else if (droiteZombies == true)
                         {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 10);
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 25);
                         }
                         else if (hautZombies == true)
                         {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 10);
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 25);
                         }
                         else if (basZombies == true)
                         {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 10);
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 25);
                         }
 
                         else
@@ -964,6 +965,13 @@ namespace JeuSAE
                             Deplacements();
                         }
                     }
+                    /*foreach (Rectangle balled in balles)
+                    {
+                        if (caisseZone.IntersectsWith(balled))
+                        {
+                            objetASupprimer.Add(balled);
+                        }
+                    }*/
 
                 }
             }
@@ -1016,12 +1024,6 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) - 10);
             }
-        }
-
-        private void CaisseZombieEtJoueur() //COLLISONS ZOMBIES ET CAISSES (BUGGé). VOIR AUSSI LIGNE 823.
-        {
-            
-            
         }
 
         /*----------------------------------------------------*/
