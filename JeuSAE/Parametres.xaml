@@ -27,7 +27,7 @@
         <Label
         Width="200"
         Height="35"
-        Margin="200,265,0,0"
+        Margin="52,253,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Content="Mode de difficulté : "
@@ -105,7 +105,7 @@
         Content="RETOUR" />
         <ComboBox
         Width="160"
-        Margin="400,274,0,0"
+        Margin="240,264,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top">
             <ComboBoxItem x:Name="normal" IsSelected="True" Selected="normal_Selected">Normal</ComboBoxItem>
