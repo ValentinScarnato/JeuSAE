@@ -54,7 +54,7 @@
             FontWeight="Black"
             Foreground="#FFFB2D2D"
             Content="VOUS ÊTES MORT"/>
-        <Rectangle Height="78" Stroke="White" Width="650" Canvas.Left="550" Canvas.Top="274" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Rectangle Height="78" Width="650" Canvas.Left="550" Canvas.Top="274" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Label x:Name="NbKillGameOver" Content="Nombre de kills :" Canvas.Left="562" Canvas.Top="275" FontSize="52" Foreground="Black" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Width="429"/>
         <Label x:Name="label_kill" Content="X" Canvas.Left="990" Canvas.Top="274" Height="78" Width="210" Foreground="#FFFB0000" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
 
