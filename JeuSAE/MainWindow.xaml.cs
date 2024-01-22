@@ -78,7 +78,7 @@ namespace JeuSAE
         public int killsJoueur = 0;
         int vieJoueur = VIE_JOUEUR;
         public int manche = 1;
-        int chanceBalle;
+        public int chanceBalle , mancheFin =0;
 
         /*----------------------------------------------------*/
         /*-----------------------BOOLEEN----------------------*/

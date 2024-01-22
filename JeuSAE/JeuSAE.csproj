@@ -112,8 +112,8 @@
     <None Update="Image\munition.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Image\Paramtre.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Image\Parametre.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Image\pause.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

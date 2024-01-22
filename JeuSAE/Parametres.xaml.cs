@@ -28,14 +28,21 @@ namespace JeuSAE
         Key tirer;
         Key tricher;
         KeyConverter convertir = new KeyConverter();
-        bool difficulteDifficile;
+        bool difficulteDifficile, fermer = true;
+        int mancheFinValeur = 0;
 
+
+        ImageBrush parametreFond = new ImageBrush();
+        
         public Parametres()
         {
+            
+            parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Parametre.png"));
+
             InitializeComponent();
-            ImageBrush parametreFond = new ImageBrush();
-            parametreFond.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Paramtre.png"));
-            grid_Parametre.Fill = parametreFond;
+            tb_manche_fin.Text = ((MainWindow)Application.Current.MainWindow).mancheFin + "";
+
+            fond.Fill = parametreFond;
             droite = ((MainWindow)Application.Current.MainWindow).allerADroite;
             haut = ((MainWindow)Application.Current.MainWindow).avancer;
             gauche = ((MainWindow)Application.Current.MainWindow).allerAGauche;
@@ -53,15 +60,19 @@ namespace JeuSAE
 
         private void click_Annuler(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (fermer)
+                this.Close();
         }
 
         private void Accepter_Click(object sender, RoutedEventArgs e)
         {
+            if (fermer)
+            {
+                this.Close();
 
-            this.Close();
-
-            ((MainWindow)Application.Current.MainWindow).difficile = difficulteDifficile;
+                ((MainWindow)Application.Current.MainWindow).difficile = difficulteDifficile;
+                ((MainWindow)Application.Current.MainWindow).mancheFin = mancheFinValeur;
+            }
 
         }
 
@@ -76,6 +87,52 @@ namespace JeuSAE
         {
             difficulteDifficile = true;
 
+        }
+
+        private void tb_manche_fin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tb_manche_fin.Clear();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (fermer)
+                this.Close();
+        }
+
+        private void tb_manche_fin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            String texteManche = tb_manche_fin.Text;
+
+            if (int.TryParse(texteManche, out mancheFinValeur))
+            {
+                if (mancheFinValeur < 1)
+                {
+                    erreurLabel.Content = "Nombre doit etre positif";
+                    erreurLabel.Foreground = Brushes.Red;
+                    fermer = false;
+                }
+                if (mancheFinValeur >= 0)
+                {
+                    erreurLabel.Foreground = Brushes.Transparent;
+                    fermer = true;
+                    int temp = ((MainWindow)Application.Current.MainWindow).manche;
+                    ((MainWindow)Application.Current.MainWindow).mancheFin = mancheFinValeur;
+                    if (temp != ((MainWindow)Application.Current.MainWindow).manche)
+                    {
+                        ((MainWindow)Application.Current.MainWindow).TricheManche();
+                    }
+
+
+                }
+            }
+            else
+            {
+                erreurLabel.Foreground = Brushes.Red;
+
+                erreurLabel.Content = "Pas un nombre";
+                fermer = false;
+            }
         }
     }
 }
