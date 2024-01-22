@@ -85,6 +85,7 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         public bool difficile = false;
         bool gauche, droite, haut, bas = false;
+        bool gaucheZombies, droiteZombies, hautZombies, basZombies = false;
         bool vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
@@ -160,6 +161,19 @@ namespace JeuSAE
             Balle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/balle.png"));
 
         }
+        private void ChargerImagesZombie()
+        {
+            for (int i = 0; i < imagesZombie.Length; i++)
+            {
+                string nomFichier = $"skeleton-move_{i + 1}.png";
+                string cheminImage = $"pack://siteoforigin:,,,/Image/{nomFichier}";
+                imagesZombie[i] = new BitmapImage(new Uri(cheminImage));
+            }
+        }
+
+        /*----------------------------------------------------*/
+        /*----------------- MAIN WINDOW ----------------------*/
+        /*----------------------------------------------------*/
 
         public MainWindow()
         {
@@ -190,6 +204,7 @@ namespace JeuSAE
             mineuteur.Tick += Moteur_Jeu;
             mineuteur.Start();
         }
+
         /*----------------------------------------------------*/
         /*-------------- Moteur du jeu -----------------------*/
         /*----------------------------------------------------*/
@@ -211,27 +226,7 @@ namespace JeuSAE
 
         }
 
-        private void ChargerImagesZombie()
-        {
-            for (int i = 0; i < imagesZombie.Length; i++)
-            {
-                string nomFichier = $"skeleton-move_{i + 1}.png";
-                string cheminImage = $"pack://siteoforigin:,,,/Image/{nomFichier}";
-                imagesZombie[i] = new BitmapImage(new Uri(cheminImage));
-            }
-        }
 
-        private void AnimerZombie(Rectangle ennemi)
-        {
-            if (imagesZombie.Length > 0)
-            {
-                BitmapImage image = imagesZombie[indexImageZombie];
-                ImageBrush brush = new ImageBrush();
-                brush.ImageSource = image;
-                ennemi.Fill = brush;
-                indexImageZombie = (indexImageZombie + 1) % imagesZombie.Length;
-            }
-        }
 
         private void InitialiserAnimationZombie(Rectangle ennemi)
         {
@@ -283,6 +278,48 @@ namespace JeuSAE
             {
                 Canvas.SetTop(joueur, Canvas.GetTop(joueur) + vitesseJoueur);
             }
+
+        }
+
+        public void DeplacementZombie(Rectangle zomb)
+        {
+            if (Canvas.GetLeft(zomb) > Canvas.GetLeft(joueur)) // si le zombie se trouve a droite du joueur
+            {
+                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers la gauche
+                orientationZombieX = ORIENTATION_GAUCHE; // définir orientation horizontale vers la gauche
+                gaucheZombies = true;
+                droiteZombies = false;
+                hautZombies = false;
+                basZombies = false;
+            }
+            if (Canvas.GetLeft(zomb) < Canvas.GetLeft(joueur)) // si le zombie se trouve a la gauche du joueur
+            {
+                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + VITESSE_ZOMBIE); //  faire aller le zombie vers la droite
+                orientationZombieX = ORIENTATION_DROITE; // définir orientation horizontale vers la droie
+                gaucheZombies = false;
+                droiteZombies = true;
+                hautZombies = false;
+                basZombies = false;
+            }
+            if (Canvas.GetTop(zomb) < Canvas.GetTop(joueur)) // si le zombie est en dessous du joueur
+            {
+                Canvas.SetTop(zomb, Canvas.GetTop(zomb) + VITESSE_ZOMBIE); // faire aller le zombie vers le bas
+                orientationZombieY = ORIENTATION_HAUT; // définir l'orientation verticale du joueur vers le haut
+                gaucheZombies = false;
+                droiteZombies = false;
+                hautZombies = true;
+                basZombies = false;
+            }
+            if (Canvas.GetTop(zomb) > Canvas.GetTop(joueur)) // si le zombie est au dessus du joueur
+            {
+                Canvas.SetTop(zomb, Canvas.GetTop(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers le bas
+                orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
+                gaucheZombies = false;
+                droiteZombies = false;
+                hautZombies = false;
+                basZombies = true;
+            }
+            OrientationZombie(zomb, orientationZombieX, orientationZombieY);
 
         }
 
@@ -386,6 +423,7 @@ namespace JeuSAE
                 i++;
             }
         }
+
         private void GenerZombieConditions()
         {
 
@@ -398,46 +436,19 @@ namespace JeuSAE
 
 
         }
-        public void TricheManche()
+
+        private void AnimerZombie(Rectangle ennemi)
         {
-            foreach (Rectangle x in zombieListe)
+            if (imagesZombie.Length > 0)
             {
-                objetASupprimer.Add(x);
-
+                BitmapImage image = imagesZombie[indexImageZombie];
+                ImageBrush brush = new ImageBrush();
+                brush.ImageSource = image;
+                ennemi.Fill = brush;
+                indexImageZombie = (indexImageZombie + 1) % imagesZombie.Length;
             }
-            ennemisRestants = 0;
-            nombreEnnemisMap = 0;
-            killManche = 0;
-            nombreZombieManche = NOMBRE_ZOMBIES + 5 * (manche - 1);
-            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * (manche - 1);
-            if (!difficile)
-                munitionMaxJoueur = MUNITIONS_MAX_DEBUT + (1 * manche) - 1;
         }
-        private void FinManche()
-        {
-            if (killManche == nombreZombieManche)
-            {
-                ennemisRestants = 0;
-                killManche = 0;
-                nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
-                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
-                if (!difficile)
-                {
 
-                    munitionMaxJoueur++;
-                    nombreDeBalles = munitionMaxJoueur;
-                    vieJoueur += 5;
-                }
-                if (manche == mancheFin && mancheFin!=0)
-                {
-                    Gagner();
-                }
-                manche++;
-                
-            }
-
-
-        }
 
         /*----------------------------------------------------*/
         /*----------------GENERATION DE BOITE-----------------*/
@@ -596,12 +607,65 @@ namespace JeuSAE
             nombre_kill.Content = killsJoueur;
 
         }
+
+        /*----------------------------------------------------*/
+        /*-----------------GESTION DES MANCHES----------------*/
+        /*----------------------------------------------------*/
+
         public void Manche()
         {
             label_manche.Content = "Manche " + manche;
         }
 
+        public void TricheManche()
+        {
+            foreach (Rectangle x in zombieListe)
+            {
+                objetASupprimer.Add(x);
 
+            }
+            ennemisRestants = 0;
+            nombreEnnemisMap = 0;
+            killManche = 0;
+            nombreZombieManche = NOMBRE_ZOMBIES + 5 * (manche - 1);
+            nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * (manche - 1);
+            if (!difficile)
+                munitionMaxJoueur = MUNITIONS_MAX_DEBUT + (1 * manche) - 1;
+        }
+
+        private void FinManche()
+        {
+            if (killManche == nombreZombieManche)
+            {
+                ennemisRestants = 0;
+                killManche = 0;
+                nombreZombieManche = NOMBRE_ZOMBIES + 5 * manche;
+                nombreZombieMaxMemeTemps = ZOMBIE_MEME_TEMPS + 2 * manche;
+                if (!difficile)
+                {
+
+                    munitionMaxJoueur++;
+                    nombreDeBalles = munitionMaxJoueur;
+                    vieJoueur += 5;
+                }
+                if (manche == mancheFin && mancheFin != 0)
+                {
+                    Gagner();
+                }
+                manche++;
+
+            }
+
+
+        }
+
+        private void Gagner()
+        {
+            mineuteur.Stop(); // quand le bouton pause est cliqué, le minuteur et l'interval se stoppent
+            interval.Stop();
+            Victoire victoire = new Victoire(); // nouvelle fenetre pause
+            victoire.ShowDialog(); // ouverture fenetre pause
+        }
 
         /*----------------------------------------------------*/
         /*-----------------GESTION DES TOUCHES----------------*/
@@ -817,52 +881,64 @@ namespace JeuSAE
                 {
                     if (!triche)
                     {
-                        vieJoueur -= 5;
+                        vieJoueur -= 2;
                         Thread.Sleep(30);
                     }
             
 
                 }
                 DeplacementZombie(zomb);
-                CaisseZombie(zomb);
-
             }
+
+
 
             foreach (Rectangle caisse in boiteListe)
             {
+
                 Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height);
                 if (zoneJoueur.IntersectsWith(caisseZone))
                 {
                     if (!triche)
                     {
-                        if (gauche == true)
-                        {
-                            Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + 10);
-                        }
-
-                        else if (droite == true)
-                        {
-                            Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - 10);
-                        }
-                        else if (haut == true)
-                        {
-                            Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 10);
-                        }
-                        else if (bas == true)
-                        {
-                            Canvas.SetTop(joueur, Canvas.GetTop(joueur) - 10);
-                        }
+                        CaisseJoueur();
                     }
                     else
                     {
                         Deplacements();
                     }
+                }
+                foreach (Rectangle zomb in zombieListe)
+                {
+                    Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
+                    if (caisseZone.IntersectsWith(ennemiZone))
+                    {
+                        if (gaucheZombies == true)
+                        {
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 10);
+                        }
 
+                        else if (droiteZombies == true)
+                        {
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 10);
+                        }
+                        else if (hautZombies == true)
+                        {
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 10);
+                        }
+                        else if (basZombies == true)
+                        {
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 10);
+                        }
 
+                        else
+                        {
+                            Deplacements();
+                        }
+                    }
 
                 }
-
             }
+            //CaisseZombieEtJoueur();
             foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
             {
                 fond.Children.Remove(y);
@@ -888,73 +964,35 @@ namespace JeuSAE
             }
             
         }
-        public void DeplacementZombie(Rectangle zomb)
+
+
+
+        private void CaisseJoueur()
         {
-            if (Canvas.GetLeft(zomb) > Canvas.GetLeft(joueur)) // si le zombie se trouve a droite du joueur
-            {
-                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers la gauche
-                orientationZombieX = ORIENTATION_GAUCHE; // définir orientation horizontale vers la gauche
 
-            }
-            if (Canvas.GetLeft(zomb) < Canvas.GetLeft(joueur)) // si le zombie se trouve a la gauche du joueur
+            if (gauche == true)
             {
-                Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + VITESSE_ZOMBIE); //  faire aller le zombie vers la droite
-                orientationZombieX = ORIENTATION_DROITE; // définir orientation horizontale vers la droie
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + 10);
             }
-            if (Canvas.GetTop(zomb) < Canvas.GetTop(joueur)) // si le zombie est en dessous du joueur
-            {
-                Canvas.SetTop(zomb, Canvas.GetTop(zomb) + VITESSE_ZOMBIE); // faire aller le zombie vers le bas
-                orientationZombieY = ORIENTATION_HAUT; // définir l'orientation verticale du joueur vers le haut
-            }
-            if (Canvas.GetTop(zomb) > Canvas.GetTop(joueur)) // si le zombie est au dessus du joueur
-            {
-                Canvas.SetTop(zomb, Canvas.GetTop(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers le bas
-                orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
-            }
-            OrientationZombie(zomb, orientationZombieX, orientationZombieY);
 
+            else if (droite == true)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - 10);
+            }
+            else if (haut == true)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 10);
+            }
+            else if (bas == true)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - 10);
+            }
         }
 
-        //COLLISONS ZOMBIES ET CAISSES (BUGGé). VOIR AUSSI LIGNE 823.
-        private void CaisseZombie(Rectangle zomb)
+        private void CaisseZombieEtJoueur() //COLLISONS ZOMBIES ET CAISSES (BUGGé). VOIR AUSSI LIGNE 823.
         {
-            /*
-            Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
-            foreach (Rectangle caisse in boiteListe)
-            {
-                Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height);
-                if (caisseZone.IntersectsWith(ennemiZone))
-                {
-                    if (!triche)
-                    {
-                        if (gauche == true)
-                        {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 15);
-                        }
-
-                        else if (droite == true)
-                        {
-                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 15);
-                        }
-                        else if (haut == true)
-                        {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 15);
-                        }
-                        else if (bas == true)
-                        {
-                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 15);
-                        }
-                    }
-                    else
-                    {
-                        Deplacements();
-                    }
-
-                }
-
-
-            }
-            */
+            
+            
         }
 
         /*----------------------------------------------------*/
@@ -1052,13 +1090,7 @@ namespace JeuSAE
             Pause pause = new Pause(); // nouvelle fenetre pause
             pause.ShowDialog(); // ouverture fenetre pause
         }
-        private void Gagner()
-        {
-            mineuteur.Stop(); // quand le bouton pause est cliqué, le minuteur et l'interval se stoppent
-            interval.Stop();
-            Victoire victoire = new Victoire(); // nouvelle fenetre pause
-            victoire.ShowDialog(); // ouverture fenetre pause
-        }
+
 
 
     }
