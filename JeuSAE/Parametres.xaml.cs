@@ -96,9 +96,17 @@ namespace JeuSAE
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (!fermer)
+                e.Cancel = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
             if (fermer)
                 this.Close();
         }
+
+        
 
         private void tb_manche_fin_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -115,13 +123,8 @@ namespace JeuSAE
                 if (mancheFinValeur >= 0)
                 {
                     erreurLabel.Foreground = Brushes.Transparent;
-                    fermer = true;
-                    int temp = ((MainWindow)Application.Current.MainWindow).manche;
                     ((MainWindow)Application.Current.MainWindow).mancheFin = mancheFinValeur;
-                    if (temp != ((MainWindow)Application.Current.MainWindow).manche)
-                    {
-                        ((MainWindow)Application.Current.MainWindow).TricheManche();
-                    }
+                    
 
 
                 }

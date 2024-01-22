@@ -8,16 +8,16 @@
     Title="Parametres"
     Width="1157"
     Height="651"
-    mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closed="Window_Closed" Closing="Window_Closing">
 
     <Grid x:Name="grid">
 
         <Rectangle x:Name="fond" Width="1157" Height="635" Fill="Black" />
 
 
-        <Label x:Name="label_0_infini" Content="( 0 pour jouer à l'infini)"
+        <Label x:Name="label_0_infini" Content="( 0 pour jouer à l'infini )"
                 FontSize="25"
-                Foreground="White" Background="{x:Null}" Canvas.Left="765" Canvas.Top="429" Margin="773,466,115,97"/>
+                Foreground="White" Background="{x:Null}" Canvas.Left="765" Canvas.Top="429" Margin="773,466,86,97"/>
         <Label
         Width="352"
         Height="52"

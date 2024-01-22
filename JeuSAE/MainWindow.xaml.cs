@@ -429,7 +429,12 @@ namespace JeuSAE
                     vieJoueur += 5;
                 }
                 manche++;
+                if (manche == mancheFin)
+                {
+
+                }
             }
+
 
         }
 
