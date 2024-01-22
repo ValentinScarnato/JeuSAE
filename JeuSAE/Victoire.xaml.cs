@@ -27,7 +27,7 @@ namespace JeuSAE
             label_kill.Content = ((MainWindow)Application.Current.MainWindow).killsJoueur;
             ImageBrush victoire = new ImageBrush();
             victoire.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/victoire.png"));
-            rectangleVictoire.Fill = victoire;
+            fond.Fill = victoire;
         }
         public void RedemarrerApplication()
         {

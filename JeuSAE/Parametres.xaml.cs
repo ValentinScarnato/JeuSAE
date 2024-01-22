@@ -114,7 +114,7 @@ namespace JeuSAE
 
             if (int.TryParse(texteManche, out mancheFinValeur))
             {
-                if (mancheFinValeur < 1)
+                if (mancheFinValeur < 0)
                 {
                     erreurLabel.Content = "Nombre doit etre positif";
                     erreurLabel.Foreground = Brushes.Red;
@@ -124,7 +124,8 @@ namespace JeuSAE
                 {
                     erreurLabel.Foreground = Brushes.Transparent;
                     ((MainWindow)Application.Current.MainWindow).mancheFin = mancheFinValeur;
-                    
+                    fermer = true;
+
 
 
                 }

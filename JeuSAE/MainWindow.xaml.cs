@@ -428,11 +428,12 @@ namespace JeuSAE
                     nombreDeBalles = munitionMaxJoueur;
                     vieJoueur += 5;
                 }
-                manche++;
-                if (manche == mancheFin)
+                if (manche == mancheFin && mancheFin!=0)
                 {
-
+                    Gagner();
                 }
+                manche++;
+                
             }
 
 
@@ -608,7 +609,7 @@ namespace JeuSAE
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-
+            // si la touche pour tirer est pressée, la méthode pour générer des balles est appellée
             if (e.Key == tirer)
             {
                 GenerationBalle();
@@ -1049,6 +1050,13 @@ namespace JeuSAE
 
             Pause pause = new Pause(); // nouvelle fenetre pause
             pause.ShowDialog(); // ouverture fenetre pause
+        }
+        private void Gagner()
+        {
+            mineuteur.Stop(); // quand le bouton pause est cliqué, le minuteur et l'interval se stoppent
+            interval.Stop();
+            Victoire victoire = new Victoire(); // nouvelle fenetre pause
+            victoire.ShowDialog(); // ouverture fenetre pause
         }
 
 
