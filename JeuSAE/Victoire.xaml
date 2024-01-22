@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JeuSAE"
         mc:Ignorable="d"
-        Title="Victoire" Height="980" Width="1750">
+        Title="Victoire" Height="980" Width="1750" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Rectangle x:Name="fond" HorizontalAlignment="Center" Height="954" Stroke="Black" VerticalAlignment="Top" Width="1750" Margin="0,10,0,0"/>
         <Label

@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JeuSAE"
         mc:Ignorable="d"
-        Title="Plus" Height="450" Width="800">
-    <Grid>
-
+        Title="Plus" Height="526" Width="880" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid Background="Black">
+        <Canvas>
+            <Label Content="BENECH Enzo" Canvas.Left="80" Canvas.Top="239" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" FontSize="25" FontWeight="Bold"/>
+            <Label Content="BEKHOUCHE Amir" Canvas.Left="80" Canvas.Top="152" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="262" FontSize="25" FontWeight="Bold"/>
+            <Label Content="SCARNATO Valentin" Canvas.Left="80" Canvas.Top="324" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Width="254" FontWeight="Bold" FontSize="25"/>
+            <Label Content="© 2024 LAST NIGHT TOUS DROITS RESERVES" Foreground="White" FontSize="13" VerticalContentAlignment="Center" Canvas.Left="10" Canvas.Top="461" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Content="IUT ANNECY SAE" Foreground="White" FontSize="16" VerticalContentAlignment="Center" Canvas.Left="740" Canvas.Top="457"/>
+            <Label Content="BUT INFORMATIQUE" Foreground="White" FontSize="16" VerticalContentAlignment="Center" Canvas.Left="362" Canvas.Top="457"/>
+            <Label Content="Développement :" Foreground="White" FontSize="28" FontWeight="Bold" Canvas.Left="19" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Content="Design :" Foreground="White" FontSize="28" FontWeight="Bold" Canvas.Left="472" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Label Content="BENECH Enzo" Canvas.Left="529" Canvas.Top="239" Foreground="White" Width="262" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Content="BEKHOUCHE Amir" Canvas.Left="529" Canvas.Top="152" Foreground="White" Width="262" FontSize="25" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Content="SCARNATO Valentin" Canvas.Left="529" Canvas.Top="324" Foreground="White" Width="254" FontWeight="Bold" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Label Content="CRÉDITS" Canvas.Left="337" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Width="206" Height="68" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="40" FontWeight="Bold"/>
+        </Canvas>
     </Grid>
 </Window>
