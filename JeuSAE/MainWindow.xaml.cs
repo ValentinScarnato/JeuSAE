@@ -126,12 +126,14 @@ namespace JeuSAE
         ImageBrush Balle = new ImageBrush();
 
         /*----------------------------------------------------*/
-        /*--------------------IMAGEBRUSH----------------------*/
+        /*-------------------------SON------------------------*/
         /*----------------------------------------------------*/
 
         MediaPlayer sonsZombie = new MediaPlayer();
         MediaPlayer sonsBalle = new MediaPlayer();
         MediaPlayer sonsTouche = new MediaPlayer();
+        MediaPlayer sonVie = new MediaPlayer();
+        MediaPlayer f = new MediaPlayer();
 
 
         /*----------------------------------------------------*/
@@ -927,6 +929,8 @@ namespace JeuSAE
                     {
                         vieJoueur -= 2;
                         Thread.Sleep(30);
+                        sonVie.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/take-damage.mp3"));
+                        sonVie.Play();
                     }
             
 
@@ -975,6 +979,8 @@ namespace JeuSAE
                 {
                     vieJoueur -= 2;
                     Thread.Sleep(15);
+                    sonVie.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/take-damage.mp3"));
+                    sonVie.Play();
                 }
             }
             
