@@ -84,7 +84,6 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         public bool difficile = false;
         bool gauche, droite, haut, bas = false;
-        bool gaucheZombies, droiteZombies, hautZombies, basZombies = false;
         bool vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
@@ -325,37 +324,25 @@ namespace JeuSAE
             {
                 Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers la gauche
                 orientationZombieX = ORIENTATION_GAUCHE; // définir orientation horizontale vers la gauche
-                gaucheZombies = true;
-                droiteZombies = false;
-                hautZombies = false;
-                basZombies = false;
+                
             }
             if (Canvas.GetLeft(zomb) < Canvas.GetLeft(joueur)) // si le zombie se trouve a la gauche du joueur
             {
                 Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + VITESSE_ZOMBIE); //  faire aller le zombie vers la droite
                 orientationZombieX = ORIENTATION_DROITE; // définir orientation horizontale vers la droie
-                gaucheZombies = false;
-                droiteZombies = true;
-                hautZombies = false;
-                basZombies = false;
+                
             }
             if (Canvas.GetTop(zomb) < Canvas.GetTop(joueur)) // si le zombie est en dessous du joueur
             {
                 Canvas.SetTop(zomb, Canvas.GetTop(zomb) + VITESSE_ZOMBIE); // faire aller le zombie vers le bas
                 orientationZombieY = ORIENTATION_HAUT; // définir l'orientation verticale du joueur vers le haut
-                gaucheZombies = false;
-                droiteZombies = false;
-                hautZombies = true;
-                basZombies = false;
+                
             }
             if (Canvas.GetTop(zomb) > Canvas.GetTop(joueur)) // si le zombie est au dessus du joueur
             {
                 Canvas.SetTop(zomb, Canvas.GetTop(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers le bas
                 orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
-                gaucheZombies = false;
-                droiteZombies = false;
-                hautZombies = false;
-                basZombies = true;
+                
             }
             OrientationZombie(zomb, orientationZombieX, orientationZombieY);
 
