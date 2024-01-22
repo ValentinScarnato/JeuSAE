@@ -106,6 +106,8 @@ namespace JeuSAE
         private List<Rectangle> balleB = new List<Rectangle>();
         private BitmapImage[] imagesZombie = new BitmapImage[16];
         private int indexImageZombie = 0;
+        private BitmapImage[] imagesFeu = new BitmapImage[19];
+        private int indexImageFeu = 0;
 
 
 
@@ -123,7 +125,6 @@ namespace JeuSAE
         ImageBrush soin = new ImageBrush();
         ImageBrush pause = new ImageBrush();
         ImageBrush map = new ImageBrush();
-        ImageBrush feu_ = new ImageBrush();
         ImageBrush Balle = new ImageBrush();
 
         /*----------------------------------------------------*/
@@ -156,8 +157,6 @@ namespace JeuSAE
             bouton_pause.Background = pause;
             map.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/Map..png"));
             fond.Background = map;
-            feu_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/feu.gif"));
-            Feu.Fill = feu_;
             Balle.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/balle.png"));
 
         }
@@ -184,6 +183,8 @@ namespace JeuSAE
             GenerationImage();
             Generation_Boite();
             Generation_Zombies(nombreZombieMaxMemeTemps);
+            ChargerImagesFeu();
+            InitialiserAnimationFeu(Flamme);
             if (!difficile)
                 GenerationKitSoin();
             Generation_Munitions(nombreMunitionMaxMemeTemps);
@@ -234,6 +235,34 @@ namespace JeuSAE
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += (sender, e) => AnimerZombie(ennemi);
             timer.Start();
+        }
+        private void InitialiserAnimationFeu(Rectangle Flamme)
+        {
+            DispatcherTimer time = new DispatcherTimer();
+            time.Interval = TimeSpan.FromMilliseconds(100);
+            time.Tick += (sender, e) => AnimerFeu(Flamme);
+            time.Start();
+        }
+        private void ChargerImagesFeu()
+        {
+            for (int i = 0; i < imagesFeu.Length; i++)
+            {
+                string nomFichier = $"Fire+Sparks{i + 1}.png";
+                string cheminImage = $"pack://siteoforigin:,,,/Image/{nomFichier}";
+                imagesFeu[i] = new BitmapImage(new Uri(cheminImage));
+            }
+        }
+
+        private void AnimerFeu(Rectangle Flamme)
+        {
+            if (imagesFeu.Length > 0)
+            {
+                BitmapImage image = imagesFeu[indexImageFeu];
+                ImageBrush brush = new ImageBrush();
+                brush.ImageSource = image;
+                Flamme.Fill = brush;
+                indexImageFeu = (indexImageFeu + 1) % imagesFeu.Length;
+            }
         }
 
         /*----------------------------------------------------*/

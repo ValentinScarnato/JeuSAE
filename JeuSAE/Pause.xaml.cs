@@ -29,6 +29,9 @@ namespace JeuSAE
             InitializeComponent();
             fond.Children.Add(erreurLabel);
             selectionner_manche.Text = ((MainWindow)Application.Current.MainWindow).manche + "";
+            ImageBrush pause = new ImageBrush();
+            pause.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/pauze.png"));
+            rectanglePauze.Fill = pause;
         }
 
         Label erreurLabel = new Label

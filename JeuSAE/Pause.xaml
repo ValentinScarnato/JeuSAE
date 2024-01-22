@@ -12,6 +12,11 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d" Closed="Window_Closed" Closing="Window_Closing">
     <Grid x:Name="fond" Background="Black">
+        <Rectangle x:Name="rectanglePauze" HorizontalAlignment="Center" Height="690" VerticalAlignment="Center" Width="1086">
+            <Rectangle.Effect>
+                <BlurEffect/>
+            </Rectangle.Effect>
+        </Rectangle>
         <Button
             x:Name="bouton_reprendre"
             Width="300"
@@ -55,5 +60,6 @@
             Foreground="Red"
             TextWrapping="Wrap" Width="383" ><Run Text="Appuyez sur K pour activer l"/><Run Language="fr-fr" Text="a"/><Run Language="fr-fr" Text=" "/><Run Text="Triche"/></TextBlock>
         <TextBox x:Name="selectionner_manche" TextWrapping="Wrap" Text="" Margin="448,211,448,382" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" TextChanged="selectionner_manche_TextChanged" GotFocus="selectionner_manche_GotFocus" BorderBrush="White"/>
+        
     </Grid>
 </Window>
