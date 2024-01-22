@@ -74,7 +74,7 @@ namespace JeuSAE
         int nombreDeBalles = MUNITIONS_MAX_DEBUT;
         int nombreZombieManche = 0, nombreEnnemisMap, ennemisRestants, killManche;
         int vitesseJoueur = VITESSE_JOUEUR, vitesseBalle = VITESSE_BALLE, munitionMaxJoueur = MUNITIONS_MAX_DEBUT;
-        int nombreSoinMaXMemeTemps = 1, nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
+        int nombreZombieMaxMemeTemps = 5, nombreMunitionMaxMemeTemps = 1;
         public int killsJoueur = 0;
         int vieJoueur = VIE_JOUEUR;
         public int manche = 1;
@@ -85,7 +85,6 @@ namespace JeuSAE
         /*----------------------------------------------------*/
         public bool difficile = false;
         bool gauche, droite, haut, bas = false;
-        bool FinDePartie = false;
         bool vieInfinie = false, ballesInfinies = false;
         bool triche = false;
         bool perdu = false;
