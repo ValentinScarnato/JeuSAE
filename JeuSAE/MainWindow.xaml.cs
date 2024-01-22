@@ -743,6 +743,7 @@ namespace JeuSAE
         private void Interactions()
         {
             Rect zoneJoueur = new Rect(Canvas.GetLeft(joueur), Canvas.GetTop(joueur), joueur.Width, joueur.Height); // convertir le Rectangle joueur en Rect
+
             if (!triche) // si la triche est désactivée la vitesse de balles sera égale a la constante VITESSE_BALLE
                 vitesseBalle = VITESSE_BALLE;
             else // si la triche est activée la vitesse de balles sera égale a la constante VITESSE_BALLE_TRICHE
@@ -806,6 +807,7 @@ namespace JeuSAE
             }
             foreach (Rectangle zomb in zombieListe)
             {
+
                 Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
                 if (zoneJoueur.IntersectsWith(ennemiZone) && vieJoueur > 0)
                 {
@@ -818,10 +820,10 @@ namespace JeuSAE
 
                 }
                 DeplacementZombie(zomb);
-                
-                OrientationZombie(zomb, orientationZombieX, orientationZombieY); //appel de la méthode orientation zombie en envoyant l'orientation verticale et horizontale
+                CaisseZombie(zomb);
 
             }
+
             foreach (Rectangle caisse in boiteListe)
             {
                 Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height);
@@ -852,7 +854,10 @@ namespace JeuSAE
                         Deplacements();
                     }
 
+
+
                 }
+
             }
             foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
             {
@@ -877,7 +882,7 @@ namespace JeuSAE
                     Thread.Sleep(15);
                 }
             }
-
+            
         }
         public void DeplacementZombie(Rectangle zomb)
         {
@@ -903,6 +908,49 @@ namespace JeuSAE
                 orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
             }
         }
+
+        //COLLISONS ZOMBIES ET CAISSES (BUGGé). VOIR AUSSI LIGNE 823.
+        private void CaisseZombie(Rectangle zomb)
+        {
+            /*
+            Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height);
+            foreach (Rectangle caisse in boiteListe)
+            {
+                Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height);
+                if (caisseZone.IntersectsWith(ennemiZone))
+                {
+                    if (!triche)
+                    {
+                        if (gauche == true)
+                        {
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) + 15);
+                        }
+
+                        else if (droite == true)
+                        {
+                            Canvas.SetLeft(zomb, Canvas.GetLeft(zomb) - 15);
+                        }
+                        else if (haut == true)
+                        {
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) + 15);
+                        }
+                        else if (bas == true)
+                        {
+                            Canvas.SetTop(zomb, Canvas.GetTop(zomb) - 15);
+                        }
+                    }
+                    else
+                    {
+                        Deplacements();
+                    }
+
+                }
+
+
+            }
+            */
+        }
+
         /*----------------------------------------------------*/
         /*----------------------CHEAT VIE---------------------*/
         /*----------------------------------------------------*/
