@@ -715,7 +715,6 @@ namespace JeuSAE
             foreach (Rectangle zomb in zombieListe) //boucler pour chaque rectangle dans la liste des zombies
             {
                 Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle zomb en Rect
-
                 if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
 
@@ -912,6 +911,8 @@ namespace JeuSAE
                 Canvas.SetTop(zomb, Canvas.GetTop(zomb) - VITESSE_ZOMBIE); //faire aller le zombie vers le bas
                 orientationZombieY = ORIENTATION_BAS; // définir orientation du zombie vers le bas
             }
+            OrientationZombie(zomb, orientationZombieX, orientationZombieY);
+
         }
 
         //COLLISONS ZOMBIES ET CAISSES (BUGGé). VOIR AUSSI LIGNE 823.
