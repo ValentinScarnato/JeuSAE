@@ -20,7 +20,6 @@ namespace JeuSAE
     /// </summary>
     public partial class FenetreMort : Window
     {
-        MainWindow mainwindows;
         public FenetreMort()
         {
             InitializeComponent();

@@ -77,13 +77,15 @@
         </Border>
         <Button
             x:Name="boutonPlus"
-            Canvas.Left="48"
-            Canvas.Top="30"
-            Width="100"
+            Background="#FFA1B0A2"
+            BorderThickness="0,0,0,0"
+            FontFamily="Segoe UI"
+            FontSize="40"
+            FontWeight="Bold"
+            Width="208"
             Height="100"
-            Content="+"
-            FontSize="48"
-            FontWeight="Bold" Click="boutonPlus_Click" />
+            Content="CREDITS"
+           Click="boutonPlus_Click" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.519,0.53" Canvas.Left="771" Canvas.Top="822" />
 
 
 
