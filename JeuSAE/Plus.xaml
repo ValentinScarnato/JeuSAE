@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JeuSAE"
         mc:Ignorable="d"
-        Title="Plus" Height="526" Width="880" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="Plus" Height="526" Width="880" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         <Canvas>
             <Label Content="BENECH Enzo" Canvas.Left="80" Canvas.Top="239" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="262" FontSize="25" FontWeight="Bold"/>
