@@ -18,8 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using System.Threading;
-
-
+using System.Media;
 
 namespace JeuSAE
 {
@@ -128,6 +127,15 @@ namespace JeuSAE
         ImageBrush Balle = new ImageBrush();
 
         /*----------------------------------------------------*/
+        /*--------------------IMAGEBRUSH----------------------*/
+        /*----------------------------------------------------*/
+
+        MediaPlayer sonsZombie = new MediaPlayer();
+        MediaPlayer sonsBalle = new MediaPlayer();
+        MediaPlayer sonsTouche = new MediaPlayer();
+
+
+        /*----------------------------------------------------*/
         /*--------------------DISPATCHERTIMER-----------------*/
         /*----------------------------------------------------*/
 
@@ -141,6 +149,7 @@ namespace JeuSAE
 
         public void GenerationImage()
         {
+            String chemin = AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png";
             caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
@@ -358,9 +367,13 @@ namespace JeuSAE
 
         private void GenerationBalle()
         {
+            
             if (nombreDeBalles > 0)
             {
-                Rectangle balle = new Rectangle
+                sonsBalle.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/balle.mp3"));
+                sonsBalle.Play();
+                Rectangle balle = new Rectangle()
+                
                 {
                     Tag = "Balle",
                     Height = 5,
@@ -459,6 +472,8 @@ namespace JeuSAE
 
             if (nombreEnnemisMap == 0 && killManche != nombreZombieManche)
             {
+                sonsZombie.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/zombie.mp3"));
+                sonsZombie.Play();
                 Generation_Zombies(nombreZombieMaxMemeTemps);
             }
 
@@ -810,7 +825,8 @@ namespace JeuSAE
                 Rect ennemiZone = new Rect(Canvas.GetLeft(zomb), Canvas.GetTop(zomb), zomb.Width, zomb.Height); //convertir le rectangle zomb en Rect
                 if (balleR.IntersectsWith(ennemiZone)) // tester si il y a une collision entre une balle et un ennemi
                 {
-
+                    sonsTouche.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Sons/touche_balle.mp3"));
+                    sonsTouche.Play();
                     objetASupprimer.Add(balle); // ajout de la balle aux objets a supprimer
                     objetASupprimer.Add(zomb); // ajout du zombie aux objets a supprimer
                     nombreEnnemisMap--; // il y a un ennemi sur la carte en moins
