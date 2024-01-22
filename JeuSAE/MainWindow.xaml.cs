@@ -828,8 +828,19 @@ namespace JeuSAE
                     }
                     return true;
                 }
+                
 
-            }
+            
+            }foreach (Rectangle caisse in boiteListe)
+                   {  
+                    Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height); //convertir le rectangle zomb en Rect
+
+               
+                    if (caisseZone.IntersectsWith(balleR))
+                        {
+                            objetASupprimer.Add(balle);
+                        }
+                    }
             return false;
 
         }
@@ -965,13 +976,7 @@ namespace JeuSAE
                             Deplacements();
                         }
                     }
-                    /*foreach (Rectangle balled in balles)
-                    {
-                        if (caisseZone.IntersectsWith(balled))
-                        {
-                            objetASupprimer.Add(balled);
-                        }
-                    }*/
+                    
 
                 }
             }
