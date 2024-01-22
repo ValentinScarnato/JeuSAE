@@ -25,12 +25,12 @@
             </Rectangle.Effect>
         </Rectangle>
         <Label
-        Width="172"
+        Width="200"
         Height="35"
         Margin="52,253,0,0"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Content="Niveau Du Jeu : "
+        Content="Mode de difficulté : "
         FontSize="20"
         FontWeight="Bold"
         Foreground="White" />
@@ -143,7 +143,7 @@
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Text=""
-        TextWrapping="Wrap" IsReadOnly="True" />
+        TextWrapping="Wrap" IsReadOnly="True"  />
         <TextBox
         x:Name="bouton_tirer"
         Width="141"

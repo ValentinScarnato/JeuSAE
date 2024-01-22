@@ -97,6 +97,7 @@ namespace JeuSAE
         private List<Rectangle> objetASupprimer = new List<Rectangle>();
         private List<Rectangle> zombieListe = new List<Rectangle>();
         private List<Rectangle> munitionListe = new List<Rectangle>();
+        private List<Rectangle> boiteListe = new List<Rectangle>();
         private List<Rectangle> soinListe = new List<Rectangle>();
         private List<Rectangle> balles = new List<Rectangle>();
         private List<Rectangle> balleG = new List<Rectangle>();
@@ -140,9 +141,6 @@ namespace JeuSAE
         public void GenerationImage()
         {
             caisseDecor.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/caisse_fond.png"));
-            caisse_decor_1.Fill = caisseDecor;
-            caisse_decor_3.Fill = caisseDecor;
-            caisse_decor_4.Fill = caisseDecor;
             boiteMunition.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/boite_munitions.png"));
             joueur_.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Image/joueur.png"));
             joueur.Fill = joueur_;
@@ -171,6 +169,7 @@ namespace JeuSAE
             menu.ShowDialog();
             InitializeComponent();
             GenerationImage();
+            Generation_Boite();
             Generation_Zombies(nombreZombieMaxMemeTemps);
             if (!difficile)
                 GenerationKitSoin();
@@ -243,16 +242,49 @@ namespace JeuSAE
             timer.Start();
         }
 
-
-
         /*----------------------------------------------------*/
-        /*-------------------TEMPS DE JEU TXT-----------------*/
+        /*------------------ TEMPS DE JEU TXT ----------------*/
         /*----------------------------------------------------*/
 
         private void TempsDeJeu()
         {
             minuterie = minuterie.Add(TimeSpan.FromMilliseconds(1500));
             texteMinuterie.Text = minuterie.ToString(@"hh\:mm");
+        }
+
+        /*----------------------------------------------------*/
+        /*-------------------- DEPLACEMENTS ------------------*/
+        /*----------------------------------------------------*/
+
+        public void Deplacements()
+        {
+            if (!triche)
+            {
+
+                vitesseJoueur = VITESSE_JOUEUR;
+            }
+            else
+            {
+                vitesseJoueur = VITESSE_JOUEUR_TRICHE;
+            }
+            if (gauche == true && Canvas.GetLeft(joueur) > 0)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - vitesseJoueur);
+            }
+
+            else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
+            {
+                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + vitesseJoueur);
+            }
+            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - vitesseJoueur);
+            }
+            else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
+            {
+                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + vitesseJoueur);
+            }
+
         }
 
         /*----------------------------------------------------*/
@@ -308,43 +340,9 @@ namespace JeuSAE
         }
 
         /*----------------------------------------------------*/
-        /*-------------------- DEPLACEMENTS ------------------*/
-        /*----------------------------------------------------*/
-
-        public void Deplacements()
-        {
-            if (!triche)
-            {
-
-                vitesseJoueur = VITESSE_JOUEUR;
-            }
-            else
-            {
-                vitesseJoueur = VITESSE_JOUEUR_TRICHE;
-            }
-            if (gauche == true && Canvas.GetLeft(joueur) > 0)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - vitesseJoueur);
-            }
-
-            else if (droite == true && Canvas.GetLeft(joueur) + joueur.Width < Application.Current.MainWindow.Width)
-            {
-                Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + vitesseJoueur);
-            }
-            else if (haut == true && Canvas.GetTop(joueur) > BANDEAU + 20)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) - vitesseJoueur);
-            }
-            else if (bas == true && Canvas.GetTop(joueur) + joueur.Width < Application.Current.MainWindow.Height)
-            {
-                Canvas.SetTop(joueur, Canvas.GetTop(joueur) + vitesseJoueur);
-            }
-
-        }
-
-        /*----------------------------------------------------*/
         /*-------------- GENERATION DE ZOMBIES ---------------*/
         /*----------------------------------------------------*/
+
         private void Generation_Zombies(int zombiesGeneration)
         {
             int i = 0;
@@ -434,6 +432,56 @@ namespace JeuSAE
                 manche++;
             }
 
+        }
+
+        /*----------------------------------------------------*/
+        /*----------------GENERATION DE BOITE-----------------*/
+        /*----------------------------------------------------*/
+
+        private void Generation_Boite()
+        {
+
+                Rectangle caisse1 = new Rectangle
+                {
+                    Tag = "caisse",
+                    Height = 70,
+                    Width = 70,
+                    Fill = caisseDecor
+                };
+
+                Canvas.SetTop(caisse1, 680);
+                Canvas.SetLeft(caisse1, 490);
+
+                boiteListe.Add(caisse1);
+                fond.Children.Add(caisse1);
+
+            Rectangle caisse2 = new Rectangle
+            {
+                Tag = "caisse",
+                Height = 70,
+                Width = 70,
+                Fill = caisseDecor
+            };
+
+            Canvas.SetTop(caisse2, 700);
+            Canvas.SetLeft(caisse2, 1200);
+
+            boiteListe.Add(caisse2);
+            fond.Children.Add(caisse2);
+
+            Rectangle caisse3 = new Rectangle
+            {
+                Tag = "caisse",
+                Height = 70,
+                Width = 70,
+                Fill = caisseDecor
+            };
+
+            Canvas.SetTop(caisse3, 210);
+            Canvas.SetLeft(caisse3, 210);
+
+            boiteListe.Add(caisse3);
+            fond.Children.Add(caisse3);
         }
 
         /*----------------------------------------------------*/
@@ -766,12 +814,45 @@ namespace JeuSAE
                         vieJoueur -= 5;
                         Thread.Sleep(30);
                     }
+            
 
                 }
                 DeplacementZombie(zomb);
                 
                 OrientationZombie(zomb, orientationZombieX, orientationZombieY); //appel de la méthode orientation zombie en envoyant l'orientation verticale et horizontale
 
+            }
+            foreach (Rectangle caisse in boiteListe)
+            {
+                Rect caisseZone = new Rect(Canvas.GetLeft(caisse), Canvas.GetTop(caisse), caisse.Width, caisse.Height);
+                if (zoneJoueur.IntersectsWith(caisseZone))
+                {
+                    if (!triche)
+                    {
+                        if (gauche == true)
+                        {
+                            Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) + 10);
+                        }
+
+                        else if (droite == true)
+                        {
+                            Canvas.SetLeft(joueur, Canvas.GetLeft(joueur) - 10);
+                        }
+                        else if (haut == true)
+                        {
+                            Canvas.SetTop(joueur, Canvas.GetTop(joueur) + 10);
+                        }
+                        else if (bas == true)
+                        {
+                            Canvas.SetTop(joueur, Canvas.GetTop(joueur) - 10);
+                        }
+                    }
+                    else
+                    {
+                        Deplacements();
+                    }
+
+                }
             }
             foreach (Rectangle y in objetASupprimer) // boucler pour chaque Rectangle dans la liste objets a supprimer
             {
