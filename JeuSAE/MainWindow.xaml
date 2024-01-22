@@ -158,6 +158,7 @@
                    VerticalAlignment="Center"
                    FontSize="38"
                    Foreground="White"/>
+            <Rectangle x:Name="Flamme" Height="150" Canvas.Left="1280" Canvas.Top="485" Width="175"/>
 
         </Canvas>
 
